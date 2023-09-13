@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -28,4 +30,20 @@ public class DepartmentService {
                 .build();
         departmentRepository.save(department);
     }
+
+    public List<Department> findAll(){
+        return departmentRepository.findAll();
+    }
+
+    public Department update(Long id, DepartmentRequest request){
+        Department department = departmentRepository.findById(id).get();
+        department.update(request);
+        departmentRepository.save(department);
+        return department;
+    }
+
+    public void delete(Long id){
+        departmentRepository.deleteById(id);
+    }
+
 }
