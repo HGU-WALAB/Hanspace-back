@@ -38,7 +38,7 @@ public class Department extends BaseEntity{
         this.color = request.getColor();
         this.userAccept = request.isUserAccept();
         this.maxRserveCount = request.getMaxRserveCount();
-        this.link = request.getLink();
+//        this.link = request.getLink();
         this.firstInfo = request.getFirstInfo();
         this.secondInfo = request.getSecondInfo();
         this.siteInfoTitle = request.getSiteInfoTitle();
