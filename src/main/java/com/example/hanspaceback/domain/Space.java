@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 
@@ -23,6 +24,8 @@ public class Space extends BaseEntity{
     private Date startTime;
     private Date endTime;
     private String detail;
+
+    @ColumnDefault("true")
     private boolean availability;
     private String image;
     private Date unusableDate;

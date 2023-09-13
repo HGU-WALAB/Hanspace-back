@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -16,7 +17,9 @@ public class DeptMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deptMemberId")
     private Long id;
+//    @ColumnDefault("pending approval")
     private String approve;
+//    @ColumnDefault("user")
     private String permission;
 
     @ManyToOne

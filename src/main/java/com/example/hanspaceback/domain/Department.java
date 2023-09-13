@@ -2,6 +2,7 @@ package com.example.hanspaceback.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -17,8 +18,11 @@ public class Department extends BaseEntity{
     private String siteName;
     private String deptName;
     private String logo;
+//    @ColumnDefault("black")
     private String color;
+//    @ColumnDefault("true")
     private boolean userAccept;
+//    @ColumnDefault("30")
     private int maxRserveCount;
     private String link;
     private String firstInfo;

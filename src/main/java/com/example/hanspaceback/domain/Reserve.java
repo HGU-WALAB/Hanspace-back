@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
 
@@ -24,6 +25,8 @@ public class Reserve extends BaseEntity{
     private String groupName;
     private String purpose;
     private String phoneNumber;
+
+//    @ColumnDefault("pending approval")
     private String approve;
 
     @ManyToOne
