@@ -1,13 +1,20 @@
 package com.example.hanspaceback.domain;
 
 import com.example.hanspaceback.dto.request.DepartmentRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department extends BaseEntity{
@@ -15,7 +22,7 @@ public class Department extends BaseEntity{
     @Id
     @Column(name = "deptId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long deptId;
     private String siteName;
     private String deptName;
     private String logo;
@@ -29,6 +36,7 @@ public class Department extends BaseEntity{
     private String firstInfo;
     private String secondInfo;
     private String siteInfoTitle;
+    @Lob
     private String siteInfoDetail;
 
     public void update(DepartmentRequest request) {
@@ -44,4 +52,7 @@ public class Department extends BaseEntity{
         this.siteInfoTitle = request.getSiteInfoTitle();
         this.siteInfoDetail = request.getSiteInfoDetail();
     }
+    @JsonIgnore
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DeptMember> deptMember = new ArrayList<>();
 }

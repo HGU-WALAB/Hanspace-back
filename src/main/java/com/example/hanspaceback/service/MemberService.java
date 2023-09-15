@@ -1,17 +1,11 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.List;
 
 @Service

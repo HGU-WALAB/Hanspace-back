@@ -16,19 +16,20 @@ import java.util.Date;
 @NoArgsConstructor
 public class Reserve extends BaseEntity{
     @Id
+    @Column(name = "reserveId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date date;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private int headCount;
     private String groupName;
     private String purpose;
     private String phoneNumber;
-
 //    @ColumnDefault("pending approval")
     private String approve;
-
+    private String firstInfoAns;
+    private String secondInfoAns;
     @ManyToOne
     @JoinColumn(name = "spaceId")
     Space space;
