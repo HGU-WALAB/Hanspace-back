@@ -21,9 +21,10 @@ public class Space extends BaseEntity{
     private Long id;
     private String name;
     private int headCount;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
     private String detail;
+    private String lableColor;
 
     @ColumnDefault("true")
     private boolean availability;

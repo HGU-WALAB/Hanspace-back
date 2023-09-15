@@ -21,12 +21,10 @@ public class DepartmentController {
     public ResponseEntity<List<Department>> findAll(){
         return ResponseEntity.ok(departmentService.findAll());
     }
-
     @PatchMapping("/dept/{id}")
     public ResponseEntity<Department> update(@PathVariable Long id, @RequestBody DepartmentRequest request){
         return ResponseEntity.ok(departmentService.update(id, request));
     }
-
     @DeleteMapping("/dept/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
         departmentService.delete(id);

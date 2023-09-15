@@ -1,10 +1,10 @@
 package com.example.hanspaceback.domain;
 
+import com.example.hanspaceback.dto.request.DeptMemberRequest;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -12,7 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeptMember {
+public class DeptMember extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deptMemberId")
@@ -22,11 +22,22 @@ public class DeptMember {
 //    @ColumnDefault("user")
     private String permission;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId")
+//    @JsonProperty("deptId")
+//    @JsonBackReference
     private Department department;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
+//    @JsonBackReference
+//    @JsonProperty("memberId")
     private Member member;
+
+//    private Long deptId = department.getDeptId();
+//    private Long memberId = member.getMemberId();
+    public void update(DeptMemberRequest request){
+        this.approve = request.getApprove();
+        this.permission = request.getPermission();
+    }
 }
