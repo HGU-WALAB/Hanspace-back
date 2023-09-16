@@ -22,11 +22,11 @@ public class DeptMember extends BaseEntity{
 //    @ColumnDefault("user")
     private String permission;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "deptId")
     private Department department;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "memberId")
     private Member member;
 
