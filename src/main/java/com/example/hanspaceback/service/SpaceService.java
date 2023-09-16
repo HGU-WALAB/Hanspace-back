@@ -39,7 +39,6 @@ public class SpaceService {
     public List<Space> findSpaceFetchJoin(){
         return spaceRepository.findSpaceFetchJoin();
     }
-
     public Space update(Long id, SpaceRequest request){
         Space space = spaceRepository.findById(id).orElseThrow();
         space.update(request);
