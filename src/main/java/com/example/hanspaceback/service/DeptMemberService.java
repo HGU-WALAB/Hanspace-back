@@ -36,13 +36,6 @@ public class DeptMemberService {
         deptMemberRepository.save(deptMember);
     }
 
-//    public List<DeptMember> findAll(){
-//        //fetch join
-////        return deptMemberRepository.findAll();
-//    }
-//    public List<DeptMember> findAllDeptMembers() {
-//        return deptMemberRepository.findAllWithDepartmentAndMember();
-//    }
     public List<DeptMember> findDeptMemberFetchJoin() {
         return deptMemberRepository.findDeptMemberFetchJoin();
     }

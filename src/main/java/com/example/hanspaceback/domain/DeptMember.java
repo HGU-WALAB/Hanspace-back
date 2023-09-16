@@ -24,18 +24,12 @@ public class DeptMember extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId")
-//    @JsonProperty("deptId")
-//    @JsonBackReference
     private Department department;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
-//    @JsonBackReference
-//    @JsonProperty("memberId")
     private Member member;
 
-//    private Long deptId = department.getDeptId();
-//    private Long memberId = member.getMemberId();
     public void update(DeptMemberRequest request){
         this.approve = request.getApprove();
         this.permission = request.getPermission();

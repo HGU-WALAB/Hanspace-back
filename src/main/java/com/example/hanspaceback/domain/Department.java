@@ -4,6 +4,7 @@ import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,7 +15,6 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department extends BaseEntity{
@@ -46,13 +46,19 @@ public class Department extends BaseEntity{
         this.color = request.getColor();
         this.userAccept = request.isUserAccept();
         this.maxRserveCount = request.getMaxRserveCount();
-//        this.link = request.getLink();
+        this.link = request.getLink();
         this.firstInfo = request.getFirstInfo();
         this.secondInfo = request.getSecondInfo();
         this.siteInfoTitle = request.getSiteInfoTitle();
         this.siteInfoDetail = request.getSiteInfoDetail();
     }
-    @JsonIgnore
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<DeptMember> deptMember = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Space> space = new ArrayList<>();
 }
