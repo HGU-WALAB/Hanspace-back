@@ -18,11 +18,7 @@ public class DeptMemberController {
     public void create(@RequestBody DeptMemberRequest request){
         deptMemberService.create(request);
     }
-//    @PostMapping("/deptMember/list")
-//    public ResponseEntity<List<DeptMember>> findAllDeptMembers(){
-//        return ResponseEntity.ok(deptMemberService.findAllDeptMembers());
-//    }
-    @PostMapping("/deptMember/list")
+    @GetMapping("/deptMember/list")
     public ResponseEntity<List<DeptMember>> findDeptMemberFetchJoin(){
         return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
     }

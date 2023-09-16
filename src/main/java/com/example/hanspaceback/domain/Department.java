@@ -52,7 +52,13 @@ public class Department extends BaseEntity{
         this.siteInfoTitle = request.getSiteInfoTitle();
         this.siteInfoDetail = request.getSiteInfoDetail();
     }
-    @JsonIgnore
+
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<DeptMember> deptMember = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Space> space = new ArrayList<>();
 }

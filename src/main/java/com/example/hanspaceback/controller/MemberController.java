@@ -18,7 +18,7 @@ public class MemberController {
     public void create(@RequestBody MemberRequest request){
         memberService.create(request);
     }
-    @PostMapping("/member/list")
+    @GetMapping("/member/list")
     public ResponseEntity<List<Member>> findAll(){
         return ResponseEntity.ok(memberService.findAll());
     }

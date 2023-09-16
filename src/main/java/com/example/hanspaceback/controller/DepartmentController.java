@@ -17,7 +17,7 @@ public class DepartmentController {
     public void create(@RequestBody DepartmentRequest request){
         departmentService.create(request);
     }
-    @PostMapping("/dept/list")
+    @GetMapping("/dept/list")
     public ResponseEntity<List<Department>> findAll(){
         return ResponseEntity.ok(departmentService.findAll());
     }
