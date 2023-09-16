@@ -32,4 +32,8 @@ public class Member extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeptMember> deptMember = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reserve> reserve = new ArrayList<>();
 }

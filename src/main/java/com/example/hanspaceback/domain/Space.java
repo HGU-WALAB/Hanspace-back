@@ -1,6 +1,7 @@
 package com.example.hanspaceback.domain;
 
 import com.example.hanspaceback.dto.request.SpaceRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Builder
@@ -45,4 +48,7 @@ public class Space extends BaseEntity{
         this.image = request.getImage();
         this.unusableDate = request.getUnusableDate();
     }
+    @JsonIgnore
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reserve> reserve = new ArrayList<>();
 }
