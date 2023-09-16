@@ -7,13 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+
     @PostMapping("/member")
     public void create(@RequestBody MemberRequest request){
         memberService.create(request);
@@ -22,10 +22,12 @@ public class MemberController {
     public ResponseEntity<List<Member>> findAll(){
         return ResponseEntity.ok(memberService.findAll());
     }
+
     @PatchMapping("/member/{id}")
     public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody MemberRequest request){
         return ResponseEntity.ok(memberService.update(id, request));
     }
+
     @DeleteMapping("/member/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
         memberService.delete(id);

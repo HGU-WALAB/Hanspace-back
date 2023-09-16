@@ -4,6 +4,7 @@ import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,7 +15,6 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department extends BaseEntity{

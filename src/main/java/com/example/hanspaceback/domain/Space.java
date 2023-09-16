@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
