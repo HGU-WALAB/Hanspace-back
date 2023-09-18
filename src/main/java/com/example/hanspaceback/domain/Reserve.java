@@ -3,11 +3,9 @@ package com.example.hanspaceback.domain;
 import com.example.hanspaceback.dto.request.ReserveRequest;
 import com.example.hanspaceback.repository.ReserveRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.Date;
@@ -42,18 +40,20 @@ public class Reserve extends BaseEntity{
     @JoinColumn(name = "memberId")
     Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "longReserveId")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "longReserveId", nullable = true)
+//    @Nullable
+//    @Column(unique = true, nullable = false)
     LongReserve longReserve;
 
     public void update(ReserveRequest request){
-        this.reserveDate = request.getReserveDate();
+//        this.reserveDate = request.getReserveDate()[0];
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();;
         this.groupName = request.getGroupName();
         this.purpose = request.getPurpose();
-        this.phoneNumber = request.getReserveDate();
+        this.phoneNumber = request.getPhoneNumber();
         this.approve = request.getApprove();
         this.firstInfoAns = request.getFirstInfoAns();
         this.secondInfoAns = request.getSecondInfoAns();

@@ -1,5 +1,6 @@
 package com.example.hanspaceback.dto.request;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ public class ReserveRequest {
     private Long spaceId;
     private Long memberId;
     private Long longReserveId;
-    private String reserveDate;
+    private String[] reserveDate;
     private String startTime;
     private String endTime;
     private int headCount;
@@ -19,4 +20,5 @@ public class ReserveRequest {
     private String approve;
     private String firstInfoAns;
     private String secondInfoAns;
+    private int count;
 }

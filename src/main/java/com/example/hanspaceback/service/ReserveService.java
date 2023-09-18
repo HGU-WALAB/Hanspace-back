@@ -22,13 +22,15 @@ public class ReserveService {
     private final SpaceRepository spaceRepository;
     private final LongReserveRepository longReserveRepository;
 
-    public void create(ReserveRequest request){
+    public void create(ReserveRequest request, int i){
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
-        LongReserve longReserve = longReserveRepository.findById(request.getLongReserveId()).orElseThrow();
-
+        LongReserve longReserve = null;
+        if (request.getLongReserveId() != null) {
+            longReserve = longReserveRepository.findById(request.getLongReserveId()).orElseThrow();
+        }
         Reserve reserve = Reserve.builder()
-                .reserveDate(request.getReserveDate())
+                .reserveDate(request.getReserveDate()[i])
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .headCount(request.getHeadCount())
