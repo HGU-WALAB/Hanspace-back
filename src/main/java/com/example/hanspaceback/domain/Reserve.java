@@ -47,7 +47,6 @@ public class Reserve extends BaseEntity{
     LongReserve longReserve;
 
     public void update(ReserveRequest request){
-//        this.reserveDate = request.getReserveDate()[0];
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();;
