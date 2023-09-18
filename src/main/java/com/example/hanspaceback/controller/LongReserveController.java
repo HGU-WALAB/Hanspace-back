@@ -2,6 +2,7 @@ package com.example.hanspaceback.controller;
 
 import com.example.hanspaceback.domain.LongReserve;
 import com.example.hanspaceback.dto.request.LongReserveRequest;
+import com.example.hanspaceback.dto.response.LongReserveResponse;
 import com.example.hanspaceback.repository.LongReserveRepository;
 import com.example.hanspaceback.service.LongResrveService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,9 @@ public class LongReserveController {
     private final LongResrveService longResrveService;
 
     @PostMapping("/longReserve")
-    public void create(@RequestBody LongReserveRequest request){
-        longResrveService.create(request);
+    public LongReserveResponse create(@RequestBody LongReserveRequest request){
+        LongReserveResponse response = longResrveService.create(request);
+        return response;
     }
 
     @GetMapping("/longReserve/list")

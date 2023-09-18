@@ -23,7 +23,7 @@ public class DeptMemberController {
         return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
     }
 
-    @PostMapping("/deptMember/{id}")
+    @GetMapping("/deptMember/{id}")
     public ResponseEntity<DeptMember> findbyId(@PathVariable Long id){
         return ResponseEntity.ok(deptMemberService.findbyId(id));
     }

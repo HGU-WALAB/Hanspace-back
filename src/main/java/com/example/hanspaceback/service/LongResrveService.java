@@ -2,6 +2,7 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.LongReserve;
 import com.example.hanspaceback.dto.request.LongReserveRequest;
+import com.example.hanspaceback.dto.response.LongReserveResponse;
 import com.example.hanspaceback.repository.LongReserveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,17 @@ import java.util.List;
 public class LongResrveService {
     private final LongReserveRepository longReserveRepository;
 
-    public void create(LongReserveRequest request){
+    public LongReserveResponse create(LongReserveRequest request){
         LongReserve longReserve = LongReserve.builder()
                 .week(request.getWeek())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .build();
         longReserveRepository.save(longReserve);
+
+        LongReserveResponse response = new LongReserveResponse();
+        response.setLongReserveId(longReserve.getId());
+        return response;
     }
     public List<LongReserve> findAll(){
         return longReserveRepository.findAll();

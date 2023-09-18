@@ -17,7 +17,10 @@ public class ReserveController {
 
     @PostMapping("/reserve")
     public void create(@RequestBody ReserveRequest request){
-        reserveService.create(request);
+        for(int i = 0; request.getCount() > i; i++){
+            reserveService.create(request, i);
+            System.out.println("count " + i);
+        }
     }
 
     @GetMapping("/reserve/list")
