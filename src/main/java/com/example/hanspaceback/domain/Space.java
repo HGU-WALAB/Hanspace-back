@@ -51,4 +51,10 @@ public class Space extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reserve> reserve = new ArrayList<>();
+
+//    @OneToOne(mappedBy = "space", fetch = FetchType.LAZY)
+//    private SpaceWeekTime spaceWeekTime;
+    @JsonIgnore
+    @OneToOne(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private SpaceWeekTime spaceWeekTime;
 }

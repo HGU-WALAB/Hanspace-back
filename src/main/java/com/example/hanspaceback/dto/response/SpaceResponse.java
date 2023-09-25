@@ -15,4 +15,5 @@ public class SpaceResponse {
     private String image;
     private String unusableDate;
     private Long departmentId;
+//    private Long spaceWeekTimeId;
 }
