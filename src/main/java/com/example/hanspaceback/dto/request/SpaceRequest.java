@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class SpaceRequest {
     private Long deptId;
+//    private Long spaceWeekTimeId;
     private String name;
     private int headCount;
     private String startTime;
