@@ -11,11 +11,10 @@ public class SpaceRequest {
 //    private Long spaceWeekTimeId;
     private String name;
     private int headCount;
-    private String startTime;
-    private String endTime;
+    private String availableStart;
+    private String availableEnd;
     private String detail;
     private String lableColor;
     private boolean availability;
     private String image;
-    private String unusableDate;
 }
