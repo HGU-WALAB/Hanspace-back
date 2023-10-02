@@ -5,6 +5,7 @@ import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.request.DeptMemberRequest;
+import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
@@ -24,6 +25,10 @@ public class DeptMemberService {
     private final MemberRepository memberRepository;
 
     public void create(DeptMemberRequest request){
+        int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), request.getMemberId());
+        if (count > 0) {
+            throw new DuplicateDeptMemberException("이미 존재하는 DeptMember입니다.");
+        }
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
 
