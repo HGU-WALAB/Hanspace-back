@@ -40,7 +40,7 @@ public class Space extends BaseEntity{
         this.availableStart = request.getAvailableStart();
         this.availableEnd = request.getAvailableEnd();
         this.detail = request.getDetail();
-        this.lableColor = request.getLableColor();
+//        this.lableColor = request.getLableColor();
         this.availability = request.isAvailability();
         this.image = request.getImage();
     }
