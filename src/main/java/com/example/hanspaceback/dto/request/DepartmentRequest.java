@@ -15,4 +15,6 @@ public class DepartmentRequest {
     private String secondInfo;
     private String siteInfoTitle;
     private String siteInfoDetail;
+
+    private Long memberId;
 }
