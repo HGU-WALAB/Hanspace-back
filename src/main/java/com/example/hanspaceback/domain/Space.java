@@ -50,5 +50,5 @@ public class Space extends BaseEntity{
 
     @JsonIgnore
     @OneToOne(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UnavailableReserve unavailableReserve;
+    private SpaceTimeExtra spaceTimeExtra;
 }
