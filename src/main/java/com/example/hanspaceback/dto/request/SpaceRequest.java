@@ -14,7 +14,7 @@ public class SpaceRequest {
     private String availableStart;
     private String availableEnd;
     private String detail;
-    private String lableColor;
+//    private String lableColor;
     private boolean availability;
     private String image;
 }
