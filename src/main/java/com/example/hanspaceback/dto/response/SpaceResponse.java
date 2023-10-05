@@ -10,7 +10,6 @@ public class SpaceResponse {
     private String startTime;
     private String endTime;
     private String detail;
-    private String lableColor;
     private boolean availability;
     private String image;
     private String unusableDate;

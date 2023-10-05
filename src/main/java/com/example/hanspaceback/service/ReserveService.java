@@ -38,8 +38,7 @@ public class ReserveService {
                 .purpose(request.getPurpose())
                 .phoneNumber(request.getPhoneNumber())
                 .approve(request.getApprove())
-                .firstInfoAns(request.getFirstInfoAns())
-                .secondInfoAns(request.getSecondInfoAns())
+                .extraInfoAns(request.getExtraInfoAns())
                 .member(member)
                 .space(space)
                 .longReserve(longReserve)
@@ -60,5 +59,11 @@ public class ReserveService {
 
     public void delete(Long id){
         reserveRepository.deleteById(id);
+//        Reserve reserve = reserveRepository.findById(id).orElseThrow();
+//        Member member = memberRepository.findById(id).get();
+//        Reserve reserve = Reserve.builder()
+//                .deleteMember(String.valueOf(member))
+//                .build();
+//        reserveRepository.update(reserve);
     }
 }

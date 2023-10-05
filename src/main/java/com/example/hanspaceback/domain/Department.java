@@ -33,8 +33,7 @@ public class Department extends BaseEntity{
 //    @ColumnDefault("30")
     private int maxRserveCount;
     private String link;
-    private String firstInfo;
-    private String secondInfo;
+    private String extraInfo;
     private String siteInfoTitle;
     @Lob
     private String siteInfoDetail;
@@ -47,8 +46,7 @@ public class Department extends BaseEntity{
         this.userAccept = request.isUserAccept();
         this.maxRserveCount = request.getMaxRserveCount();
         this.link = request.getLink();
-        this.firstInfo = request.getFirstInfo();
-        this.secondInfo = request.getSecondInfo();
+        this.extraInfo = request.getExtraInfo();
         this.siteInfoTitle = request.getSiteInfoTitle();
         this.siteInfoDetail = request.getSiteInfoDetail();
     }

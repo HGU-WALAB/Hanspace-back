@@ -25,7 +25,7 @@ public class SpaceService {
                 .availableStart(request.getAvailableStart())
                 .availableEnd(request.getAvailableEnd())
                 .detail(request.getDetail())
-//                .lableColor(request.getLableColor())
+                .labelColor("black")
                 .department(department)
                 .image(request.getImage())
                 .build();

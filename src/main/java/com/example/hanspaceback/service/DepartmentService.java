@@ -31,8 +31,7 @@ public class DepartmentService {
                 .userAccept(request.isUserAccept())
                 .maxRserveCount(request.getMaxRserveCount())
                 .link(request.getLink())
-                .firstInfo(request.getFirstInfo())
-                .secondInfo(request.getSecondInfo())
+                .extraInfo(request.getExtraInfo())
                 .siteInfoTitle(request.getSiteInfoTitle())
                 .siteInfoDetail(request.getSiteInfoDetail())
                 .build();
@@ -43,7 +42,7 @@ public class DepartmentService {
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve("허가")
+                .approve("승인 허가")
                 .permission("admin")
                 .build();
         deptMemberRepository.save(deptMember);

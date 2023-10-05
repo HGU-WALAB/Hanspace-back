@@ -11,8 +11,7 @@ public class DepartmentRequest {
     private boolean userAccept;
     private int maxRserveCount;
     private String link;
-    private String firstInfo;
-    private String secondInfo;
+    private String extraInfo;
     private String siteInfoTitle;
     private String siteInfoDetail;
 
