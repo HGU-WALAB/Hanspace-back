@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UnavailableReserveController {
     private final UnavailableReserveService unavailableReserveService;
     @PostMapping("/unavailableReserve")

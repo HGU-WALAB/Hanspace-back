@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class LongReserveController {
     private final LongResrveService longResrveService;
 

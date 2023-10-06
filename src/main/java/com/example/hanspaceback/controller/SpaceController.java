@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class SpaceController {
     private final SpaceService spaceService;
 
