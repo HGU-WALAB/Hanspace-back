@@ -8,7 +8,7 @@ public class ReserveResponse {
     private Long spaceId;
     private Long memberId;
     private Long longReserveId;
-    private String[] reserveDate;
+    private String reserveDate;
     private String startTime;
     private String endTime;
     private int headCount;

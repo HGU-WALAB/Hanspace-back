@@ -2,6 +2,7 @@ package com.example.hanspaceback.controller;
 
 import com.example.hanspaceback.domain.Reserve;
 import com.example.hanspaceback.dto.request.ReserveRequest;
+import com.example.hanspaceback.dto.response.ReserveResponse;
 import com.example.hanspaceback.repository.ReserveRepository;
 import com.example.hanspaceback.service.ReserveService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,10 @@ public class ReserveController {
     public ResponseEntity<List<Reserve>> findReserveFetchJoin(){
         return ResponseEntity.ok(reserveService.findReserveFetchJoin());
     }
+//    @GetMapping("/reserve/list")
+//    public ResponseEntity<List<ReserveResponse>> findReserveFetchJoin(){
+//        return ResponseEntity.ok(reserveService.findReserveFetchJoin());
+//    }
 
     @PatchMapping("/reserve/{id}")
     public ResponseEntity<Reserve> update(@PathVariable Long id, @RequestBody ReserveRequest request){
