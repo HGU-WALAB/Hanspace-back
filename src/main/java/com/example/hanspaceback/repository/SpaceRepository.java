@@ -12,4 +12,5 @@ import java.util.List;
 public interface SpaceRepository extends JpaRepository<Space, Long> {
     @Query("select s from Space s left join fetch s.department")
     List<Space> findSpaceFetchJoin();
+    List<Space> findByDepartment_DeptId(Long deptId);
 }

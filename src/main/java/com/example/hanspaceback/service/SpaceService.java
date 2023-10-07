@@ -4,6 +4,8 @@ import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.Space;
 import com.example.hanspaceback.domain.SpaceTimeExtra;
 import com.example.hanspaceback.dto.request.SpaceRequest;
+import com.example.hanspaceback.dto.response.LongReserveResponse;
+import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.SpaceRepository;
 import com.example.hanspaceback.repository.SpaceTimeExtraRepository;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +31,6 @@ public class SpaceService {
                 .availableStart(request.getAvailableStart())
                 .availableEnd(request.getAvailableEnd())
                 .detail(request.getDetail())
-//                .labelColor("black")
                 .availability(request.isAvailability())
                 .department(department)
                 .image(request.getImage())
@@ -37,6 +39,24 @@ public class SpaceService {
     }
     public List<Space> findSpaceFetchJoin(){
         return spaceRepository.findSpaceFetchJoin();
+    }
+    public List<SpaceResponse> findByDeptId(Long deptId) {
+        List<Space> spaces = spaceRepository.findByDepartment_DeptId(deptId);
+        List<SpaceResponse> responses = new ArrayList<>();
+
+        for (Space space : spaces) {
+            SpaceResponse response = new SpaceResponse();
+            response.setSpaceId(space.getSpaceId());
+            response.setName(space.getName());
+            response.setHeadCount(space.getHeadCount());
+            response.setAvailableStart(space.getAvailableStart());
+            response.setAvailableEnd(space.getAvailableEnd());
+            response.setDetail(space.getDetail());
+            response.setAvailability(space.isAvailability());
+            response.setImage(space.getImage());
+            responses.add(response);
+        }
+        return responses;
     }
     public Space update(Long id, SpaceRequest request){
         Space space = spaceRepository.findById(id).orElseThrow();
