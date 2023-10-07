@@ -4,6 +4,7 @@ import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.domain.Space;
 import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.dto.request.SpaceRequest;
+import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.service.SpaceService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,10 @@ public class SpaceController {
     @GetMapping("/space/list")
     public ResponseEntity<List<Space>> findSpaceFetchJoin(){
         return ResponseEntity.ok(spaceService.findSpaceFetchJoin());
+    }
+    @GetMapping("/space/{deptId}")
+    public ResponseEntity<List<SpaceResponse>> findByDeptId(@PathVariable Long deptId){
+        return ResponseEntity.ok(spaceService.findByDeptId(deptId));
     }
     @PatchMapping("/space/{id}")
     public ResponseEntity<Space> update(@PathVariable Long id, @RequestBody SpaceRequest request){
