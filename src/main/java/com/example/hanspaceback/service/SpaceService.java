@@ -2,9 +2,11 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.Space;
+import com.example.hanspaceback.domain.SpaceTimeExtra;
 import com.example.hanspaceback.dto.request.SpaceRequest;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.SpaceRepository;
+import com.example.hanspaceback.repository.SpaceTimeExtraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import java.util.List;
 public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final DepartmentRepository departmentRepository;
+    private final SpaceTimeExtraRepository spaceTimeExtraRepository;
     public void create(SpaceRequest request){
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
         Space space = Space.builder()
@@ -25,7 +28,7 @@ public class SpaceService {
                 .availableStart(request.getAvailableStart())
                 .availableEnd(request.getAvailableEnd())
                 .detail(request.getDetail())
-                .labelColor("black")
+//                .labelColor("black")
                 .department(department)
                 .image(request.getImage())
                 .build();

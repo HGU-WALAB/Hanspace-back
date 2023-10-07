@@ -1,5 +1,6 @@
 package com.example.hanspaceback.dto.response;
 
+import com.example.hanspaceback.domain.SpaceTimeExtra;
 import lombok.Data;
 
 @Data
@@ -15,4 +16,5 @@ public class SpaceResponse {
     private String unusableDate;
     private Long departmentId;
 //    private Long spaceWeekTimeId;
+//    private SpaceTimeExtra spaceTimeExtra;
 }

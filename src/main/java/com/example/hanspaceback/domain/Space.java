@@ -48,6 +48,6 @@ public class Space extends BaseEntity{
     private List<Reserve> reserve = new ArrayList<>();
 
     @JsonIgnore
-    @OneToOne(mappedBy = "space", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "space", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private SpaceTimeExtra spaceTimeExtra;
 }
