@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class SpaceTimeExtraController {
     private final SpaceTimeExtraService spaceTimeExtraService;
     @PostMapping("/spaceTimeExtra")
