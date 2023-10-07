@@ -29,6 +29,10 @@ public class DeptMemberController {
         return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
     }
 
+    @GetMapping("/deptMember/list/{deptId}")
+    public ResponseEntity<List<DeptMemberResponse>> findByDeptMemberFetchJoin(@PathVariable Long deptId){
+        return ResponseEntity.ok(deptMemberService.findByDeptMemberFetchJoin(deptId));
+    }
     @GetMapping("/deptMember/{id}")
     public ResponseEntity<DeptMember> findbyId(@PathVariable Long id){
         return ResponseEntity.ok(deptMemberService.findById(id));

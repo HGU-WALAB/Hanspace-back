@@ -53,29 +53,47 @@ public class DepartmentService {
 //    public List<Department> findAll(){
 //        return departmentRepository.findAll();
 //    }
-public List<DepartmentResponse> findAll() {
-    List<Department> departments = departmentRepository.findAll();
-    List<DepartmentResponse> responses = new ArrayList<>();
+    public List<DepartmentResponse> findAll() {
+        List<Department> departments = departmentRepository.findAll();
+        List<DepartmentResponse> responses = new ArrayList<>();
 
-    for (Department department : departments) {
-        DepartmentResponse response = new DepartmentResponse();
-        response.setDeptId(department.getDeptId());
-        response.setSiteName(department.getSiteName());
-        response.setDeptName(department.getDeptName());
-        response.setLogo(department.getLogo());
-        response.setColor(department.getColor());
-        response.setUserAccept(department.isUserAccept());
-        response.setMaxRserveCount(department.getMaxRserveCount());
-        response.setLink(department.getLink());
-        response.setExtraInfo(department.getExtraInfo());
-        response.setSiteInfoTitle(department.getSiteInfoTitle());
-        response.setSiteInfoDetail(department.getSiteInfoDetail());
+        for (Department department : departments) {
+            DepartmentResponse response = new DepartmentResponse();
+            response.setDeptId(department.getDeptId());
+            response.setSiteName(department.getSiteName());
+            response.setDeptName(department.getDeptName());
+            response.setLogo(department.getLogo());
+            response.setColor(department.getColor());
+            response.setUserAccept(department.isUserAccept());
+            response.setMaxRserveCount(department.getMaxRserveCount());
+            response.setLink(department.getLink());
+            response.setExtraInfo(department.getExtraInfo());
+            response.setSiteInfoTitle(department.getSiteInfoTitle());
+            response.setSiteInfoDetail(department.getSiteInfoDetail());
 
-        responses.add(response);
+            responses.add(response);
+        }
+        return responses;
     }
-    return responses;
-}
 
+//    public List<DepartmentResponse> findById(Long id) {
+//        Department department = departmentRepository.findById(id).get();
+//        DepartmentResponse response = new DepartmentResponse();
+//
+//        response.setDeptId(department.getDeptId());
+//        response.setSiteName(department.getSiteName());
+//        response.setDeptName(department.getDeptName());
+//        response.setLogo(department.getLogo());
+//        response.setColor(department.getColor());
+//        response.setUserAccept(department.isUserAccept());
+//        response.setMaxRserveCount(department.getMaxRserveCount());
+//        response.setLink(department.getLink());
+//        response.setExtraInfo(department.getExtraInfo());
+//        response.setSiteInfoTitle(department.getSiteInfoTitle());
+//        response.setSiteInfoDetail(department.getSiteInfoDetail());
+//
+//        return response;
+//    }
 
     public Department update(Long id, DepartmentRequest request){
         Department department = departmentRepository.findById(id).get();
