@@ -8,4 +8,6 @@ import java.util.Date;
 public class MemberRequest {
     private String name;
     private String email;
+
+    private Long deptId;
 }

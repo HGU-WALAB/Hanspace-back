@@ -28,13 +28,12 @@ public class Reserve extends BaseEntity{
     private String purpose;
     private String phoneNumber;
     private String approve;
-    private String firstInfoAns;
-    private String secondInfoAns;
+    private String extraInfoAns;
+//    private String deleteMember;
 
     @ManyToOne
     @JoinColumn(name = "spaceId")
     Space space;
-
 
     @ManyToOne
     @JoinColumn(name = "memberId")
@@ -42,8 +41,6 @@ public class Reserve extends BaseEntity{
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "longReserveId", nullable = true)
-//    @Nullable
-//    @Column(unique = true, nullable = false)
     LongReserve longReserve;
 
     public void update(ReserveRequest request){
@@ -54,7 +51,6 @@ public class Reserve extends BaseEntity{
         this.purpose = request.getPurpose();
         this.phoneNumber = request.getPhoneNumber();
         this.approve = request.getApprove();
-        this.firstInfoAns = request.getFirstInfoAns();
-        this.secondInfoAns = request.getSecondInfoAns();
+        this.extraInfoAns = request.getExtraInfoAns();
     }
 }

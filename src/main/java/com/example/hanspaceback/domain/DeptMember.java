@@ -23,7 +23,7 @@ public class DeptMember extends BaseEntity{
     private String permission;
 
     @ManyToOne
-    @JoinColumn(name = "deptId")
+//    @JoinColumn(name = "deptId")
     private Department department;
 
     @ManyToOne

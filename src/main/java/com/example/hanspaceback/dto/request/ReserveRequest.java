@@ -18,7 +18,6 @@ public class ReserveRequest {
     private String purpose;
     private String phoneNumber;
     private String approve;
-    private String firstInfoAns;
-    private String secondInfoAns;
-    private int count;
+    private String extraInfoAns;
+    private int reserveCount;
 }
