@@ -3,6 +3,7 @@ package com.example.hanspaceback.controller;
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.dto.request.DeptMemberRequest;
+import com.example.hanspaceback.dto.response.DeptMemberResponse;
 import com.example.hanspaceback.service.DeptMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,18 @@ public class DeptMemberController {
     public void create(@RequestBody DeptMemberRequest request){
         deptMemberService.create(request);
     }
+//    @GetMapping("/deptMember/list")
+//    public ResponseEntity<List<DeptMember>> findDeptMemberFetchJoin(){
+//        return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
+//    }
     @GetMapping("/deptMember/list")
-    public ResponseEntity<List<DeptMember>> findDeptMemberFetchJoin(){
+    public ResponseEntity<List<DeptMemberResponse>> findDeptMemberFetchJoin(){
         return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
     }
 
     @GetMapping("/deptMember/{id}")
     public ResponseEntity<DeptMember> findbyId(@PathVariable Long id){
-        return ResponseEntity.ok(deptMemberService.findbyId(id));
+        return ResponseEntity.ok(deptMemberService.findById(id));
     }
     @PatchMapping("/deptMember/{id}")
     public ResponseEntity<DeptMember> update(@PathVariable Long id, @RequestBody DeptMemberRequest request){

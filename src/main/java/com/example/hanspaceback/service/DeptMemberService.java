@@ -5,6 +5,8 @@ import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.request.DeptMemberRequest;
+import com.example.hanspaceback.dto.response.DepartmentResponse;
+import com.example.hanspaceback.dto.response.DeptMemberResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,10 +46,25 @@ public class DeptMemberService {
         deptMemberRepository.save(deptMember);
     }
 
-    public List<DeptMember> findDeptMemberFetchJoin() {
-        return deptMemberRepository.findDeptMemberFetchJoin();
+//    public List<DeptMember> findDeptMemberFetchJoin() {
+//        return deptMemberRepository.findDeptMemberFetchJoin();
+//    }
+    public List<DeptMemberResponse> findDeptMemberFetchJoin() {
+        List<DeptMember> deptMembers = deptMemberRepository.findAll();
+        List<DeptMemberResponse> responses = new ArrayList<>();
+
+        for (DeptMember deptMember : deptMembers) {
+            DeptMemberResponse response = new DeptMemberResponse();
+            response.setDeptMemberId(deptMember.getId());
+            response.setDeptId(deptMember.getDepartment().getDeptId());
+            response.setMemberId(deptMember.getMember().getMemberId());
+            response.setApprove(deptMember.getApprove());
+            response.setPermission(deptMember.getPermission());
+            responses.add(response);
+        }
+        return responses;
     }
-    public DeptMember findbyId(Long id){
+    public DeptMember findById(Long id){
         DeptMember deptMember = deptMemberRepository.findById(id).get();
         return deptMember;
     }
