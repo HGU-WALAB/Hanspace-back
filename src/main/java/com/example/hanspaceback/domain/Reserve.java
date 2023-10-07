@@ -35,7 +35,6 @@ public class Reserve extends BaseEntity{
     @JoinColumn(name = "spaceId")
     Space space;
 
-
     @ManyToOne
     @JoinColumn(name = "memberId")
     Member member;
