@@ -12,4 +12,5 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
+    Member findByNameAndEmail(String name, String email);
 }

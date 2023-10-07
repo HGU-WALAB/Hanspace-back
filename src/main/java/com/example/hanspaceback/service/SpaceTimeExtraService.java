@@ -28,6 +28,19 @@ public class SpaceTimeExtraService {
                 .extraEndDate(request.getExtraEndDate())
                 .build();
         spaceTimeExtraRepository.save(spaceTimeExtra);
+//        Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
+//        String[] countWeek = request.getWeek().split(",");
+//        for(int i = 0; i < countWeek.length; i++) {
+//            SpaceTimeExtra spaceTimeExtra = SpaceTimeExtra.builder()
+//                    .space(space)
+//                    .week(countWeek[i])
+//                    .extraUnavailableStart(request.getExtraUnavailableStart())
+//                    .extraUnavailableEnd(request.getExtraUnavailableEnd())
+//                    .extraStartDate(request.getExtraStartDate())
+//                    .extraEndDate(request.getExtraEndDate())
+//                    .build();
+//            spaceTimeExtraRepository.save(spaceTimeExtra);
+//        }
     }
     public List<SpaceTimeExtra> findAll(){
         return spaceTimeExtraRepository.findAll();

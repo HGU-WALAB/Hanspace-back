@@ -35,8 +35,10 @@ public class DeptMemberService {
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve(request.getApprove())
-                .permission(request.getPermission())
+//                .approve(request.getApprove()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
+                .approve("승인 대기") // default : 승인대기
+//                .permission(request.getPermission()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
+                .permission("user") // default : user
                 .build();
         deptMemberRepository.save(deptMember);
     }
