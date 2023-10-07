@@ -73,7 +73,6 @@ public List<DepartmentResponse> findAll() {
 
         responses.add(response);
     }
-
     return responses;
 }
 
