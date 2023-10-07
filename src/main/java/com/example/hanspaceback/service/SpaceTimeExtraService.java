@@ -3,12 +3,15 @@ package com.example.hanspaceback.service;
 import com.example.hanspaceback.domain.Space;
 import com.example.hanspaceback.domain.SpaceTimeExtra;
 import com.example.hanspaceback.dto.request.SpaceTimeExtraRequest;
+import com.example.hanspaceback.dto.response.SpaceResponse;
+import com.example.hanspaceback.dto.response.SpaceTimeExtraResponse;
 import com.example.hanspaceback.repository.SpaceRepository;
 import com.example.hanspaceback.repository.SpaceTimeExtraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,22 +31,16 @@ public class SpaceTimeExtraService {
                 .extraEndDate(request.getExtraEndDate())
                 .build();
         spaceTimeExtraRepository.save(spaceTimeExtra);
-//        Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-//        String[] countWeek = request.getWeek().split(",");
-//        for(int i = 0; i < countWeek.length; i++) {
-//            SpaceTimeExtra spaceTimeExtra = SpaceTimeExtra.builder()
-//                    .space(space)
-//                    .week(countWeek[i])
-//                    .extraUnavailableStart(request.getExtraUnavailableStart())
-//                    .extraUnavailableEnd(request.getExtraUnavailableEnd())
-//                    .extraStartDate(request.getExtraStartDate())
-//                    .extraEndDate(request.getExtraEndDate())
-//                    .build();
-//            spaceTimeExtraRepository.save(spaceTimeExtra);
-//        }
     }
-    public List<SpaceTimeExtra> findAll(){
-        return spaceTimeExtraRepository.findAll();
+//    public List<SpaceTimeExtra> findAll(){
+//        return spaceTimeExtraRepository.findAll();
+//    }
+    public List<SpaceTimeExtraResponse> findAll(){
+        List<SpaceTimeExtra> spaceTimeExtras = spaceTimeExtraRepository.findAll();
+        List<SpaceTimeExtraResponse> responses = new ArrayList<>();
+
+//        return spaceTimeExtraRepository.findAll();
+        return responses;
     }
     public SpaceTimeExtra update(Long id, SpaceTimeExtraRequest request){
         SpaceTimeExtra spaceTimeExtra = spaceTimeExtraRepository.findById(id).get();

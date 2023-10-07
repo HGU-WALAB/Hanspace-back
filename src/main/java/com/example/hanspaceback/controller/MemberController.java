@@ -2,6 +2,7 @@ package com.example.hanspaceback.controller;
 
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.MemberRequest;
+import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,15 @@ public class MemberController {
     public void create(@RequestBody MemberRequest request){
         memberService.create(request);
     }
+//    @GetMapping("/member/list")
+//    public ResponseEntity<List<Member>> findAll(){
+//        return ResponseEntity.ok(memberService.findAll());
+//    }
+
     @GetMapping("/member/list")
-    public ResponseEntity<List<Member>> findAll(){
+    public ResponseEntity<List<MemberResponse>> findAll(){
         return ResponseEntity.ok(memberService.findAll());
     }
-
     @PatchMapping("/member/{id}")
     public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody MemberRequest request){
         return ResponseEntity.ok(memberService.update(id, request));
