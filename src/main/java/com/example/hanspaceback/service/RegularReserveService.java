@@ -1,7 +1,7 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.LongReserve;
-import com.example.hanspaceback.dto.request.LongReserveRequest;
+import com.example.hanspaceback.domain.RegularReserve;
+import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.response.LongReserveResponse;
 import com.example.hanspaceback.repository.LongReserveRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,28 +13,28 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class LongResrveService {
+public class LongReserveService {
     private final LongReserveRepository longReserveRepository;
 
-    public LongReserveResponse create(LongReserveRequest request){
-        LongReserve longReserve = LongReserve.builder()
+    public LongReserveResponse create(RegularReserveRequest request){
+        RegularReserve regularReserve = RegularReserve.builder()
                 .week(request.getWeek())
-                .startDate(request.getStartDate())
+                .startDate(request .getStartDate())
                 .endDate(request.getEndDate())
                 .build();
-        longReserveRepository.save(longReserve);
+        longReserveRepository.save(regularReserve);
 
         LongReserveResponse response = new LongReserveResponse();
-        response.setLongReserveId(longReserve.getId());
+        response.setLongReserveId(regularReserve.getId());
         return response;
     }
-    public List<LongReserve> findAll(){
+    public List<RegularReserve> findAll(){
         return longReserveRepository.findAll();
     }
-    public LongReserve update(Long id, LongReserveRequest request){
-        LongReserve longReserve = longReserveRepository.findById(id).orElseThrow();
-        longReserve.update(request);
-        return longReserve;
+    public RegularReserve update(Long id, RegularReserveRequest request){
+        RegularReserve regularReserve = longReserveRepository.findById(id).orElseThrow();
+        regularReserve.update(request);
+        return regularReserve;
     }
     public void delete(Long id){
         longReserveRepository.deleteById(id);
