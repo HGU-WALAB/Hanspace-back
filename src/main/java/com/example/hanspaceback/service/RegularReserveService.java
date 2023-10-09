@@ -1,12 +1,16 @@
 package com.example.hanspaceback.service;
 
+import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.domain.RegularReserve;
 import com.example.hanspaceback.domain.Reserve;
+import com.example.hanspaceback.domain.Space;
 import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.request.ReserveRequest;
 import com.example.hanspaceback.dto.response.RegularReserveResponse;
+import com.example.hanspaceback.repository.MemberRepository;
 import com.example.hanspaceback.repository.RegularReserveRepository;
 import com.example.hanspaceback.repository.ReserveRepository;
+import com.example.hanspaceback.repository.SpaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +23,9 @@ import java.util.List;
 public class RegularReserveService {
     private final RegularReserveRepository regularReserveRepository;
     private final ReserveRepository reserveRepository;
-    private final ReserveService reserveService;
+    private final SpaceRepository spaceRepository;
+    private final MemberRepository memberRepository;
+//    private final ReserveService reserveService;
 
 //    public RegularReserveResponse create(RegularReserveRequest request, ReserveRequest reserveRequest){
     public RegularReserveResponse create(RegularReserveRequest request){
@@ -31,6 +37,9 @@ public class RegularReserveService {
         regularReserveRepository.save(regularReserve);
 
         for(int i = 0; i < request.getReserveCount(); i++) {
+            Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
+            Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+
             Reserve reserve = Reserve.builder()
                     .reserveDate(request.getReserveDate()[i])
                     .startTime(request.getStartTime())
@@ -42,6 +51,8 @@ public class RegularReserveService {
                     .approve(request.getApprove())
                     .extraInfoAns(request.getExtraInfoAns())
                     .regularReserve(regularReserve)
+                    .space(space)
+                    .member(member)
                     .build();
             reserveRepository.save(reserve);
         }

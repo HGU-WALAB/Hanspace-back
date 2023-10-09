@@ -38,9 +38,10 @@ public class Reserve extends BaseEntity{
     RegularReserve regularReserve;
 
     public void update(ReserveRequest request){
+        this.reserveDate = request.getReserveDate()[0];
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
-        this.headCount = request.getHeadCount();;
+        this.headCount = request.getHeadCount();
         this.groupName = request.getGroupName();
         this.purpose = request.getPurpose();
         this.phoneNumber = request.getPhoneNumber();

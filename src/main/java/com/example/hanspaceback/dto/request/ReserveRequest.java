@@ -9,7 +9,7 @@ import java.util.Date;
 public class ReserveRequest {
     private Long spaceId;
     private Long memberId;
-    private Long reserveReserveId;
+    private Long regularReserveId;
     private String[] reserveDate;
     private String startTime;
     private String endTime;
@@ -19,8 +19,4 @@ public class ReserveRequest {
     private String phoneNumber;
     private String approve;
     private String extraInfoAns;
-    private int reserveCount;
-    private String week;
-    private String startDate;
-    private String endDate;
 }
