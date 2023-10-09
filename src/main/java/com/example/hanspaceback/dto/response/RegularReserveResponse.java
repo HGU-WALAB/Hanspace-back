@@ -3,6 +3,6 @@ package com.example.hanspaceback.dto.response;
 import lombok.Data;
 
 @Data
-public class LongReserveResponse {
+public class RegularReserveResponse {
     private Long LongReserveId;
 }

@@ -2,9 +2,7 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.Space;
-import com.example.hanspaceback.domain.SpaceTimeExtra;
 import com.example.hanspaceback.dto.request.SpaceRequest;
-import com.example.hanspaceback.dto.response.LongReserveResponse;
 import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.SpaceRepository;
