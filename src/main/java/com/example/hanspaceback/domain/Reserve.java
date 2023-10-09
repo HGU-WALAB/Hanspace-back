@@ -1,14 +1,8 @@
 package com.example.hanspaceback.domain;
 
 import com.example.hanspaceback.dto.request.ReserveRequest;
-import com.example.hanspaceback.repository.ReserveRepository;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.util.Date;
 
 @Entity
 @Getter
@@ -40,8 +34,8 @@ public class Reserve extends BaseEntity{
     Member member;
 
     @ManyToOne(optional = true)
-    @JoinColumn(name = "longReserveId", nullable = true)
-    LongReserve longReserve;
+    @JoinColumn(name = "reserveReserveId", nullable = true)
+    RegularReserve regularReserve;
 
     public void update(ReserveRequest request){
         this.startTime = request.getStartTime();
