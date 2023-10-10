@@ -27,7 +27,11 @@ public class DepartmentController {
     public ResponseEntity<List<DepartmentResponse>> findAll(){
         return ResponseEntity.ok(departmentService.findAll());
     }
-
+    @GetMapping("/dept/{deptName}")
+    public Long findDeptIdByDeptName(@PathVariable String deptName){
+//        return ResponseEntity.ok(departmentService.findDeptIdByDeptName());
+        return departmentService.findDeptIdByDeptName(deptName);
+    }
     @PatchMapping("/dept/{id}")
     public ResponseEntity<Department> update(@PathVariable Long id, @RequestBody DepartmentRequest request){
         return ResponseEntity.ok(departmentService.update(id, request));
