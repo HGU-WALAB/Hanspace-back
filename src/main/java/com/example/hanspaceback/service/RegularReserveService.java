@@ -25,9 +25,7 @@ public class RegularReserveService {
     private final ReserveRepository reserveRepository;
     private final SpaceRepository spaceRepository;
     private final MemberRepository memberRepository;
-//    private final ReserveService reserveService;
 
-//    public RegularReserveResponse create(RegularReserveRequest request, ReserveRequest reserveRequest){
     public RegularReserveResponse create(RegularReserveRequest request){
             RegularReserve regularReserve = RegularReserve.builder()
                 .week(request.getWeek())

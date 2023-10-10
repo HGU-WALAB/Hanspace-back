@@ -26,10 +26,14 @@ public class ReserveController {
     public ResponseEntity<List<Reserve>> findReserveFetchJoin(){
         return ResponseEntity.ok(reserveService.findReserveFetchJoin());
     }
-//    @GetMapping("/reserve/list")
-//    public ResponseEntity<List<ReserveResponse>> findReserveFetchJoin(){
-//        return ResponseEntity.ok(reserveService.findReserveFetchJoin());
-//    }
+    @GetMapping("/reserve/list/{spaceId}")
+    public ResponseEntity<List<Reserve>> findBySpaceId(@PathVariable Long spaceId){
+        return ResponseEntity.ok(reserveService.findBySpaceId(spaceId));
+    }
+    @GetMapping("/reserve/{deptId}")
+    public ResponseEntity<List<Reserve>> findByDeptId(@PathVariable Long deptId){
+        return ResponseEntity.ok(reserveService.findByDeptId(deptId));
+    }
 
     @PatchMapping("/reserve/{id}")
     public ResponseEntity<Reserve> update(@PathVariable Long id, @RequestBody ReserveRequest request){
