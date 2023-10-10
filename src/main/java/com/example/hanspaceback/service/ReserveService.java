@@ -67,4 +67,14 @@ public class ReserveService {
 //                .build();
 //        reserveRepository.update(reserve);
     }
+
+    public Long countReserve(Long spaceId) {
+        Space space = spaceRepository.findById(spaceId).get();
+        if(space == null) {
+            throw new IllegalArgumentException("Space not found with ID: " + spaceId);
+        }
+        Long deptId = space.getDepartment().getDeptId();
+        return reserveRepository.countByApproveAndSpace_Department_DeptId("미승인", deptId);
+    }
+
 }
