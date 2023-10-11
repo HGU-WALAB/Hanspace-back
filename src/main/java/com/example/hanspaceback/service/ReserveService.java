@@ -24,7 +24,7 @@ public class ReserveService {
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
         Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
         Reserve reserve = Reserve.builder()
-                .reserveDate(request.getReserveDate()[0])
+                .reserveDate(request.getReserveDate())
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .headCount(request.getHeadCount())
@@ -67,4 +67,14 @@ public class ReserveService {
 //                .build();
 //        reserveRepository.update(reserve);
     }
+
+    public Long countReserve(Long spaceId) {
+        Space space = spaceRepository.findById(spaceId).get();
+        if(space == null) {
+            throw new IllegalArgumentException("Space not found with ID: " + spaceId);
+        }
+        Long deptId = space.getDepartment().getDeptId();
+        return reserveRepository.countByApproveAndSpace_Department_DeptId("미승인", deptId);
+    }
+
 }

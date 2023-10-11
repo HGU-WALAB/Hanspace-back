@@ -8,6 +8,7 @@ import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,7 @@ public class DepartmentService {
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve("승인 허가")
+                .approve("승인")
                 .permission("admin")
                 .build();
         deptMemberRepository.save(deptMember);
@@ -106,4 +107,9 @@ public class DepartmentService {
         departmentRepository.deleteById(id);
     }
 
+    public Long findDeptIdByDeptName(String deptName) {
+        Department department = departmentRepository.findByDeptName(deptName).orElseThrow();
+        Long deptId = department.getDeptId();
+        return deptId;
+    }
 }

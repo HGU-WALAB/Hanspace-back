@@ -21,7 +21,10 @@ public class ReserveController {
     public void create(@RequestBody ReserveRequest request){
         reserveService.create(request);
     }
-
+    @GetMapping("/reserve/count")
+    public Long countReserve(@RequestBody ReserveRequest request){
+        return reserveService.countReserve(request.getSpaceId());
+    }
     @GetMapping("/reserve/list")
     public ResponseEntity<List<Reserve>> findReserveFetchJoin(){
         return ResponseEntity.ok(reserveService.findReserveFetchJoin());

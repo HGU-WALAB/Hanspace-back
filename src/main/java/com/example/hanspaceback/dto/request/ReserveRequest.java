@@ -10,7 +10,7 @@ public class ReserveRequest {
     private Long spaceId;
     private Long memberId;
     private Long regularReserveId;
-    private String[] reserveDate;
+    private String reserveDate;
     private String startTime;
     private String endTime;
     private int headCount;

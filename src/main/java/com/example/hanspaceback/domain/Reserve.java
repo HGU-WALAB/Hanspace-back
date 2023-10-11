@@ -6,6 +6,7 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,7 +39,7 @@ public class Reserve extends BaseEntity{
     RegularReserve regularReserve;
 
     public void update(ReserveRequest request){
-        this.reserveDate = request.getReserveDate()[0];
+        this.reserveDate = request.getReserveDate();
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();

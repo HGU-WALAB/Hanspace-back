@@ -63,8 +63,29 @@ public class RegularReserveService {
         return regularReserveRepository.findAll();
     }
     public RegularReserve update(Long id, RegularReserveRequest request){
+//        RegularReserve regularReserve = regularReserveRepository.findById(id).orElseThrow();
+//        regularReserve.update(request);
         RegularReserve regularReserve = regularReserveRepository.findById(id).orElseThrow();
         regularReserve.update(request);
+
+        List<Reserve> reserves = reserveRepository.findByRegularReserve_Id(id);
+        for (int i = 0; i < request.getReserveCount(); i++) {
+            if (i < reserves.size()) {
+                Reserve reserve = reserves.get(i);
+                // existingReserve의 값을 request로부터 업데이트하세요.
+                // 예: existingReserve.setReserveDate(request.getReserveDate()[i]);
+                reserve.setReserveDate(request.getReserveDate()[i]);
+                reserve.setStartTime(request.getStartTime());
+                reserve.setEndTime(request.getEndTime());
+                reserve.setHeadCount(request.getHeadCount());
+                reserve.setGroupName(request.getGroupName());
+                reserve.setPurpose(request.getPurpose());
+                reserve.setPhoneNumber(request.getPhoneNumber());
+                reserve.setApprove(request.getApprove());
+                reserve.setExtraInfoAns(request.getExtraInfoAns());
+            }
+        }
+
         return regularReserve;
     }
     public void delete(Long id){
