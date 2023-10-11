@@ -17,4 +17,5 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
 //    findByDepartment(Department department)
     Long countByApproveAndSpace_Department_DeptId(String approve, Long deptId);
 
+    List<Reserve> findByRegularReserve_Id(Long id);
 }
