@@ -8,6 +8,7 @@ import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -77,10 +78,10 @@ public class DepartmentService {
         return responses;
     }
 
-//    public List<DepartmentResponse> findById(Long id) {
-//        Department department = departmentRepository.findById(id).get();
-//        DepartmentResponse response = new DepartmentResponse();
-//
+    public DepartmentResponse findByDeptId(Long id) {
+        Department department = departmentRepository.findById(id).get();
+        DepartmentResponse response = new DepartmentResponse();
+
 //        response.setDeptId(department.getDeptId());
 //        response.setSiteName(department.getSiteName());
 //        response.setDeptName(department.getDeptName());
@@ -89,12 +90,12 @@ public class DepartmentService {
 //        response.setUserAccept(department.isUserAccept());
 //        response.setMaxRserveCount(department.getMaxRserveCount());
 //        response.setLink(department.getLink());
-//        response.setExtraInfo(department.getExtraInfo());
+        response.setExtraInfo(department.getExtraInfo());
 //        response.setSiteInfoTitle(department.getSiteInfoTitle());
 //        response.setSiteInfoDetail(department.getSiteInfoDetail());
-//
-//        return response;
-//    }
+
+        return response;
+    }
 
     public Department update(Long id, DepartmentRequest request){
         Department department = departmentRepository.findById(id).get();
