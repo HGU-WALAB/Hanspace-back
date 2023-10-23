@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,6 +34,14 @@ public class DepartmentController {
 //        return ResponseEntity.ok(departmentService.findDeptIdByDeptName());
         return departmentService.findDeptIdByDeptName(deptName);
     }
+    @GetMapping("/dept/deptId/{deptId}")
+    public ResponseEntity<Map<String, String>> findByDeptId(@PathVariable Long deptId) {
+        String extraInfo = departmentService.findByDeptId(deptId).getExtraInfo();
+        Map<String, String> response = new HashMap<>();
+        response.put("extraInfo", extraInfo);
+        return ResponseEntity.ok(response);
+    }
+
     @PatchMapping("/dept/{id}")
     public ResponseEntity<Department> update(@PathVariable Long id, @RequestBody DepartmentRequest request){
         return ResponseEntity.ok(departmentService.update(id, request));
