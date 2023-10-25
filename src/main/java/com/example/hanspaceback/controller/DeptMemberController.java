@@ -33,6 +33,14 @@ public class DeptMemberController {
     public ResponseEntity<List<DeptMemberResponse>> findByDeptMemberFetchJoin(@PathVariable Long deptId){
         return ResponseEntity.ok(deptMemberService.findByDeptMemberFetchJoin(deptId));
     }
+    @GetMapping("/deptMember/list/approve/{deptId}")
+    public ResponseEntity<List<DeptMemberResponse>> findDeptMembersApprove(@PathVariable Long deptId){
+        return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "승인"));
+    }
+    @GetMapping("/deptMember/list/approveNan/{deptId}")
+    public ResponseEntity<List<DeptMemberResponse>> findDeptMembersNApprove(@PathVariable Long deptId){
+        return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "승인 대기"));
+    }
     @GetMapping("/deptMember/{id}")
     public ResponseEntity<DeptMember> findbyId(@PathVariable Long id){
         return ResponseEntity.ok(deptMemberService.findById(id));
