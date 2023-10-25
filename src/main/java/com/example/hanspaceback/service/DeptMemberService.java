@@ -81,6 +81,24 @@ public class DeptMemberService {
         }
         return responses;
     }
+    public List<DeptMemberResponse> findDeptMembersByApprovalStatus(Long deptId, String approvalStatus) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByDepartment_DeptId(deptId);
+        List<DeptMemberResponse> responses = new ArrayList<>();
+
+        for (DeptMember deptMember : deptMembers) {
+            if (!approvalStatus.equals(deptMember.getApprove())) {
+                continue;
+            }
+            DeptMemberResponse response = new DeptMemberResponse();
+            response.setDeptMemberId(deptMember.getId());
+            response.setDeptId(deptMember.getDepartment().getDeptId());
+            response.setMemberId(deptMember.getMember().getMemberId());
+            response.setApprove(deptMember.getApprove());
+            response.setPermission(deptMember.getPermission());
+            responses.add(response);
+        }
+        return responses;
+    }
     public DeptMember findById(Long id){
         DeptMember deptMember = deptMemberRepository.findById(id).get();
         return deptMember;
@@ -96,4 +114,5 @@ public class DeptMemberService {
     public void delete(Long id){
         deptMemberRepository.deleteById(id);
     }
+
 }
