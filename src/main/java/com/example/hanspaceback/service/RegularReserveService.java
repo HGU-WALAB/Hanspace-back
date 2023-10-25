@@ -43,10 +43,11 @@ public class RegularReserveService {
                     .startTime(request.getStartTime())
                     .endTime(request.getEndTime())
                     .headCount(request.getHeadCount())
-                    .groupName(request.getGroupName())
+//                    .groupName(request.getGroupName())
                     .purpose(request.getPurpose())
-                    .phoneNumber(request.getPhoneNumber())
-                    .approve(request.getApprove())
+                    .detail(request.getDetail())
+//                    .phoneNumber(request.getPhoneNumber())
+                    .status(request.getStatus())
                     .extraInfoAns(request.getExtraInfoAns())
                     .regularReserve(regularReserve)
                     .space(space)
@@ -78,10 +79,10 @@ public class RegularReserveService {
                 reserve.setStartTime(request.getStartTime());
                 reserve.setEndTime(request.getEndTime());
                 reserve.setHeadCount(request.getHeadCount());
-                reserve.setGroupName(request.getGroupName());
+//                reserve.setGroupName(request.getGroupName());
                 reserve.setPurpose(request.getPurpose());
-                reserve.setPhoneNumber(request.getPhoneNumber());
-                reserve.setApprove(request.getApprove());
+                reserve.setDetail(reserve.getDetail());
+                reserve.setStatus(request.getStatus());
                 reserve.setExtraInfoAns(request.getExtraInfoAns());
             }
         }

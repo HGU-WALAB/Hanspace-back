@@ -11,10 +11,9 @@ public class RegularReserveRequest {
     private String startTime;
     private String endTime;
     private int headCount;
-    private String groupName;
     private String purpose;
-    private String phoneNumber;
-    private String approve;
+    private String detail;
+    private String status;
     private String extraInfoAns;
 
     private String week;

@@ -28,10 +28,10 @@ public class ReserveService {
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .headCount(request.getHeadCount())
-                .groupName(request.getGroupName())
                 .purpose(request.getPurpose())
-                .phoneNumber(request.getPhoneNumber())
-                .approve(request.getApprove())
+                .detail(request.getDetail())
+//                .phoneNumber(request.getPhoneNumber())
+                .status(request.getStatus())
                 .extraInfoAns(request.getExtraInfoAns())
                 .member(member)
                 .space(space)
@@ -74,7 +74,7 @@ public class ReserveService {
             throw new IllegalArgumentException("Space not found with ID: " + spaceId);
         }
         Long deptId = space.getDepartment().getDeptId();
-        return reserveRepository.countByApproveAndSpace_Department_DeptId("미승인", deptId);
+        return reserveRepository.countByStatusAndSpace_Department_DeptId("미승인", deptId);
     }
 
 }
