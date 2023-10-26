@@ -11,6 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reserve extends BaseEntity{
+    // groupName -> purpose
+    // purpose -> detail
+    // approve -> status
+    // phoneNumber 삭제
     @Id
     @Column(name = "reserveId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +23,10 @@ public class Reserve extends BaseEntity{
     private String startTime;
     private String endTime;
     private int headCount;
-    private String groupName;
     private String purpose;
-    private String phoneNumber;
-    private String approve;
+//    private String detail;
+//    private String phoneNumber;
+    private String status;
     private String extraInfoAns;
 //    private String deleteMember;
 
@@ -43,10 +47,10 @@ public class Reserve extends BaseEntity{
         this.startTime = request.getStartTime();
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();
-        this.groupName = request.getGroupName();
         this.purpose = request.getPurpose();
-        this.phoneNumber = request.getPhoneNumber();
-        this.approve = request.getApprove();
+//        this.detail = request.getDetail();
+//        this.phoneNumber = request.getPhoneNumber();
+        this.status = request.getStatus();
         this.extraInfoAns = request.getExtraInfoAns();
     }
 }
