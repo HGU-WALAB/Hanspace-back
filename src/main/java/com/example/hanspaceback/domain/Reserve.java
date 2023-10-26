@@ -24,7 +24,7 @@ public class Reserve extends BaseEntity{
     private String endTime;
     private int headCount;
     private String purpose;
-    private String detail;
+//    private String detail;
 //    private String phoneNumber;
     private String status;
     private String extraInfoAns;
@@ -48,7 +48,7 @@ public class Reserve extends BaseEntity{
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();
         this.purpose = request.getPurpose();
-        this.detail = request.getDetail();
+//        this.detail = request.getDetail();
 //        this.phoneNumber = request.getPhoneNumber();
         this.status = request.getStatus();
         this.extraInfoAns = request.getExtraInfoAns();

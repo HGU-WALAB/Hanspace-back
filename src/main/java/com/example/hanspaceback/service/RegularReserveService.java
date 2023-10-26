@@ -45,7 +45,7 @@ public class RegularReserveService {
                     .headCount(request.getHeadCount())
 //                    .groupName(request.getGroupName())
                     .purpose(request.getPurpose())
-                    .detail(request.getDetail())
+//                    .detail(request.getDetail())
 //                    .phoneNumber(request.getPhoneNumber())
                     .status(request.getStatus())
                     .extraInfoAns(request.getExtraInfoAns())
@@ -81,7 +81,7 @@ public class RegularReserveService {
                 reserve.setHeadCount(request.getHeadCount());
 //                reserve.setGroupName(request.getGroupName());
                 reserve.setPurpose(request.getPurpose());
-                reserve.setDetail(reserve.getDetail());
+//                reserve.setDetail(reserve.getDetail());
                 reserve.setStatus(request.getStatus());
                 reserve.setExtraInfoAns(request.getExtraInfoAns());
             }

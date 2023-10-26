@@ -29,7 +29,7 @@ public class ReserveService {
                 .endTime(request.getEndTime())
                 .headCount(request.getHeadCount())
                 .purpose(request.getPurpose())
-                .detail(request.getDetail())
+//                .detail(request.getDetail())
 //                .phoneNumber(request.getPhoneNumber())
                 .status(request.getStatus())
                 .extraInfoAns(request.getExtraInfoAns())

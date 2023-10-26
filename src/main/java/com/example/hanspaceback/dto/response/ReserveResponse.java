@@ -1,6 +1,9 @@
 package com.example.hanspaceback.dto.response;
 
 import lombok.Data;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Data
 public class ReserveResponse {
@@ -16,7 +19,7 @@ public class ReserveResponse {
     private int headCount;
 //    private String groupName;
     private String purpose;
-    private String detail;
+//    private String detail;
 //    private String phoneNumber;
     private String status;
     private String extraInfoAns;
