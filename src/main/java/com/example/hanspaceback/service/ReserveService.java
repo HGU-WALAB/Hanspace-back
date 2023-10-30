@@ -21,7 +21,7 @@ public class ReserveService {
     private final ReserveMemberRepository reserveMemberRepository;
     public void create(ReserveRequest request){
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-//        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
         Reserve reserve = Reserve.builder()
                 .reserveDate(request.getReserveDate())
                 .startTime(request.getStartTime())
@@ -34,6 +34,12 @@ public class ReserveService {
                 .space(space)
                 .build();
         reserveRepository.save(reserve);
+
+        ReserveMember reservingReserveMember = ReserveMember.builder()
+                .reserve(reserve)
+                .member(member)
+                .build();
+        reserveMemberRepository.save(reservingReserveMember);
 
         String invitedMemberEmail = request.getInvitedMemberEmail();
 
