@@ -1,8 +1,12 @@
 package com.example.hanspaceback.domain;
 
 import com.example.hanspaceback.dto.request.ReserveRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,22 +28,22 @@ public class Reserve extends BaseEntity{
     private String endTime;
     private int headCount;
     private String purpose;
-//    private String detail;
-//    private String phoneNumber;
     private String status;
     private String extraInfoAns;
-//    private String deleteMember;
+    private String invitedMemberEmail;
 
     @ManyToOne
     @JoinColumn(name = "spaceId")
     Space space;
 
-    @ManyToOne
-    @JoinColumn(name = "memberId")
-    Member member;
-
+//    @ManyToOne
+//    @JoinColumn(name = "memberId")
+//    Member member;
+    @JsonIgnore
+    @OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReserveMember> reserveMember = new ArrayList<>();
     @ManyToOne(optional = true)
-    @JoinColumn(name = "reserveReserveId", nullable = true)
+    @JoinColumn(name = "regularReserveId", nullable = true)
     RegularReserve regularReserve;
 
     public void update(ReserveRequest request){
@@ -52,5 +56,6 @@ public class Reserve extends BaseEntity{
 //        this.phoneNumber = request.getPhoneNumber();
         this.status = request.getStatus();
         this.extraInfoAns = request.getExtraInfoAns();
+        this.invitedMemberEmail = request.getInvitedMemberEmail();
     }
 }

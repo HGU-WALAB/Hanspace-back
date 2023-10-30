@@ -1,5 +1,6 @@
 package com.example.hanspaceback.repository;
 
+import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.domain.Space;
@@ -18,4 +19,6 @@ public interface DeptMemberRepository extends JpaRepository<DeptMember, Long> {
     @Query("SELECT COUNT(dm) FROM DeptMember dm WHERE dm.department.deptId = :deptId AND dm.member.memberId = :memberId")
     int countByDeptIdAndMemberId(@Param("deptId") Long deptId, @Param("memberId") Long memberId);
     List<DeptMember> findByDepartment_DeptId(Long deptId);
+
+    DeptMember findByMemberAndDepartment(Member member, Department department);
 }

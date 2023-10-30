@@ -15,8 +15,7 @@ public class ReserveRequest {
     private String endTime;
     private int headCount;
     private String purpose;
-    private String detail;
-//    private String phoneNumber;
     private String status;
     private String extraInfoAns;
+    private String invitedMemberEmail;
 }

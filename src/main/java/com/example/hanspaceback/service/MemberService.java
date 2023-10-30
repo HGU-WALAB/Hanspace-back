@@ -3,6 +3,7 @@ package com.example.hanspaceback.service;
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
+import com.example.hanspaceback.domain.ReserveMember;
 import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.MemberResponse;
@@ -11,6 +12,7 @@ import com.example.hanspaceback.exception.DuplicateMemberException;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
+import com.example.hanspaceback.repository.ReserveMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +27,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final DeptMemberRepository deptMemberRepository;
     private final DepartmentRepository departmentRepository;
-    public void create(MemberRequest request){
-//        Member member = Member.builder()
-//                .name(request.getName())
-//                .email(request.getEmail())
-//                .build();
-//        memberRepository.save(member);
-        Member member = memberRepository.findByNameAndEmail(request.getName(), request.getEmail());
+    private final ReserveMemberRepository reserveMemberRepository;
+
+    public void signup(MemberRequest request){
+        Member member = memberRepository.findByEmail(request.getEmail());
 
         if (member == null) {
-            // 존재하지 않는 멤버인 경우에만 member를 생성
             member = Member.builder()
                     .name(request.getName())
                     .email(request.getEmail())
@@ -43,8 +41,21 @@ public class MemberService {
         }else{
             throw new DuplicateMemberException("이미 member에 있는 사람입니당.");
         }
-
+    }
+    public void add(MemberRequest request){
+        Member member = memberRepository.findByEmail(request.getEmail());
         Department department = departmentRepository.findById(request.getDeptId()).get();
+        if(member == null){
+            throw new RuntimeException("해당 멤버를 찾을 수 없습니다.");
+        }
+        if(department == null){
+            throw new RuntimeException("해당 기관을 찾을 수 없습니다.");
+        }
+        DeptMember existingDeptMember = deptMemberRepository.findByMemberAndDepartment(member, department);
+        if (existingDeptMember != null) {
+            throw new DuplicateDeptMemberException("이미 해당 부서에 소속된 멤버입니다.");
+        }
+
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
@@ -52,10 +63,13 @@ public class MemberService {
                 .permission("user")
                 .build();
         deptMemberRepository.save(deptMember);
+
+        ReserveMember reserveMember = ReserveMember.builder()
+                .member(member)
+                .build();
+        reserveMemberRepository.save(reserveMember);
     }
-//    public List<Member> findAll(){
-//        return memberRepository.findAll();
-//    }
+
     public List<MemberResponse> findAll(){
         List<Member> members = memberRepository.findAll();
         List<MemberResponse> responses = new ArrayList<>();

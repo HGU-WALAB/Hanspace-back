@@ -9,8 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
     Member findByNameAndEmail(String name, String email);
+
+    Member findByEmail(String email);
 }

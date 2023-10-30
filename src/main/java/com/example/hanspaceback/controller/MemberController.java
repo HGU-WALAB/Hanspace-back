@@ -16,9 +16,13 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/member")
-    public void create(@RequestBody MemberRequest request){
-        memberService.create(request);
+    @PostMapping("/member/add")
+    public void add(@RequestBody MemberRequest request){
+        memberService.add(request);
+    }
+    @PostMapping("/member/signup")
+    public void signup(@RequestBody MemberRequest request){
+        memberService.signup(request);
     }
 //    @GetMapping("/member/list")
 //    public ResponseEntity<List<Member>> findAll(){

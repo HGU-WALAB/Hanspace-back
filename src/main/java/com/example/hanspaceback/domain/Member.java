@@ -33,7 +33,10 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeptMember> deptMember = new ArrayList<>();
 
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Reserve> reserve = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reserve> reserve = new ArrayList<>();
+    private List<ReserveMember> reserveMember = new ArrayList<>();
 }
