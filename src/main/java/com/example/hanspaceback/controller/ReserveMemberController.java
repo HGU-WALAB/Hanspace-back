@@ -20,8 +20,8 @@ public class ReserveMemberController {
 //        reserveMemberService.create(request);
 //    }
 
-    @GetMapping("/reserveMember/list/{memberId}")
-    public ResponseEntity<List<ReserveMemberResponse>> findAll(@PathVariable Long memberId){
-        return ResponseEntity.ok(reserveMemberService.findByMemberId(memberId));
-    }
+//    @GetMapping("/reserve/list/{memberId}")
+//    public ResponseEntity<List<ReserveMemberResponse>> findAll(@PathVariable Long memberId){
+//        return ResponseEntity.ok(reserveMemberService.findByMemberId(memberId));
+//    }
 }
