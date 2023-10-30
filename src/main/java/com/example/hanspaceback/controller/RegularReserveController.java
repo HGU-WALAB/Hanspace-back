@@ -14,26 +14,18 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@RequestMapping("/regularReserve")
 public class RegularReserveController {
     private final RegularReserveService regularReserveService;
-
-    @PostMapping("/regularReserve")
-//    public RegularReserveResponse create(@RequestBody RegularReserveRequest request, @RequestBody ReserveRequest reserveRequest){
-    public RegularReserveResponse create(@RequestBody RegularReserveRequest request){
-//        RegularReserveResponse response = regularReserveService.create(request, reserveRequest);
-        RegularReserveResponse response = regularReserveService.create(request);
-        return response;
-    }
-
-    @GetMapping("/regularReserve/list")
+    @GetMapping("/list")
     public ResponseEntity<List<RegularReserve>> findAll(){
         return ResponseEntity.ok(regularReserveService.findAll());
     }
-    @PatchMapping("regularReserve/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<RegularReserve> update(@PathVariable Long id, @RequestBody RegularReserveRequest request){
         return ResponseEntity.ok(regularReserveService.update(id, request));
     }
-    @DeleteMapping("regularReserve/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         regularReserveService.delete(id);
     }

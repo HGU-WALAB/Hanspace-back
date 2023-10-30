@@ -1,10 +1,13 @@
 package com.example.hanspaceback.controller;
 
 import com.example.hanspaceback.domain.Reserve;
+import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.request.ReserveRequest;
+import com.example.hanspaceback.dto.response.RegularReserveResponse;
 import com.example.hanspaceback.dto.response.ReserveMemberResponse;
 import com.example.hanspaceback.dto.response.ReserveResponse;
 import com.example.hanspaceback.repository.ReserveRepository;
+import com.example.hanspaceback.service.RegularReserveService;
 import com.example.hanspaceback.service.ReserveMemberService;
 import com.example.hanspaceback.service.ReserveService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +23,16 @@ import java.util.List;
 public class ReserveController {
     private final ReserveService reserveService;
     private final ReserveMemberService reserveMemberService;
+    private final RegularReserveService regularReserveService;
     @PostMapping
     public void create(@RequestBody ReserveRequest request){
         reserveService.create(request);
+    }
+    @PostMapping("/regularReserve")
+    public ReserveResponse create(@RequestBody RegularReserveRequest request){
+//        RegularReserveResponse response = regularReserveService.create(request, reserveRequest);
+        ReserveResponse response = regularReserveService.create(request);
+        return response;
     }
     @GetMapping("/count")
     public Long countReserve(@RequestBody ReserveRequest request){
