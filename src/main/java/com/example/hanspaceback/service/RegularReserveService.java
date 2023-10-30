@@ -1,16 +1,10 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.domain.RegularReserve;
-import com.example.hanspaceback.domain.Reserve;
-import com.example.hanspaceback.domain.Space;
+import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.request.ReserveRequest;
 import com.example.hanspaceback.dto.response.RegularReserveResponse;
-import com.example.hanspaceback.repository.MemberRepository;
-import com.example.hanspaceback.repository.RegularReserveRepository;
-import com.example.hanspaceback.repository.ReserveRepository;
-import com.example.hanspaceback.repository.SpaceRepository;
+import com.example.hanspaceback.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +18,8 @@ public class RegularReserveService {
     private final RegularReserveRepository regularReserveRepository;
     private final ReserveRepository reserveRepository;
     private final SpaceRepository spaceRepository;
-    private final MemberRepository memberRepository;
+//    private final MemberRepository memberRepository;
+    private final ReserveMemberRepository reserveMemberRepository;
 
     public RegularReserveResponse create(RegularReserveRequest request){
             RegularReserve regularReserve = RegularReserve.builder()
@@ -36,24 +31,26 @@ public class RegularReserveService {
 
         for(int i = 0; i < request.getReserveCount(); i++) {
             Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-            Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+//            Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
 
             Reserve reserve = Reserve.builder()
                     .reserveDate(request.getReserveDate()[i])
                     .startTime(request.getStartTime())
                     .endTime(request.getEndTime())
                     .headCount(request.getHeadCount())
-//                    .groupName(request.getGroupName())
                     .purpose(request.getPurpose())
-//                    .detail(request.getDetail())
-//                    .phoneNumber(request.getPhoneNumber())
                     .status(request.getStatus())
                     .extraInfoAns(request.getExtraInfoAns())
                     .regularReserve(regularReserve)
                     .space(space)
-                    .member(member)
+//                    .member(member)
                     .build();
             reserveRepository.save(reserve);
+
+            ReserveMember reserveMember = ReserveMember.builder()
+                    .reserve(reserve)
+                    .build();
+            reserveMemberRepository.save(reserveMember);
         }
 
         RegularReserveResponse response = new RegularReserveResponse();

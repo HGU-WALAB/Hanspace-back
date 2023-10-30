@@ -2,14 +2,13 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.ReserveRequest;
-import com.example.hanspaceback.repository.RegularReserveRepository;
-import com.example.hanspaceback.repository.MemberRepository;
-import com.example.hanspaceback.repository.ReserveRepository;
-import com.example.hanspaceback.repository.SpaceRepository;
+import com.example.hanspaceback.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,24 +18,52 @@ public class ReserveService {
     private final ReserveRepository reserveRepository;
     private final MemberRepository memberRepository;
     private final SpaceRepository spaceRepository;
-
+    private final ReserveMemberRepository reserveMemberRepository;
     public void create(ReserveRequest request){
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+//        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
         Reserve reserve = Reserve.builder()
                 .reserveDate(request.getReserveDate())
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .headCount(request.getHeadCount())
                 .purpose(request.getPurpose())
-//                .detail(request.getDetail())
-//                .phoneNumber(request.getPhoneNumber())
                 .status(request.getStatus())
                 .extraInfoAns(request.getExtraInfoAns())
-                .member(member)
+                .invitedMemberEmail(request.getInvitedMemberEmail())
                 .space(space)
                 .build();
         reserveRepository.save(reserve);
+
+        String invitedMemberEmail = request.getInvitedMemberEmail();
+
+        if (invitedMemberEmail != null && !invitedMemberEmail.trim().isEmpty()) {
+            List<String> emailsToProcess = new ArrayList<>();
+
+            if (invitedMemberEmail.contains(",")) {
+                emailsToProcess.addAll(Arrays.asList(invitedMemberEmail.split(",")));
+            } else {
+                emailsToProcess.add(invitedMemberEmail.trim());
+            }
+
+            for (String email : emailsToProcess) {
+                email = email.trim();
+                Member invitedMember = memberRepository.findByEmail(email);
+
+                if (invitedMember == null) {
+                    throw new IllegalArgumentException("No member found with email: " + email);
+                }
+
+                ReserveMember reserveMember = ReserveMember.builder()
+                        .reserve(reserve)
+                        .member(invitedMember)
+                        .build();
+
+                System.out.println("member email : " + email);
+                reserveMemberRepository.save(reserveMember);
+            }
+        }
+
     }
 
     public List<Reserve> findReserveFetchJoin(){

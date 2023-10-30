@@ -33,7 +33,7 @@ public class DepartmentService {
                 .logo(request.getLogo())
                 .color(request.getColor())
                 .userAccept(request.isUserAccept())
-                .maxRserveCount(request.getMaxRserveCount())
+                .maxReserveCount(request.getMaxRserveCount())
                 .link(request.getLink())
                 .extraInfo(request.getExtraInfo())
                 .siteInfoTitle(request.getSiteInfoTitle())
@@ -67,7 +67,7 @@ public class DepartmentService {
             response.setLogo(department.getLogo());
             response.setColor(department.getColor());
             response.setUserAccept(department.isUserAccept());
-            response.setMaxRserveCount(department.getMaxRserveCount());
+            response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
             response.setSiteInfoTitle(department.getSiteInfoTitle());
