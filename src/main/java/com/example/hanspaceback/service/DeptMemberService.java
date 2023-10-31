@@ -8,6 +8,7 @@ import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.request.DeptMemberRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.DeptMemberResponse;
+import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.repository.DepartmentRepository;
@@ -99,6 +100,60 @@ public class DeptMemberService {
         }
         return responses;
     }
+    public List<DepartmentResponse> findAddDeptMembersByMemberId(Long memberId) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
+        List<DepartmentResponse> responses = new ArrayList<>();
+
+        for (DeptMember deptMember : deptMembers) {
+            if(deptMember.getDepartment().getDeptId() != null) {
+                DepartmentResponse response = new DepartmentResponse();
+                Department department =  deptMember.getDepartment();
+                response.setDeptId(department.getDeptId());
+                response.setSiteName(department.getSiteName());
+                response.setDeptName(department.getDeptName());
+                response.setLogo(department.getLogo());
+                response.setColor(department.getColor());
+                response.setUserAccept(department.isUserAccept());
+                response.setMaxRserveCount(department.getMaxReserveCount());
+                response.setLink(department.getLink());
+                response.setExtraInfo(department.getExtraInfo());
+                response.setSiteInfoTitle(department.getSiteInfoTitle());
+                response.setSiteInfoDetail(department.getSiteInfoDetail());
+                responses.add(response);
+            }
+        }
+        return responses;
+    }
+    public List<DepartmentResponse> findNAddDeptMembersByMemberId(Long memberId) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
+        List<Department> allDepts = departmentRepository.findAll();
+
+        List<Long> addedDeptIds = new ArrayList<>();
+        for (DeptMember deptMember : deptMembers) {
+            addedDeptIds.add(deptMember.getDepartment().getDeptId());
+        }
+
+        List<DepartmentResponse> notAddedDepts = new ArrayList<>();
+        for (Department dept : allDepts) {
+            if (!addedDeptIds.contains(dept.getDeptId())) {
+                DepartmentResponse response = new DepartmentResponse();
+                response.setDeptId(dept.getDeptId());
+                response.setSiteName(dept.getSiteName());
+                response.setDeptName(dept.getDeptName());
+                response.setLogo(dept.getLogo());
+                response.setColor(dept.getColor());
+                response.setUserAccept(dept.isUserAccept());
+                response.setMaxRserveCount(dept.getMaxReserveCount());
+                response.setLink(dept.getLink());
+                response.setExtraInfo(dept.getExtraInfo());
+                response.setSiteInfoTitle(dept.getSiteInfoTitle());
+                response.setSiteInfoDetail(dept.getSiteInfoDetail());
+                notAddedDepts.add(response);
+            }
+        }
+
+        return notAddedDepts;
+    }
     public DeptMember findById(Long id){
         DeptMember deptMember = deptMemberRepository.findById(id).get();
         return deptMember;
@@ -114,5 +169,4 @@ public class DeptMemberService {
     public void delete(Long id){
         deptMemberRepository.deleteById(id);
     }
-
 }
