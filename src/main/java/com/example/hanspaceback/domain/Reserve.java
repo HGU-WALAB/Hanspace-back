@@ -31,6 +31,7 @@ public class Reserve extends BaseEntity{
     private String status;
     private String extraInfoAns;
     private String invitedMemberEmail;
+    private Long createMemberId;
 
     @ManyToOne
     @JoinColumn(name = "spaceId")
@@ -52,8 +53,6 @@ public class Reserve extends BaseEntity{
         this.endTime = request.getEndTime();
         this.headCount = request.getHeadCount();
         this.purpose = request.getPurpose();
-//        this.detail = request.getDetail();
-//        this.phoneNumber = request.getPhoneNumber();
         this.status = request.getStatus();
         this.extraInfoAns = request.getExtraInfoAns();
         this.invitedMemberEmail = request.getInvitedMemberEmail();

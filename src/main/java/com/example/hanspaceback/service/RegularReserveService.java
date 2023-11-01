@@ -64,7 +64,7 @@ public class RegularReserveService {
         ReserveResponse response = new ReserveResponse();
         response.setReserveId(lastReserve.getId());
         response.setSpaceId(lastReserve.getSpace().getSpaceId());
-        response.setLongReserveId(regularReserve.getId());
+        response.setRegularReserveId(regularReserve.getId());
         response.setReserveDate(firstReserve.getReserveDate() + ", " + lastReserve.getReserveDate());
         response.setStartTime(lastReserve.getStartTime());
         response.setEndTime(lastReserve.getEndTime());
@@ -78,8 +78,6 @@ public class RegularReserveService {
         return regularReserveRepository.findAll();
     }
     public RegularReserve update(Long id, RegularReserveRequest request){
-//        RegularReserve regularReserve = regularReserveRepository.findById(id).orElseThrow();
-//        regularReserve.update(request);
         RegularReserve regularReserve = regularReserveRepository.findById(id).orElseThrow();
         regularReserve.update(request);
 
@@ -87,15 +85,11 @@ public class RegularReserveService {
         for (int i = 0; i < request.getReserveCount(); i++) {
             if (i < reserves.size()) {
                 Reserve reserve = reserves.get(i);
-                // existingReserve의 값을 request로부터 업데이트하세요.
-                // 예: existingReserve.setReserveDate(request.getReserveDate()[i]);
                 reserve.setReserveDate(request.getReserveDate()[i]);
                 reserve.setStartTime(request.getStartTime());
                 reserve.setEndTime(request.getEndTime());
                 reserve.setHeadCount(request.getHeadCount());
-//                reserve.setGroupName(request.getGroupName());
                 reserve.setPurpose(request.getPurpose());
-//                reserve.setDetail(reserve.getDetail());
                 reserve.setStatus(request.getStatus());
                 reserve.setExtraInfoAns(request.getExtraInfoAns());
             }
