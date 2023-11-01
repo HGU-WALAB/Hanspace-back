@@ -2,14 +2,15 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.ReserveRequest;
+import com.example.hanspaceback.dto.response.DepartmentResponse;
+import com.example.hanspaceback.dto.response.ReserveResponse;
+import com.example.hanspaceback.dto.response.SpaceWithReservesResponse;
 import com.example.hanspaceback.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -32,6 +33,7 @@ public class ReserveService {
                 .extraInfoAns(request.getExtraInfoAns())
                 .invitedMemberEmail(request.getInvitedMemberEmail())
                 .space(space)
+                .createMemberId(request.getMemberId())
                 .build();
         reserveRepository.save(reserve);
 
@@ -64,12 +66,9 @@ public class ReserveService {
                         .reserve(reserve)
                         .member(invitedMember)
                         .build();
-
-                System.out.println("member email : " + email);
                 reserveMemberRepository.save(reserveMember);
             }
         }
-
     }
 
     public List<Reserve> findReserveFetchJoin(){
@@ -84,6 +83,49 @@ public class ReserveService {
         return reserves;
     }
 
+    public List<SpaceWithReservesResponse> findByReserveDateFetchJoin(Long deptId, ReserveRequest request){
+        List<Reserve> reserves = reserveRepository.findByReserveDateFetchJoin(request.getReserveDate());
+        List<Long> spaceIds = new ArrayList<>();
+        List<Space> spaces = new ArrayList<>();
+        List<SpaceWithReservesResponse> spaceWithReserveResponses = new ArrayList<>();
+        List<ReserveResponse> reserveResponses = new ArrayList<>();
+
+        for (Reserve reserve : reserves) {
+            if (reserve.getSpace().getDepartment().getDeptId().equals(deptId)) {
+                Long spaceId = reserve.getSpace().getSpaceId();
+                if (!spaceIds.contains(spaceId)) {
+                    spaceIds.add(spaceId);
+                }
+                ReserveResponse response = new ReserveResponse();
+                response.setReserveId(reserve.getId());
+                response.setReserveDate(reserve.getReserveDate());
+                response.setPurpose(reserve.getPurpose());
+                if (reserve.getRegularReserve() != null) {
+                    response.setRegularReserveId(reserve.getRegularReserve().getId());
+                }
+                response.setHeadCount(reserve.getHeadCount());
+                response.setEndTime(reserve.getEndTime());
+                response.setMemberId(reserve.getCreateMemberId());
+                response.setStatus(reserve.getStatus());
+                response.setInvitedMemberEmail(reserve.getInvitedMemberEmail());
+                response.setStartTime(reserve.getStartTime());
+                response.setExtraInfoAns(reserve.getExtraInfoAns());
+                reserveResponses.add(response);
+            }
+        }
+
+        for (Long spaceId : spaceIds) {
+            Space space = spaceRepository.findById(spaceId).orElseThrow();
+            spaces.add(space);
+        }
+
+        for(Space space : spaces){
+            SpaceWithReservesResponse sr = new SpaceWithReservesResponse(space,reserveResponses);
+
+            spaceWithReserveResponses.add(sr);
+        }
+        return spaceWithReserveResponses;
+    }
     public Reserve update(Long id, ReserveRequest request){
         Reserve reserve = reserveRepository.findById(id).orElseThrow();
         reserve.update(request);

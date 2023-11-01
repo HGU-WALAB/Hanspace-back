@@ -3,10 +3,8 @@ package com.example.hanspaceback.controller;
 import com.example.hanspaceback.domain.Reserve;
 import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.request.ReserveRequest;
-import com.example.hanspaceback.dto.response.RegularReserveResponse;
-import com.example.hanspaceback.dto.response.ReserveMemberResponse;
 import com.example.hanspaceback.dto.response.ReserveResponse;
-import com.example.hanspaceback.repository.ReserveRepository;
+import com.example.hanspaceback.dto.response.SpaceWithReservesResponse;
 import com.example.hanspaceback.service.RegularReserveService;
 import com.example.hanspaceback.service.ReserveMemberService;
 import com.example.hanspaceback.service.ReserveService;
@@ -54,6 +52,11 @@ public class ReserveController {
     @GetMapping("/{deptId}")
     public ResponseEntity<List<Reserve>> findByDeptId(@PathVariable Long deptId){
         return ResponseEntity.ok(reserveService.findByDeptId(deptId));
+    }
+
+    @PostMapping("/{deptId}/list")
+    public ResponseEntity<List<SpaceWithReservesResponse>> findByDate(@PathVariable Long deptId, @RequestBody ReserveRequest request){
+        return ResponseEntity.ok(reserveService.findByReserveDateFetchJoin(deptId, request));
     }
 
     @PatchMapping("/{id}")
