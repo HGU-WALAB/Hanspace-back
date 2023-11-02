@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.util.Date;
 
-public class JwtTokenUtil {
+public class HanSpaceTokenUtil {
 
     // JWT Token 발급
     public static String createToken(String email, String key, long expireTimeMs) {

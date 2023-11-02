@@ -5,13 +5,12 @@ import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/hanSpace")
-public class JwtLoginApiController {
+public class HanSpaceLoginController {
 
     private final MemberService memberService;
 
@@ -22,29 +21,29 @@ public class JwtLoginApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<HanSpaceTokenResponse> login(@RequestBody HanSpaceLoginRequest hanSpaceLoginRequest) {
 
-        Member member = memberService.login(loginRequest);
+        Member member = memberService.login(hanSpaceLoginRequest);
 
         // 로그인 아이디나 비밀번호가 틀린 경우 global error return
         if(member == null) {
-            return ResponseEntity.badRequest().body(new JwtResponse("로그인 아이디 또는 비밀번호가 틀렸습니다."));
+            return ResponseEntity.badRequest().body(new HanSpaceTokenResponse("로그인 아이디 또는 비밀번호가 틀렸습니다."));
         }
 
         // 로그인 성공 => Jwt Token 발급
         String secretKey = "my-secret-key-123123";
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
 
-        String jwtToken = JwtTokenUtil.createToken(member.getEmail(), secretKey, expireTimeMs);
+        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), secretKey, expireTimeMs);
 
-        return ResponseEntity.ok(new JwtResponse(jwtToken));
+        return ResponseEntity.ok(new HanSpaceTokenResponse(jwtToken));
     }
 
     @GetMapping("/info")
-    public ResponseEntity<MemberInfoResponse> memberInfo(String email) {
+    public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(String email) {
         Member member = memberService.findByEmail(email);
 
-        MemberInfoResponse response = new MemberInfoResponse(
+        HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
                 member.getEmail(),
                 member.getName(),
                 member.getHanRole()

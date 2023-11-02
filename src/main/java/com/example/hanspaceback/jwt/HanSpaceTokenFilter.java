@@ -1,8 +1,6 @@
 package com.example.hanspaceback.jwt;
 
-import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.service.DeptMemberService;
 import com.example.hanspaceback.service.MemberService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +19,7 @@ import java.util.List;
 
 // OncePerRequestFilter : 매번 들어갈 때 마다 체크 해주는 필터
 @RequiredArgsConstructor
-public class JwtTokenFilter extends OncePerRequestFilter {
+public class HanSpaceTokenFilter extends OncePerRequestFilter {
 
     private final MemberService memberService;
     private final String secretKey;
@@ -46,13 +44,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = authorizationHeader.split(" ")[1];
 
         // 전송받은 Jwt Token이 만료되었으면 => 다음 필터 진행(인증 X)
-        if(JwtTokenUtil.isExpired(token, secretKey)) {
+        if(HanSpaceTokenUtil.isExpired(token, secretKey)) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // Jwt Token에서 email 추출
-        String email = JwtTokenUtil.getEmail(token, secretKey);
+        String email = HanSpaceTokenUtil.getEmail(token, secretKey);
 
         // 추출한 email User 찾아오기
         Member loginMember = memberService.findByEmail(email);

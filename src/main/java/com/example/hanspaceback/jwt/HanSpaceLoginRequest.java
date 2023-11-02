@@ -3,7 +3,7 @@ package com.example.hanspaceback.jwt;
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class HanSpaceLoginRequest {
     private String name;
     private String email;
 }

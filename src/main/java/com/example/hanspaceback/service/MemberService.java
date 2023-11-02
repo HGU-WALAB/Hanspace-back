@@ -8,7 +8,7 @@ import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.exception.DuplicateMemberException;
-import com.example.hanspaceback.jwt.LoginRequest;
+import com.example.hanspaceback.jwt.HanSpaceLoginRequest;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
@@ -100,8 +100,8 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
-    public Member login(LoginRequest loginRequest) {
-        Member member = memberRepository.findByEmail(loginRequest.getEmail());
+    public Member login(HanSpaceLoginRequest hanSpaceLoginRequest) {
+        Member member = memberRepository.findByEmail(hanSpaceLoginRequest.getEmail());
 
         return member;
     }

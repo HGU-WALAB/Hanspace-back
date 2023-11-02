@@ -3,10 +3,10 @@ package com.example.hanspaceback.jwt;
 import lombok.Data;
 
 @Data
-public class JwtResponse {
+public class HanSpaceTokenResponse {
     private String token;
 
-    public JwtResponse(String token) {
+    public HanSpaceTokenResponse(String token) {
         this.token = token;
     }
 }
