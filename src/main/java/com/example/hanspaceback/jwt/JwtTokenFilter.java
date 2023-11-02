@@ -24,7 +24,6 @@ import java.util.List;
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final MemberService memberService;
-//    private final DeptMemberService deptMemberService;
     private final String secretKey;
 
     @Override
@@ -52,15 +51,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Jwt Token에서 loginId 추출
+        // Jwt Token에서 email 추출
         String email = JwtTokenUtil.getEmail(token, secretKey);
 
-        // 추출한 loginId로 User 찾아오기
-        Member loginMember = memberService.getLoginMemerByEmail(email);
+        // 추출한 email User 찾아오기
+        Member loginMember = memberService.findByEmail(email);
 
-        // loginUser 정보로 UsernamePasswordAuthenticationToken 발급
+        // email 정보로 UsernamePasswordAuthenticationToken 발급
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                loginMember.getEmail(), null);
+                loginMember.getEmail(), null, List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())));
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         // 권한 부여

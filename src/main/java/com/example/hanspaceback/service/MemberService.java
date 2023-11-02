@@ -36,6 +36,7 @@ public class MemberService {
             member = Member.builder()
                     .name(request.getName())
                     .email(request.getEmail())
+                    .hanRole(request.getHanRole())
                     .build();
             memberRepository.save(member);
         }else{
@@ -69,7 +70,7 @@ public class MemberService {
                 .build();
         reserveMemberRepository.save(reserveMember);
     }
-    public Member getLoginMemerByEmail(String email) {
+    public Member findByEmail(String email) {
         Member member = memberRepository.findByEmail(email);
         return member;
     }

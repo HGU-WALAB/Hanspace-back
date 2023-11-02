@@ -46,7 +46,7 @@ public class JwtLoginApiController {
 
         // 로그인 성공 => Jwt Token 발급
 
-        String secretKey = "d2FsYWItaGFuc3BhY2UteXVqaW4taHllcmltLWhhbm5hLXdhbGFiLXNwcmluZy1ib290LXNlY3VyaXR5LWp3dC1oYW5zcGFjZSEK";
+        String secretKey = "my-secret-key-123123";
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
 
         String jwtToken = JwtTokenUtil.createToken(member.getEmail(), secretKey, expireTimeMs);
@@ -55,11 +55,11 @@ public class JwtLoginApiController {
     }
 
     @GetMapping("/info")
-    public String userInfo(String email) {
-        Member member = memberService.getLoginMemerByEmail(email);
+    public String memberInfo(String email) {
+        Member member = memberService.findByEmail(email);
 
-        return String.format("loginId : %s\nnickname : %s",
-                member.getEmail(), member.getName());
+        return String.format("loginId : %s\nnickname : %s\nhanRole : %s",
+                member.getEmail(), member.getName(), member.getHanRole());
     }
 
     @GetMapping("/admin")

@@ -1,5 +1,6 @@
 package com.example.hanspaceback.jwt;
 
+import com.example.hanspaceback.domain.HanRole;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -39,11 +40,20 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/jwt-login/login", "/jwt-login/admin/**"
+                                "/jwt-login/login", "/member/signup"
                         )
                         .permitAll()
                 )
-                .authorizeHttpRequests(request -> request.anyRequest().authenticated());
+                .authorizeHttpRequests(request -> request
+//                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/jwt-login/info"
+                        ).authenticated()
+                )
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/jwt-login/admin/**")
+                        .hasAuthority(HanRole.ADMIN.name())
+                );
         return http.build();
     }
 }
