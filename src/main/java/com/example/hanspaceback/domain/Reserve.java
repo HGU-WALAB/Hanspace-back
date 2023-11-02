@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Reserve extends BaseEntity{
     // groupName -> purpose
-    // purpose -> detail
     // approve -> status
     // phoneNumber 삭제
     @Id

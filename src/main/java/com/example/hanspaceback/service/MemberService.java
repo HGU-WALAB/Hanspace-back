@@ -5,10 +5,10 @@ import com.example.hanspaceback.domain.DeptMember;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.domain.ReserveMember;
 import com.example.hanspaceback.dto.request.MemberRequest;
-import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.exception.DuplicateMemberException;
+import com.example.hanspaceback.jwt.LoginRequest;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
@@ -69,6 +69,10 @@ public class MemberService {
                 .build();
         reserveMemberRepository.save(reserveMember);
     }
+    public Member getLoginMemerByEmail(String email) {
+        Member member = memberRepository.findByEmail(email);
+        return member;
+    }
 
     public List<MemberResponse> findAll(){
         List<Member> members = memberRepository.findAll();
@@ -93,5 +97,11 @@ public class MemberService {
     }
     public void delete(Long id){
         memberRepository.deleteById(id);
+    }
+
+    public Member login(LoginRequest loginRequest) {
+        Member member = memberRepository.findByEmail(loginRequest.getEmail());
+
+        return member;
     }
 }
