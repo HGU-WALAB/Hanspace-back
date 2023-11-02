@@ -22,16 +22,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return httpSecurity
-//                .httpBasic().disable()
-//                .csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .addFilterBefore(new JwtTokenFilter(memberService, secretKey), UsernamePasswordAuthenticationFilter.class)
-//                .authorizeRequests()
-////                .antMatchers("/jwt-login/info").authenticated()
-////                .antMatchers("/jwt-login/admin/**").hasAuthority(UserRole.ADMIN.name())
-//                .and().build();
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JwtTokenFilter(memberService, secretKey), UsernamePasswordAuthenticationFilter.class)
@@ -40,18 +30,17 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/jwt-login/login", "/member/signup"
+                                "/hanSpace/login", "/member/signup"
                         )
                         .permitAll()
                 )
                 .authorizeHttpRequests(request -> request
-//                        .anyRequest().authenticated()
                         .requestMatchers(
-                                "/jwt-login/info"
+                                "/hanSpace/info"
                         ).authenticated()
                 )
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/jwt-login/admin/**")
+                        .requestMatchers("/hanSpace/admin/**")
                         .hasAuthority(HanRole.ADMIN.name())
                 );
         return http.build();

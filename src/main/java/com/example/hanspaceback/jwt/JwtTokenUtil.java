@@ -9,12 +9,6 @@ import java.util.Date;
 public class JwtTokenUtil {
 
     // JWT Token 발급
-//    public static String createToken(String loginId, String key, long expireTimeMs) {
-//        // Claim = Jwt Token에 들어갈 정보
-//        // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
-//        Claims claims = Jwts.claims();
-//        claims.put("loginId", loginId);
-
     public static String createToken(String email, String key, long expireTimeMs) {
         // Claim = Jwt Token에 들어갈 정보
         // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
@@ -28,11 +22,6 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
-
-    // Claims에서 loginId 꺼내기
-//    public static String getLoginId(String token, String secretKey) {
-//        return extractClaims(token, secretKey).get("loginId").toString();
-//    }
 
     // loginId 대신 email 사용
     public static String getEmail(String token, String secretKey) {
