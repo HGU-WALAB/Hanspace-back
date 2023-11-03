@@ -20,7 +20,7 @@ public class DeptMember extends BaseEntity{
 //    @ColumnDefault("pending approval")
     private String approve;
 //    @ColumnDefault("user")
-    private String permission;
+    private DeptRole deptRole;
 
     @ManyToOne
 //    @JoinColumn(name = "deptId")
@@ -32,6 +32,6 @@ public class DeptMember extends BaseEntity{
 
     public void update(DeptMemberRequest request){
         this.approve = request.getApprove();
-        this.permission = request.getPermission();
+        this.deptRole = request.getDeptRole();
     }
 }

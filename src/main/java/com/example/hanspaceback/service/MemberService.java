@@ -1,9 +1,6 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.Department;
-import com.example.hanspaceback.domain.DeptMember;
-import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.domain.ReserveMember;
+import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.MemberRequest;
 import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
@@ -61,7 +58,7 @@ public class MemberService {
                 .department(department)
                 .member(member)
                 .approve("승인 대기")
-                .permission("user")
+                .deptRole(DeptRole.USER)
                 .build();
         deptMemberRepository.save(deptMember);
 

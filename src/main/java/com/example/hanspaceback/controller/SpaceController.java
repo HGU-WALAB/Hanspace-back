@@ -16,26 +16,27 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@RequestMapping("/hanSpace/space")
 public class SpaceController {
     private final SpaceService spaceService;
 
-    @PostMapping("/space")
+    @PostMapping
     public void create(@RequestBody SpaceRequest request){
         spaceService.create(request);
     }
-    @GetMapping("/space/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Space>> findSpaceFetchJoin(){
         return ResponseEntity.ok(spaceService.findSpaceFetchJoin());
     }
-    @GetMapping("/space/{deptId}")
+    @GetMapping("/{deptId}")
     public ResponseEntity<List<SpaceResponse>> findByDeptId(@PathVariable Long deptId){
         return ResponseEntity.ok(spaceService.findByDeptId(deptId));
     }
-    @PatchMapping("/space/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Space> update(@PathVariable Long id, @RequestBody SpaceRequest request){
         return ResponseEntity.ok(spaceService.update(id, request));
     }
-    @DeleteMapping("/space/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
         spaceService.delete(id);
         return ResponseEntity.ok(id);

@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/deptMember")
+@RequestMapping("/hanSpace/deptMember")
 public class DeptMemberController {
     private final DeptMemberService deptMemberService;
     @PostMapping

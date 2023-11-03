@@ -2,6 +2,7 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.DeptMember;
+import com.example.hanspaceback.domain.DeptRole;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
@@ -47,7 +48,7 @@ public class DepartmentService {
                 .department(department)
                 .member(member)
                 .approve("승인")
-                .permission("admin")
+                .deptRole(DeptRole.ADMIN)
                 .build();
         deptMemberRepository.save(deptMember);
     }

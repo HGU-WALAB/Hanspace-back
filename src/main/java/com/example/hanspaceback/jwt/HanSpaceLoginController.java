@@ -1,11 +1,21 @@
 package com.example.hanspaceback.jwt;
 
+import com.example.hanspaceback.domain.Department;
+import com.example.hanspaceback.domain.DeptMember;
+import com.example.hanspaceback.domain.DeptRole;
 import com.example.hanspaceback.domain.Member;
 import com.example.hanspaceback.dto.request.MemberRequest;
+import com.example.hanspaceback.dto.response.DepartmentResponse;
+import com.example.hanspaceback.dto.response.DeptMemberResponse;
+import com.example.hanspaceback.service.DeptMemberService;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class HanSpaceLoginController {
 
     private final MemberService memberService;
+    private final DeptMemberService deptMemberService;
 
     @PostMapping("/join")
     public String join(@RequestBody MemberRequest memberRequest) {
@@ -42,11 +53,26 @@ public class HanSpaceLoginController {
     @GetMapping("/info")
     public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(String email) {
         Member member = memberService.findByEmail(email);
+//        List<DepartmentResponse> department = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
+        List<DeptMemberResponse> deptMembers = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
+//        List<DeptRole> deptRoles = new ArrayList<>();
+
+//        for (DepartmentResponse dept : department) {
+//            List<DeptMemberResponse> deptMemberResponses = deptMemberService.findByDeptMemberFetchJoin(dept.getDeptId());
+//
+//            for(DeptMemberResponse deptMemberResponse : deptMemberResponses){
+//                DeptRole deptRole = deptMemberResponse.getDeptRole();
+//                if (deptRole != null) { // deptRole이 null이 아닐 경우에만 리스트에 추가합니다.
+//                    deptRoles.add(deptRole);
+//                }
+//            }
+//        }
         HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
                 member.getEmail(),
                 member.getName(),
-                member.getHanRole()
+                member.getHanRole(),
+                deptMembers
         );
 
         return ResponseEntity.ok(response);
