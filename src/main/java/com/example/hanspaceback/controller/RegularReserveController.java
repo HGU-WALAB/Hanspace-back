@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/regularReserve")
+@RequestMapping("/hanSpace/regularReserve")
 public class RegularReserveController {
     private final RegularReserveService regularReserveService;
     @GetMapping("/list")

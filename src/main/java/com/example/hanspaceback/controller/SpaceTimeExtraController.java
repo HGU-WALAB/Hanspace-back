@@ -13,23 +13,24 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@RequestMapping("/hanSpace/spaceTimeExtra")
 public class SpaceTimeExtraController {
     private final SpaceTimeExtraService spaceTimeExtraService;
-    @PostMapping("/spaceTimeExtra")
+    @PostMapping
     public void create(@RequestBody SpaceTimeExtraRequest request){
         spaceTimeExtraService.create(request);
     }
 
-    @GetMapping("/spaceTimeExtra/list")
+    @GetMapping("/list")
     public ResponseEntity<List<SpaceTimeExtraResponse>> findAll(){
         return ResponseEntity.ok(spaceTimeExtraService.findAll());
     }
 
-    @PatchMapping("/spaceTimeExtra/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<SpaceTimeExtra> update(@PathVariable Long id, @RequestBody SpaceTimeExtraRequest request){
         return ResponseEntity.ok(spaceTimeExtraService.update(id, request));
     }
-    @DeleteMapping("/spaceTimeExtra/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         spaceTimeExtraService.delete(id);
     }

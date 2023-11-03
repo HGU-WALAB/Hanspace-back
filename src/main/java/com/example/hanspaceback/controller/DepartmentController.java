@@ -15,9 +15,10 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@RequestMapping("/hanSpace/dept")
 public class DepartmentController {
     private final DepartmentService departmentService;
-    @PostMapping("/dept")
+    @PostMapping
     public void create(@RequestBody DepartmentRequest request){
         departmentService.create(request);
     }
@@ -25,16 +26,16 @@ public class DepartmentController {
 //    public ResponseEntity<List<Department>> findAll(){
 //        return ResponseEntity.ok(departmentService.findAll());
 //    }
-    @GetMapping("/dept/list")
+    @GetMapping("/list")
     public ResponseEntity<List<DepartmentResponse>> findAll(){
         return ResponseEntity.ok(departmentService.findAll());
     }
-    @GetMapping("/dept/{deptName}")
+    @GetMapping("/{deptName}")
     public Long findDeptIdByDeptName(@PathVariable String deptName){
 //        return ResponseEntity.ok(departmentService.findDeptIdByDeptName());
         return departmentService.findDeptIdByDeptName(deptName);
     }
-    @GetMapping("/dept/deptId/{deptId}")
+    @GetMapping("/deptId/{deptId}")
     public ResponseEntity<Map<String, String>> findByDeptId(@PathVariable Long deptId) {
         String extraInfo = departmentService.findByDeptId(deptId).getExtraInfo();
         Map<String, String> response = new HashMap<>();
@@ -42,11 +43,11 @@ public class DepartmentController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/dept/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Department> update(@PathVariable Long id, @RequestBody DepartmentRequest request){
         return ResponseEntity.ok(departmentService.update(id, request));
     }
-    @DeleteMapping("/dept/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
         departmentService.delete(id);
         return ResponseEntity.ok(id);

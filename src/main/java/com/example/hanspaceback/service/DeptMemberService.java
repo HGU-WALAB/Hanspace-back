@@ -1,9 +1,6 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.Department;
-import com.example.hanspaceback.domain.DeptMember;
-import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.domain.Space;
+import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.request.DeptMemberRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
@@ -44,7 +41,7 @@ public class DeptMemberService {
 //                .approve(request.getApprove()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
                 .approve("승인 대기") // default : 승인대기
 //                .permission(request.getPermission()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
-                .permission("user") // default : user
+                .deptRole(DeptRole.USER) // default : user
                 .build();
         deptMemberRepository.save(deptMember);
     }
@@ -62,7 +59,7 @@ public class DeptMemberService {
             response.setDeptId(deptMember.getDepartment().getDeptId());
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
-            response.setPermission(deptMember.getPermission());
+            response.setDeptRole(deptMember.getDeptRole());
             responses.add(response);
         }
         return responses;
@@ -77,7 +74,7 @@ public class DeptMemberService {
             response.setDeptId(deptMember.getDepartment().getDeptId());
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
-            response.setPermission(deptMember.getPermission());
+            response.setDeptRole(deptMember.getDeptRole());
             responses.add(response);
         }
         return responses;
@@ -95,7 +92,57 @@ public class DeptMemberService {
             response.setDeptId(deptMember.getDepartment().getDeptId());
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
-            response.setPermission(deptMember.getPermission());
+            response.setDeptRole(deptMember.getDeptRole());
+            responses.add(response);
+        }
+        return responses;
+    }
+//    public List<DepartmentResponse> findDeptMembersByMemberId(Long memberId) {
+//        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
+//        List<DepartmentResponse> responses = new ArrayList<>();
+//
+//        for (DeptMember deptMember : deptMembers) {
+//            DepartmentResponse response = new DepartmentResponse();
+//            Department department =  deptMember.getDepartment();
+//            response.setDeptId(department.getDeptId());
+//            response.setSiteName(department.getSiteName());
+//            response.setDeptName(department.getDeptName());
+//            response.setLogo(department.getLogo());
+//            response.setColor(department.getColor());
+//            response.setUserAccept(department.isUserAccept());
+//            response.setMaxRserveCount(department.getMaxReserveCount());
+//            response.setLink(department.getLink());
+//            response.setExtraInfo(department.getExtraInfo());
+//            response.setSiteInfoTitle(department.getSiteInfoTitle());
+//            response.setSiteInfoDetail(department.getSiteInfoDetail());
+//            responses.add(response);
+//        }
+//        return responses;
+//    }
+
+    public List<DeptMemberResponse> findDeptMembersByMemberId(Long memberId) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
+        List<DeptMemberResponse> responses = new ArrayList<>();
+
+        for (DeptMember deptMember : deptMembers) {
+            DeptMemberResponse response = new DeptMemberResponse();
+            Department department =  deptMember.getDepartment();
+
+            DepartmentResponse departmentResponse = new DepartmentResponse();
+
+            departmentResponse.setSiteName(department.getSiteName());
+            departmentResponse.setDeptName(department.getDeptName());
+            departmentResponse.setLogo(department.getLogo());
+            departmentResponse.setColor(department.getColor());
+            departmentResponse.setUserAccept(department.isUserAccept());
+            departmentResponse.setMaxRserveCount(department.getMaxReserveCount());
+            departmentResponse.setLink(department.getLink());
+            departmentResponse.setExtraInfo(department.getExtraInfo());
+            departmentResponse.setSiteInfoTitle(department.getSiteInfoTitle());
+            departmentResponse.setSiteInfoDetail(department.getSiteInfoDetail());
+
+            response.setDepartmentResponse(departmentResponse);
+            response.setDeptRole(deptMember.getDeptRole());
             responses.add(response);
         }
         return responses;

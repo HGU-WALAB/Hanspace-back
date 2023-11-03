@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@RequestMapping("/reserve")
+@RequestMapping("hanSpace/reserve")
 public class ReserveController {
     private final ReserveService reserveService;
     private final ReserveMemberService reserveMemberService;

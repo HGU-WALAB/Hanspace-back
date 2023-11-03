@@ -25,6 +25,8 @@ public class Member extends BaseEntity{
     private Long memberId;
     private String name;
     private String email;
+
+    private HanRole hanRole;
     public void update(MemberRequest request){
         this.name = request.getName();
         this.email = request.getEmail();

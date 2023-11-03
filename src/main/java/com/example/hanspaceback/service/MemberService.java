@@ -1,14 +1,11 @@
 package com.example.hanspaceback.service;
 
-import com.example.hanspaceback.domain.Department;
-import com.example.hanspaceback.domain.DeptMember;
-import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.domain.ReserveMember;
+import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.MemberRequest;
-import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
 import com.example.hanspaceback.exception.DuplicateMemberException;
+import com.example.hanspaceback.jwt.HanSpaceLoginRequest;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
@@ -36,6 +33,7 @@ public class MemberService {
             member = Member.builder()
                     .name(request.getName())
                     .email(request.getEmail())
+                    .hanRole(request.getHanRole())
                     .build();
             memberRepository.save(member);
         }else{
@@ -60,7 +58,7 @@ public class MemberService {
                 .department(department)
                 .member(member)
                 .approve("승인 대기")
-                .permission("user")
+                .deptRole(DeptRole.USER)
                 .build();
         deptMemberRepository.save(deptMember);
 
@@ -68,6 +66,10 @@ public class MemberService {
                 .member(member)
                 .build();
         reserveMemberRepository.save(reserveMember);
+    }
+    public Member findByEmail(String email) {
+        Member member = memberRepository.findByEmail(email);
+        return member;
     }
 
     public List<MemberResponse> findAll(){
@@ -93,5 +95,11 @@ public class MemberService {
     }
     public void delete(Long id){
         memberRepository.deleteById(id);
+    }
+
+    public Member login(HanSpaceLoginRequest hanSpaceLoginRequest) {
+        Member member = memberRepository.findByEmail(hanSpaceLoginRequest.getEmail());
+
+        return member;
     }
 }

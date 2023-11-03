@@ -13,14 +13,15 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@RequestMapping("/hanSpace/member")
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/member/add")
+    @PostMapping("/add")
     public void add(@RequestBody MemberRequest request){
         memberService.add(request);
     }
-    @PostMapping("/member/signup")
+    @PostMapping("/signup")
     public void signup(@RequestBody MemberRequest request){
         memberService.signup(request);
     }
@@ -29,16 +30,16 @@ public class MemberController {
 //        return ResponseEntity.ok(memberService.findAll());
 //    }
 
-    @GetMapping("/member/list")
+    @GetMapping("/list")
     public ResponseEntity<List<MemberResponse>> findAll(){
         return ResponseEntity.ok(memberService.findAll());
     }
-    @PatchMapping("/member/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Member> update(@PathVariable Long id, @RequestBody MemberRequest request){
         return ResponseEntity.ok(memberService.update(id, request));
     }
 
-    @DeleteMapping("/member/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
         memberService.delete(id);
         return ResponseEntity.ok(id);
