@@ -15,26 +15,11 @@ public class HanSpaceMemberInfoResponse {
     private HanRole hanRole;
     private List<DepartmentResponse> departmentResponses;
     private List<DeptMemberResponse> deptMemberResponses;
-    public HanSpaceMemberInfoResponse(String loginId, String nickname, HanRole hanRole, List<DeptMemberResponse> deptMemberResponses) {
+
+    public HanSpaceMemberInfoResponse(String loginId, String nickname, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
         this.email = loginId;
         this.name = nickname;
         this.hanRole = hanRole;
-        this.deptMemberResponses = deptMemberResponses;
+        this.departmentResponses = departmentResponses;
     }
-//    private List<DeptRole> deptRoles;
-//    public HanSpaceMemberInfoResponse(String loginId, String nickname, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
-//        this.email = loginId;
-//        this.name = nickname;
-//        this.hanRole = hanRole;
-//        this.departmentResponses = departmentResponses;
-//    }
-//
-//    public HanSpaceMemberInfoResponse(String loginId, String nickname, HanRole hanRole, List<DepartmentResponse> departmentResponses, List<DeptRole> deptRoles) {
-//        this.email = loginId;
-//        this.name = nickname;
-//        this.hanRole = hanRole;
-//        this.departmentResponses = departmentResponses;
-//        this.deptRoles = deptRoles;
-//    }
-
 }
