@@ -97,52 +97,37 @@ public class DeptMemberService {
         }
         return responses;
     }
-//    public List<DepartmentResponse> findDeptMembersByMemberId(Long memberId) {
-//        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
-//        List<DepartmentResponse> responses = new ArrayList<>();
-//
-//        for (DeptMember deptMember : deptMembers) {
-//            DepartmentResponse response = new DepartmentResponse();
-//            Department department =  deptMember.getDepartment();
-//            response.setDeptId(department.getDeptId());
-//            response.setSiteName(department.getSiteName());
-//            response.setDeptName(department.getDeptName());
-//            response.setLogo(department.getLogo());
-//            response.setColor(department.getColor());
-//            response.setUserAccept(department.isUserAccept());
-//            response.setMaxRserveCount(department.getMaxReserveCount());
-//            response.setLink(department.getLink());
-//            response.setExtraInfo(department.getExtraInfo());
-//            response.setSiteInfoTitle(department.getSiteInfoTitle());
-//            response.setSiteInfoDetail(department.getSiteInfoDetail());
-//            responses.add(response);
-//        }
-//        return responses;
-//    }
+    public List<DepartmentResponse> findDeptMembersByMemberId(Long memberId) {
+        List<DepartmentResponse> responses = new ArrayList<>();
+        List<Department> departments = departmentRepository.findAll();
+        for (Department department : departments) {
+            List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
 
-    public List<DeptMemberResponse> findDeptMembersByMemberId(Long memberId) {
-        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
-        List<DeptMemberResponse> responses = new ArrayList<>();
+            DepartmentResponse response = new DepartmentResponse();
 
-        for (DeptMember deptMember : deptMembers) {
-            DeptMemberResponse response = new DeptMemberResponse();
-            Department department =  deptMember.getDepartment();
+            response.setDeptId(department.getDeptId());
+            response.setSiteName(department.getSiteName());
+            response.setDeptName(department.getDeptName());
+            response.setLogo(department.getLogo());
+            response.setColor(department.getColor());
+            response.setUserAccept(department.isUserAccept());
+            response.setMaxRserveCount(department.getMaxReserveCount());
+            response.setLink(department.getLink());
+            response.setExtraInfo(department.getExtraInfo());
+            response.setSiteInfoTitle(department.getSiteInfoTitle());
+            response.setSiteInfoDetail(department.getSiteInfoDetail());
 
-            DepartmentResponse departmentResponse = new DepartmentResponse();
+            List<DeptMemberResponse> deptMemberResponses = new ArrayList<>();
+            for (DeptMember deptMember : deptMembers) {
+                if(deptMember.getDepartment().getDeptId() == department.getDeptId()) {
+                    DeptMemberResponse deptMemberResponse = new DeptMemberResponse();
+                    deptMemberResponse.setDeptMemberId(deptMember.getId());
+                    deptMemberResponse.setDeptRole(deptMember.getDeptRole());
+                    deptMemberResponses.add(deptMemberResponse);
+                }
+            }
 
-            departmentResponse.setSiteName(department.getSiteName());
-            departmentResponse.setDeptName(department.getDeptName());
-            departmentResponse.setLogo(department.getLogo());
-            departmentResponse.setColor(department.getColor());
-            departmentResponse.setUserAccept(department.isUserAccept());
-            departmentResponse.setMaxRserveCount(department.getMaxReserveCount());
-            departmentResponse.setLink(department.getLink());
-            departmentResponse.setExtraInfo(department.getExtraInfo());
-            departmentResponse.setSiteInfoTitle(department.getSiteInfoTitle());
-            departmentResponse.setSiteInfoDetail(department.getSiteInfoDetail());
-
-            response.setDepartmentResponse(departmentResponse);
-            response.setDeptRole(deptMember.getDeptRole());
+            response.setDeptMemberResponse(deptMemberResponses);
             responses.add(response);
         }
         return responses;

@@ -11,5 +11,5 @@ public class DeptMemberResponse {
     private Long memberId;
     private String approve;
     private DeptRole deptRole;
-    private DepartmentResponse departmentResponse;
+//    private DepartmentResponse departmentResponse;
 }

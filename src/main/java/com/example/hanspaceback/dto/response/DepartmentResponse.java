@@ -3,6 +3,8 @@ package com.example.hanspaceback.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepartmentResponse {
@@ -17,4 +19,6 @@ public class DepartmentResponse {
     private String extraInfo;
     private String siteInfoTitle;
     private String siteInfoDetail;
+
+    private List<DeptMemberResponse> deptMemberResponse;
 }

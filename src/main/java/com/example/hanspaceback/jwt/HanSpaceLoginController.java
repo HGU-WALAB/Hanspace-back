@@ -53,26 +53,13 @@ public class HanSpaceLoginController {
     @GetMapping("/info")
     public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(String email) {
         Member member = memberService.findByEmail(email);
-//        List<DepartmentResponse> department = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
-        List<DeptMemberResponse> deptMembers = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
+        List<DepartmentResponse> department = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
-//        List<DeptRole> deptRoles = new ArrayList<>();
-
-//        for (DepartmentResponse dept : department) {
-//            List<DeptMemberResponse> deptMemberResponses = deptMemberService.findByDeptMemberFetchJoin(dept.getDeptId());
-//
-//            for(DeptMemberResponse deptMemberResponse : deptMemberResponses){
-//                DeptRole deptRole = deptMemberResponse.getDeptRole();
-//                if (deptRole != null) { // deptRole이 null이 아닐 경우에만 리스트에 추가합니다.
-//                    deptRoles.add(deptRole);
-//                }
-//            }
-//        }
         HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
                 member.getEmail(),
                 member.getName(),
                 member.getHanRole(),
-                deptMembers
+                department
         );
 
         return ResponseEntity.ok(response);
