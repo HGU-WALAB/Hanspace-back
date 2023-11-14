@@ -9,10 +9,11 @@ import java.util.Date;
 public class HanSpaceTokenUtil {
 
     // JWT Token 발급
-    public static String createToken(String email, String key, long expireTimeMs) {
+    public static String createToken(String email, Long memberId, String key, long expireTimeMs) {
         // Claim = Jwt Token에 들어갈 정보
         Claims claims = Jwts.claims();
         claims.put("email", email);
+        claims.put("memberId", memberId);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -24,6 +25,11 @@ public class HanSpaceTokenUtil {
 
     public static String getEmail(String token, String secretKey) {
         return extractClaims(token, secretKey).get("email").toString();
+    }
+
+    public static Long getMemberId(String token, String secretKey) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        return Long.valueOf(claims.get("memberId").toString());
     }
 
     // 밝급된 Token이 만료 시간이 지났는지 체크

@@ -6,9 +6,11 @@ import com.example.hanspaceback.dto.request.DeptMemberRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.DeptMemberResponse;
 import com.example.hanspaceback.dto.response.MemberResponse;
+import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.service.DeptMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,12 +46,14 @@ public class DeptMemberController {
     public ResponseEntity<List<DeptMemberResponse>> findDeptMembersNApprove(@PathVariable Long deptId){
         return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "승인 대기"));
     }
-    @GetMapping("/list/member/add/{memberId}")
-    public ResponseEntity<List<DepartmentResponse>> findMemberIdAdd(@PathVariable Long memberId){
+    @GetMapping("/list/member/add")
+    public ResponseEntity<List<DepartmentResponse>> findMemberIdAdd(@AuthenticationPrincipal CustomUserDetails currentUserDetails){
+        Long memberId = currentUserDetails.getMemberId();
         return ResponseEntity.ok(deptMemberService.findAddDeptMembersByMemberId(memberId));
     }
-    @GetMapping("/list/member/nadd/{memberId}")
-    public ResponseEntity<List<DepartmentResponse>> findMemberIdNAdd(@PathVariable Long memberId){
+    @GetMapping("/list/member/nadd")
+    public ResponseEntity<List<DepartmentResponse>> findMemberIdNAdd(@AuthenticationPrincipal CustomUserDetails currentUserDetails){
+        Long memberId = currentUserDetails.getMemberId();
         return ResponseEntity.ok(deptMemberService.findNAddDeptMembersByMemberId(memberId));
     }
     @GetMapping("/{id}")

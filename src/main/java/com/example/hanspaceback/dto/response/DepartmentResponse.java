@@ -20,5 +20,6 @@ public class DepartmentResponse {
     private String siteInfoTitle;
     private String siteInfoDetail;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<DeptMemberResponse> deptMemberResponse;
 }

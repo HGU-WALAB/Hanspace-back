@@ -5,11 +5,13 @@ import com.example.hanspaceback.dto.request.RegularReserveRequest;
 import com.example.hanspaceback.dto.request.ReserveRequest;
 import com.example.hanspaceback.dto.response.ReserveResponse;
 import com.example.hanspaceback.dto.response.SpaceWithReservesResponse;
+import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.service.RegularReserveService;
 import com.example.hanspaceback.service.ReserveMemberService;
 import com.example.hanspaceback.service.ReserveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,8 +43,9 @@ public class ReserveController {
         return ResponseEntity.ok(reserveService.findReserveFetchJoin());
     }
     // reserveMember findByMemberId
-    @GetMapping("/list/member/{memberId}")
-    public ResponseEntity<List<ReserveResponse>> findAll(@PathVariable Long memberId){
+    @GetMapping("/list/member")
+    public ResponseEntity<List<ReserveResponse>> findAll(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        Long memberId = customUserDetails.getMemberId();
         return ResponseEntity.ok(reserveMemberService.findByMemberId(memberId));
     }
     @GetMapping("/list/{spaceId}")

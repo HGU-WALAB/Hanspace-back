@@ -10,6 +10,7 @@ import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
 import com.example.hanspaceback.repository.ReserveMemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +72,10 @@ public class MemberService {
         Member member = memberRepository.findByEmail(email);
         return member;
     }
-
+    public Member findById(Long memberId) {
+        Member member = memberRepository.findById(memberId).get();
+        return member;
+    }
     public List<MemberResponse> findAll(){
         List<Member> members = memberRepository.findAll();
         List<MemberResponse> responses = new ArrayList<>();
@@ -87,12 +91,20 @@ public class MemberService {
         }
         return responses;
     }
-    public Member update(Long id, MemberRequest request){
-        Member member = memberRepository.findById(id).get();
+    public Member update(Long memberId, MemberRequest request){
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + memberId));
         member.update(request);
         memberRepository.save(member);
         return member;
     }
+
+    //    public Member update(String email, MemberRequest request){
+//        Member member = memberRepository.findByEmail(email);
+//        member.update(request);
+//        memberRepository.save(member);
+//        return member;
+//    }
     public void delete(Long id){
         memberRepository.deleteById(id);
     }

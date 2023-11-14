@@ -51,13 +51,17 @@ public class HanSpaceTokenFilter extends OncePerRequestFilter {
 
         // Jwt Token에서 email 추출
         String email = HanSpaceTokenUtil.getEmail(token, secretKey);
+        Long memberId = HanSpaceTokenUtil.getMemberId(token, secretKey);
 
         // 추출한 email User 찾아오기
         Member loginMember = memberService.findByEmail(email);
-
+//        Member loginMemberId = memberService.findById(memberId);
         // email 정보로 UsernamePasswordAuthenticationToken 발급
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                loginMember.getEmail(), null, List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())));
+//                loginMember.getEmail(), null, List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())));
+                new CustomUserDetails(loginMember.getEmail(), loginMember.getMemberId(), List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name()))),
+                null,
+                List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())));
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         // 권한 부여
