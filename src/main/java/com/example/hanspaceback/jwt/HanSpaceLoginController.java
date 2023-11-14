@@ -45,7 +45,7 @@ public class HanSpaceLoginController {
         String secretKey = "my-secret-key-123123";
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
 
-        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), secretKey, expireTimeMs);
+        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), member.getMemberId(), secretKey, expireTimeMs);
 
         return ResponseEntity.ok(new HanSpaceTokenResponse(jwtToken));
     }
