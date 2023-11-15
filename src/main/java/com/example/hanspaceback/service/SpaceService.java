@@ -7,10 +7,14 @@ import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.SpaceRepository;
 import com.example.hanspaceback.repository.SpaceTimeExtraRepository;
+import com.example.hanspaceback.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +24,14 @@ import java.util.List;
 public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final DepartmentRepository departmentRepository;
-    public void create(SpaceRequest request){
+    private final S3Uploader s3Uploader;
+    public void create(SpaceRequest request, MultipartFile image) throws IOException {
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
+        String imageUrl = null;
+
+        if(!image.isEmpty()) {
+            imageUrl = s3Uploader.upload(image,"images");
+        }
         Space space = Space.builder()
                 .name(request.getName())
                 .headCount(request.getHeadCount())
@@ -30,7 +40,7 @@ public class SpaceService {
                 .detail(request.getDetail())
                 .availability(request.isAvailability())
                 .department(department)
-                .image(request.getImage())
+                .image(imageUrl)
                 .build();
         spaceRepository.save(space);
     }
@@ -55,9 +65,9 @@ public class SpaceService {
         }
         return responses;
     }
-    public Space update(Long id, SpaceRequest request){
+    public Space update(Long id, SpaceRequest request, MultipartFile image) throws IOException {
         Space space = spaceRepository.findById(id).orElseThrow();
-        space.update(request);
+        space.update(request, image);
         spaceRepository.save(space);
         return space;
     }

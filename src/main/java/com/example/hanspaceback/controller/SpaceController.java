@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,8 +23,8 @@ public class SpaceController {
     private final SpaceService spaceService;
 
     @PostMapping
-    public void create(@RequestBody SpaceRequest request){
-        spaceService.create(request);
+    public void create(@ModelAttribute SpaceRequest request, @RequestParam(value="image", required = false) MultipartFile image) throws IOException {
+        spaceService.create(request, image);
     }
     @GetMapping("/list")
     public ResponseEntity<List<Space>> findSpaceFetchJoin(){
@@ -33,8 +35,8 @@ public class SpaceController {
         return ResponseEntity.ok(spaceService.findByDeptId(deptId));
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<Space> update(@PathVariable Long id, @RequestBody SpaceRequest request){
-        return ResponseEntity.ok(spaceService.update(id, request));
+    public ResponseEntity<Space> update(@PathVariable Long id, @RequestBody SpaceRequest request, @RequestParam(value="image") MultipartFile image) throws IOException {
+        return ResponseEntity.ok(spaceService.update(id, request, image));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id){
