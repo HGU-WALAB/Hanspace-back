@@ -25,13 +25,15 @@ public class ReserveController {
     private final ReserveMemberService reserveMemberService;
     private final RegularReserveService regularReserveService;
     @PostMapping
-    public void create(@RequestBody ReserveRequest request){
-        reserveService.create(request);
+    public void create(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody ReserveRequest request){
+        Long memberId = customUserDetails.getMemberId();
+        reserveService.create(memberId, request);
     }
     @PostMapping("/regularReserve")
-    public ReserveResponse create(@RequestBody RegularReserveRequest request){
+    public ReserveResponse create(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody RegularReserveRequest request){
 //        RegularReserveResponse response = regularReserveService.create(request, reserveRequest);
-        ReserveResponse response = regularReserveService.create(request);
+        Long memberId = customUserDetails.getMemberId();
+        ReserveResponse response = regularReserveService.create(memberId, request);
         return response;
     }
     @GetMapping("/count")

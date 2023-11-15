@@ -16,9 +16,9 @@ public class HanSpaceMemberInfoResponse {
     private List<DepartmentResponse> departmentResponses;
     private List<DeptMemberResponse> deptMemberResponses;
 
-    public HanSpaceMemberInfoResponse(String loginId, String nickname, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
+    public HanSpaceMemberInfoResponse(String loginId, String name, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
         this.email = loginId;
-        this.name = nickname;
+        this.name = name;
         this.hanRole = hanRole;
         this.departmentResponses = departmentResponses;
     }

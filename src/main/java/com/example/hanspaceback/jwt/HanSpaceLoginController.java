@@ -10,7 +10,9 @@ import com.example.hanspaceback.dto.response.DeptMemberResponse;
 import com.example.hanspaceback.service.DeptMemberService;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,15 +46,17 @@ public class HanSpaceLoginController {
         // 로그인 성공 => Jwt Token 발급
         String secretKey = "my-secret-key-123123";
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
+        List<DepartmentResponse> departmentResponses = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
-        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), member.getMemberId(), secretKey, expireTimeMs);
+        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), member.getMemberId(), secretKey, expireTimeMs, departmentResponses);
 
         return ResponseEntity.ok(new HanSpaceTokenResponse(jwtToken));
     }
 
     @GetMapping("/info")
-    public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(String email) {
-        Member member = memberService.findByEmail(email);
+    public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(@AuthenticationPrincipal CustomUserDetails currentUser) {
+        Long memberId = currentUser.getMemberId(); // CustomUserDetails에서 memberId를 가져옴
+        Member member = memberService.findById(memberId);
         List<DepartmentResponse> department = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
         HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
@@ -64,6 +68,35 @@ public class HanSpaceLoginController {
 
         return ResponseEntity.ok(response);
     }
+//@GetMapping("/info")
+//public ResponseEntity<HanSpaceMemberInfoResponse> memberInfo(@AuthenticationPrincipal CustomUserDetails currentUser) {
+//    Long memberId = currentUser.getMemberId(); // CustomUserDetails에서 memberId를 가져옴
+//    Member member = memberService.findById(memberId); // memberId를 사용하여 사용자 정보를 조회합니다.
+//    if (member == null) {
+//        // 적절한 예외 처리를 수행합니다.
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//    }
+//    // 토큰에서 deptId와 deptRole 정보를 추출합니다.
+//    List<DeptMemberResponse> deptMemberResponses = deptMemberService.findByDeptMemberFetchJoin(memberId).stream()
+//            .map(deptMember -> {
+//                DeptMemberResponse response = new DeptMemberResponse();
+//                response.setDeptId(deptMember.getDeptId());
+//                response.setDeptRole(deptMember.getDeptRole());
+//                return response;
+//            }).collect(Collectors.toList());
+//
+//    // 응답 객체를 생성하여 반환합니다.
+//    HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
+//            member.getEmail(),
+//            member.getName(),
+//            member.getHanRole(),
+//            null, // departmentResponses는 여기서 사용하지 않습니다.
+//            deptMemberResponses
+//    );
+//
+//    return ResponseEntity.ok(response);
+//}
+
 
     @GetMapping("/admin")
     public String adminPage() {

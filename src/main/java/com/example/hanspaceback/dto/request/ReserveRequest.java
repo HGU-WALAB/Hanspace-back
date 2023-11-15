@@ -9,7 +9,7 @@ import java.util.Date;
 public class ReserveRequest {
     private Long deptId;
     private Long spaceId;
-    private Long memberId;
+//    private Long memberId;
     private Long regularReserveId;
     private String reserveDate;
     private String startTime;

@@ -114,4 +114,28 @@ public class DepartmentService {
         Long deptId = department.getDeptId();
         return deptId;
     }
+
+    public List<DepartmentResponse> findByDeptRole(Long memberId, DeptRole deptRole) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberIdAndDeptRole(memberId, deptRole);
+        List<DepartmentResponse> responses = new ArrayList<>();
+
+        for (DeptMember deptMember : deptMembers) {
+            DepartmentResponse response = new DepartmentResponse();
+            response.setDeptId(deptMember.getDepartment().getDeptId());
+            response.setSiteName(deptMember.getDepartment().getSiteName());
+            response.setDeptName(deptMember.getDepartment().getDeptName());
+            response.setLogo(deptMember.getDepartment().getLogo());
+            response.setColor(deptMember.getDepartment().getColor());
+            response.setUserAccept(deptMember.getDepartment().isUserAccept());
+//            response.setMaxReserveCount(deptMember.getDepartment().getMaxReserveCount());
+            response.setLink(deptMember.getDepartment().getLink());
+            response.setExtraInfo(deptMember.getDepartment().getExtraInfo());
+            response.setSiteInfoTitle(deptMember.getDepartment().getSiteInfoTitle());
+            response.setSiteInfoDetail(deptMember.getDepartment().getSiteInfoDetail());
+
+            responses.add(response);
+        }
+        return responses;
+    }
+
 }
