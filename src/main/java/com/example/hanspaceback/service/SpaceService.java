@@ -20,7 +20,6 @@ import java.util.List;
 public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final DepartmentRepository departmentRepository;
-    private final SpaceTimeExtraRepository spaceTimeExtraRepository;
     public void create(SpaceRequest request){
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
         Space space = Space.builder()

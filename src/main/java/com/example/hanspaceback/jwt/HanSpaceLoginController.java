@@ -44,7 +44,7 @@ public class HanSpaceLoginController {
         }
 
         // 로그인 성공 => Jwt Token 발급
-        String secretKey = "my-secret-key-123123";
+        String secretKey = "hanspace2023AAAHanNaLee_HyelimChio_YujinJang";
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
         List<DepartmentResponse> departmentResponses = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
