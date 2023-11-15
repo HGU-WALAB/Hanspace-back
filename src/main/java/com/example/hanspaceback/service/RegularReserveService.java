@@ -22,7 +22,7 @@ public class RegularReserveService {
     private final MemberRepository memberRepository;
     private final ReserveMemberRepository reserveMemberRepository;
 
-    public ReserveResponse create(RegularReserveRequest request){
+    public ReserveResponse create(Long memberId, RegularReserveRequest request){
             RegularReserve regularReserve = RegularReserve.builder()
                 .week(request.getWeek())
                 .startDate(request .getStartDate())
@@ -34,7 +34,7 @@ public class RegularReserveService {
         Reserve lastReserve = null;
         for(int i = 0; i < request.getReserveCount(); i++) {
             Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-            Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+            Member member = memberRepository.findById(memberId).orElseThrow();
 
             Reserve reserve = Reserve.builder()
                     .reserveDate(request.getReserveDate()[i])

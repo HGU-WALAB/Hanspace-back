@@ -1,13 +1,16 @@
 package com.example.hanspaceback.domain;
 
 import com.example.hanspaceback.dto.request.SpaceRequest;
+import com.example.hanspaceback.s3.S3Uploader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,14 +37,20 @@ public class Space extends BaseEntity{
     @JoinColumn(name = "deptId")
     private Department department;
 
-    public void update(SpaceRequest request){
+    @Transient
+    private S3Uploader s3Uploader;
+    public void update(SpaceRequest request, MultipartFile image) throws IOException {
         this.name = request.getName();
         this.headCount = request.getHeadCount();
         this.availableStart = request.getAvailableStart();
         this.availableEnd = request.getAvailableEnd();
         this.detail = request.getDetail();
         this.availability = request.isAvailability();
-        this.image = request.getImage();
+        // 이미지가 존재하면 S3에 업로드
+        if (image != null && !image.isEmpty()) {
+            String imageUrl = s3Uploader.upload(image, "images");
+            this.image = imageUrl;
+        }
     }
     @JsonIgnore
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)

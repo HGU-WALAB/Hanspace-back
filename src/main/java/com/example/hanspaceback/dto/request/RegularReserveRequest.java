@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class RegularReserveRequest {
     private Long spaceId;
-    private Long memberId;
+//    private Long memberId;
     private Long reserveReserveId;
     private String[] reserveDate;
     private String startTime;

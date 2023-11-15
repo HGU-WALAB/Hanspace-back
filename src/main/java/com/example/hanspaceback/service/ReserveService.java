@@ -5,6 +5,7 @@ import com.example.hanspaceback.dto.request.ReserveRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.ReserveResponse;
 import com.example.hanspaceback.dto.response.SpaceWithReservesResponse;
+import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class ReserveService {
     private final MemberRepository memberRepository;
     private final SpaceRepository spaceRepository;
     private final ReserveMemberRepository reserveMemberRepository;
-    public void create(ReserveRequest request){
+    public void create(Long memberId, ReserveRequest request){
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
-        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+        Member member = memberRepository.findById(memberId).orElseThrow();
         Reserve reserve = Reserve.builder()
                 .reserveDate(request.getReserveDate())
                 .startTime(request.getStartTime())
@@ -33,7 +34,7 @@ public class ReserveService {
                 .extraInfoAns(request.getExtraInfoAns())
                 .invitedMemberEmail(request.getInvitedMemberEmail())
                 .space(space)
-                .createMemberId(request.getMemberId())
+                .createMemberId(memberId)
                 .build();
         reserveRepository.save(reserve);
 

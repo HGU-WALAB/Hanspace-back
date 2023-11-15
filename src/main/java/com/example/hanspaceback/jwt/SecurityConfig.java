@@ -1,5 +1,6 @@
 package com.example.hanspaceback.jwt;
 
+import com.example.hanspaceback.domain.DeptRole;
 import com.example.hanspaceback.domain.HanRole;
 import com.example.hanspaceback.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final MemberService memberService;
-    private static String secretKey = "my-secret-key-123123";
+    private static String secretKey = "hanspace2023AAAHanNaLee_HyelimChio_YujinJang";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

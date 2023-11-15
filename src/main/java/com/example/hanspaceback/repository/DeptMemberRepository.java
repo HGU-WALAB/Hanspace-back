@@ -1,9 +1,6 @@
 package com.example.hanspaceback.repository;
 
-import com.example.hanspaceback.domain.Department;
-import com.example.hanspaceback.domain.DeptMember;
-import com.example.hanspaceback.domain.Member;
-import com.example.hanspaceback.domain.Space;
+import com.example.hanspaceback.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +20,6 @@ public interface DeptMemberRepository extends JpaRepository<DeptMember, Long> {
     DeptMember findByMemberAndDepartment(Member member, Department department);
 
     List<DeptMember> findByMember_MemberId(Long memberId);
+
+    List<DeptMember> findByMember_MemberIdAndDeptRole(Long memberId, DeptRole deptRole);
 }

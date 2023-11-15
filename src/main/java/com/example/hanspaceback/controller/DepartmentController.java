@@ -1,11 +1,14 @@
 package com.example.hanspaceback.controller;
 
 import com.example.hanspaceback.domain.Department;
+import com.example.hanspaceback.domain.DeptRole;
 import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
+import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -41,6 +44,20 @@ public class DepartmentController {
         Map<String, String> response = new HashMap<>();
         response.put("extraInfo", extraInfo);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/list/user")
+    public ResponseEntity<List<DepartmentResponse>> findByUser(@AuthenticationPrincipal CustomUserDetails currentUserDetails) {
+        Long memberId = currentUserDetails.getMemberId();
+        departmentService.findByDeptRole(memberId, DeptRole.USER);
+        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.USER));
+    }
+
+    @GetMapping("/list/admin")
+    public ResponseEntity<List<DepartmentResponse>> findByADMIN(@AuthenticationPrincipal CustomUserDetails currentUserDetails) {
+        Long memberId = currentUserDetails.getMemberId();
+        departmentService.findByDeptRole(memberId, DeptRole.ADMIN);
+        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.ADMIN));
     }
 
     @PatchMapping("/{id}")
