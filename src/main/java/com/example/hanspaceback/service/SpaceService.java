@@ -27,10 +27,10 @@ public class SpaceService {
     private final S3Uploader s3Uploader;
     public void create(SpaceRequest request, MultipartFile image) throws IOException {
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
-        String imageUrl = null;
+        String imageName = null;
 
         if(!image.isEmpty()) {
-            imageUrl = s3Uploader.upload(image,"images");
+            imageName = s3Uploader.upload(image,"images");
         }
         Space space = Space.builder()
                 .name(request.getName())
@@ -40,7 +40,7 @@ public class SpaceService {
                 .detail(request.getDetail())
                 .availability(request.isAvailability())
                 .department(department)
-                .image(imageUrl)
+                .image(imageName)
                 .build();
         spaceRepository.save(space);
     }
