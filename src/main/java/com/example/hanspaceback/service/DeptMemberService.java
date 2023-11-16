@@ -8,6 +8,7 @@ import com.example.hanspaceback.dto.response.DeptMemberResponse;
 import com.example.hanspaceback.dto.response.MemberResponse;
 import com.example.hanspaceback.dto.response.SpaceResponse;
 import com.example.hanspaceback.exception.DuplicateDeptMemberException;
+import com.example.hanspaceback.exception.MemberNotFoundException;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
@@ -191,14 +192,19 @@ public class DeptMemberService {
         return deptMember;
     }
 
-    public DeptMember update(Long id, DeptMemberRequest request){
-        DeptMember deptMember = deptMemberRepository.findById(id).orElseThrow();
+    public DeptMember update(Long memberId, DeptMemberRequest request){
+        DeptMember deptMember = deptMemberRepository.findByMember_MemberIdAndDepartment_DeptId(memberId, request.getDeptId());
+
+        if(deptMember == null){
+            throw new MemberNotFoundException("Member with ID " + memberId + " not found in department " + request.getDeptId());
+        }
         deptMember.update(request);
         deptMemberRepository.save(deptMember);
+
         return deptMember;
     }
 
-    public void delete(Long id){
-        deptMemberRepository.deleteById(id);
+    public void delete(Long memberId, DeptMemberRequest request){
+        deptMemberRepository.deleteByMember_MemberIdAndDepartment_DeptId(memberId, request.getDeptId());
     }
 }

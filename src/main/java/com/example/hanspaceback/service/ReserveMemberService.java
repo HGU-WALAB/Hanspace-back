@@ -66,6 +66,7 @@ public class ReserveMemberService {
             response.setExtraInfoAns(reserve.getExtraInfoAns());
             response.setInvitedMemberEmail(reserve.getInvitedMemberEmail());
             response.setSpaceId(reserve.getSpace().getSpaceId());
+            response.setSpaceName(reserve.getSpace().getName());
             responses.add(response);
         }
         return responses;

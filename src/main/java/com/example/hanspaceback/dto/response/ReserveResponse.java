@@ -10,6 +10,7 @@ public class ReserveResponse {
     // extraInfo, extraInfoAns, headCount,
     private Long reserveId;
     private Long spaceId;
+    private String spaceName;
     private Long memberId;
     private Long regularReserveId;
     private String reserveDate;

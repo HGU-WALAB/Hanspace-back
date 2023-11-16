@@ -22,4 +22,8 @@ public interface DeptMemberRepository extends JpaRepository<DeptMember, Long> {
     List<DeptMember> findByMember_MemberId(Long memberId);
 
     List<DeptMember> findByMember_MemberIdAndDeptRole(Long memberId, DeptRole deptRole);
+
+    void deleteByMember_MemberIdAndDepartment_DeptId(Long memberId, Long deptId);
+
+    DeptMember findByMember_MemberIdAndDepartment_DeptId(Long memberId, Long deptId);
 }
