@@ -56,17 +56,20 @@ public class DeptMemberController {
         Long memberId = currentUserDetails.getMemberId();
         return ResponseEntity.ok(deptMemberService.findNAddDeptMembersByMemberId(memberId));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<DeptMember> findbyId(@PathVariable Long id){
-        return ResponseEntity.ok(deptMemberService.findById(id));
+    @GetMapping("/memberId")
+    public ResponseEntity<DeptMember> findbyId(@AuthenticationPrincipal CustomUserDetails currentUserDetails){
+        Long memberId = currentUserDetails.getMemberId();
+        return ResponseEntity.ok(deptMemberService.findById(memberId));
     }
-    @PatchMapping("/{id}")
-    public ResponseEntity<DeptMember> update(@PathVariable Long id, @RequestBody DeptMemberRequest request){
-        return ResponseEntity.ok(deptMemberService.update(id, request));
+    @PatchMapping("/update")
+    public ResponseEntity<DeptMember> update(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @RequestBody DeptMemberRequest request){
+        Long memberId = currentUserDetails.getMemberId();
+        return ResponseEntity.ok(deptMemberService.update(memberId, request));
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Long> delete(@PathVariable Long id){
-        deptMemberService.delete(id);
-        return ResponseEntity.ok(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Long> delete(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @RequestBody DeptMemberRequest request){
+        Long memberId = currentUserDetails.getMemberId();
+        deptMemberService.delete(memberId, request);
+        return ResponseEntity.ok(memberId);
     }
 }
