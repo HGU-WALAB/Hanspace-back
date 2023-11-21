@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepartmentResponse {
     private Long deptId;
     private String siteName;
@@ -20,6 +20,6 @@ public class DepartmentResponse {
     private String siteInfoTitle;
     private String siteInfoDetail;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<DeptMemberResponse> deptMemberResponse;
 }
