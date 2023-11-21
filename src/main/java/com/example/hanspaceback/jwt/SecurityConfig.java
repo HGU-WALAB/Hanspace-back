@@ -31,7 +31,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/hanSpace/login", "/hanSpace/member/signup"
+                                "/hanSpace/login", "/hanSpace/member/signup", "/error"
                         )
                         .permitAll()
                 )

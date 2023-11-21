@@ -124,6 +124,7 @@ public class DeptMemberService {
                     DeptMemberResponse deptMemberResponse = new DeptMemberResponse();
                     deptMemberResponse.setDeptMemberId(deptMember.getId());
                     deptMemberResponse.setDeptRole(deptMember.getDeptRole());
+                    deptMemberResponse.setApprove(deptMember.getApprove());
                     deptMemberResponses.add(deptMemberResponse);
                 }
             }
