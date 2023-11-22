@@ -110,13 +110,13 @@ public class DeptMemberService {
             response.setSiteName(department.getSiteName());
             response.setDeptName(department.getDeptName());
             response.setLogo(department.getLogo());
-            response.setColor(department.getColor());
+//            response.setColor(department.getColor());
             response.setUserAccept(department.isUserAccept());
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
-            response.setSiteInfoTitle(department.getSiteInfoTitle());
-            response.setSiteInfoDetail(department.getSiteInfoDetail());
+//            response.setSiteInfoTitle(department.getSiteInfoTitle());
+//            response.setSiteInfoDetail(department.getSiteInfoDetail());
 
             List<DeptMemberResponse> deptMemberResponses = new ArrayList<>();
             for (DeptMember deptMember : deptMembers) {
@@ -146,13 +146,13 @@ public class DeptMemberService {
                 response.setSiteName(department.getSiteName());
                 response.setDeptName(department.getDeptName());
                 response.setLogo(department.getLogo());
-                response.setColor(department.getColor());
+//                response.setColor(department.getColor());
                 response.setUserAccept(department.isUserAccept());
                 response.setMaxRserveCount(department.getMaxReserveCount());
                 response.setLink(department.getLink());
                 response.setExtraInfo(department.getExtraInfo());
-                response.setSiteInfoTitle(department.getSiteInfoTitle());
-                response.setSiteInfoDetail(department.getSiteInfoDetail());
+//                response.setSiteInfoTitle(department.getSiteInfoTitle());
+//                response.setSiteInfoDetail(department.getSiteInfoDetail());
                 responses.add(response);
             }
         }
@@ -175,13 +175,13 @@ public class DeptMemberService {
                 response.setSiteName(dept.getSiteName());
                 response.setDeptName(dept.getDeptName());
                 response.setLogo(dept.getLogo());
-                response.setColor(dept.getColor());
+//                response.setColor(dept.getColor());
                 response.setUserAccept(dept.isUserAccept());
                 response.setMaxRserveCount(dept.getMaxReserveCount());
                 response.setLink(dept.getLink());
                 response.setExtraInfo(dept.getExtraInfo());
-                response.setSiteInfoTitle(dept.getSiteInfoTitle());
-                response.setSiteInfoDetail(dept.getSiteInfoDetail());
+//                response.setSiteInfoTitle(dept.getSiteInfoTitle());
+//                response.setSiteInfoDetail(dept.getSiteInfoDetail());
                 notAddedDepts.add(response);
             }
         }
