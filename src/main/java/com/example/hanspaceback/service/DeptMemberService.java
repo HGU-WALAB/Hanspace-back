@@ -28,13 +28,13 @@ public class DeptMemberService {
     private final DeptMemberRepository deptMemberRepository;
     private final MemberRepository memberRepository;
 
-    public void create(DeptMemberRequest request){
+    public void create(Long memberId, DeptMemberRequest request){
         int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), request.getMemberId());
         if (count > 0) {
             throw new DuplicateDeptMemberException("이미 존재하는 DeptMember입니다.");
         }
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
-        Member member = memberRepository.findById(request.getMemberId()).orElseThrow();
+        Member member = memberRepository.findById(memberId).orElseThrow();
 
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
