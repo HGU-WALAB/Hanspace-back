@@ -27,7 +27,7 @@ public class DepartmentService {
     private final MemberRepository memberRepository;
     private final DepartmentRepository departmentRepository;
     private final DeptMemberRepository deptMemberRepository;
-    public void create(DepartmentRequest request){
+    public void create(Long memberId, DepartmentRequest request){
         Department department = Department.builder()
                 .siteName(request.getSiteName())
                 .deptName(request.getDeptName())
@@ -42,7 +42,7 @@ public class DepartmentService {
                 .build();
         departmentRepository.save(department);
 
-        Member member = memberRepository.findById(request.getMemberId()).get();
+        Member member = memberRepository.findById(memberId).get();
 
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
