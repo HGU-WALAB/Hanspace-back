@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/hanSpace")
+@CrossOrigin("*")
 public class HanSpaceLoginController {
 
     private final MemberService memberService;
