@@ -22,8 +22,9 @@ import java.util.Map;
 public class DepartmentController {
     private final DepartmentService departmentService;
     @PostMapping
-    public void create(@RequestBody DepartmentRequest request){
-        departmentService.create(request);
+    public void create(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @RequestBody DepartmentRequest request){
+        Long memberId = currentUserDetails.getMemberId();
+        departmentService.create(memberId, request);
     }
 //    @GetMapping("/dept/list")
 //    public ResponseEntity<List<Department>> findAll(){
