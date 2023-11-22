@@ -27,28 +27,28 @@ public class Department extends BaseEntity{
     private String deptName;
     private String logo;
 //    @ColumnDefault("black")
-    private String color;
+//    private String color;
 //    @ColumnDefault("true")
     private boolean userAccept;
 //    @ColumnDefault("30")
     private int maxReserveCount;
     private String link;
     private String extraInfo;
-    private String siteInfoTitle;
-    @Lob
-    private String siteInfoDetail;
+//    private String siteInfoTitle;
+//    @Lob
+//    private String siteInfoDetail;
 
     public void update(DepartmentRequest request) {
         this.siteName = request.getSiteName();
         this.deptName = request.getDeptName();
         this.logo = request.getLogo();
-        this.color = request.getColor();
+//        this.color = request.getColor();
         this.userAccept = request.isUserAccept();
         this.maxReserveCount = request.getMaxRserveCount();
         this.link = request.getLink();
         this.extraInfo = request.getExtraInfo();
-        this.siteInfoTitle = request.getSiteInfoTitle();
-        this.siteInfoDetail = request.getSiteInfoDetail();
+//        this.siteInfoTitle = request.getSiteInfoTitle();
+//        this.siteInfoDetail = request.getSiteInfoDetail();
     }
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)

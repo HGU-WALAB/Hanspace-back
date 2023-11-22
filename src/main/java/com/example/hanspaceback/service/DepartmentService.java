@@ -32,13 +32,13 @@ public class DepartmentService {
                 .siteName(request.getSiteName())
                 .deptName(request.getDeptName())
                 .logo(request.getLogo())
-                .color(request.getColor())
+//                .color(request.getColor())
                 .userAccept(request.isUserAccept())
                 .maxReserveCount(request.getMaxRserveCount())
                 .link(request.getLink())
                 .extraInfo(request.getExtraInfo())
-                .siteInfoTitle(request.getSiteInfoTitle())
-                .siteInfoDetail(request.getSiteInfoDetail())
+//                .siteInfoTitle(request.getSiteInfoTitle())
+//                .siteInfoDetail(request.getSiteInfoDetail())
                 .build();
         departmentRepository.save(department);
 
@@ -66,13 +66,13 @@ public class DepartmentService {
             response.setSiteName(department.getSiteName());
             response.setDeptName(department.getDeptName());
             response.setLogo(department.getLogo());
-            response.setColor(department.getColor());
+//            response.setColor(department.getColor());
             response.setUserAccept(department.isUserAccept());
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
-            response.setSiteInfoTitle(department.getSiteInfoTitle());
-            response.setSiteInfoDetail(department.getSiteInfoDetail());
+//            response.setSiteInfoTitle(department.getSiteInfoTitle());
+//            response.setSiteInfoDetail(department.getSiteInfoDetail());
 
             responses.add(response);
         }
@@ -83,14 +83,14 @@ public class DepartmentService {
         Department department = departmentRepository.findById(id).get();
         DepartmentResponse response = new DepartmentResponse();
 
-//        response.setDeptId(department.getDeptId());
-//        response.setSiteName(department.getSiteName());
-//        response.setDeptName(department.getDeptName());
-//        response.setLogo(department.getLogo());
+        response.setDeptId(department.getDeptId());
+        response.setSiteName(department.getSiteName());
+        response.setDeptName(department.getDeptName());
+        response.setLogo(department.getLogo());
 //        response.setColor(department.getColor());
-//        response.setUserAccept(department.isUserAccept());
-//        response.setMaxRserveCount(department.getMaxRserveCount());
-//        response.setLink(department.getLink());
+        response.setUserAccept(department.isUserAccept());
+        response.setMaxRserveCount(department.getMaxReserveCount());
+        response.setLink(department.getLink());
         response.setExtraInfo(department.getExtraInfo());
 //        response.setSiteInfoTitle(department.getSiteInfoTitle());
 //        response.setSiteInfoDetail(department.getSiteInfoDetail());
@@ -125,13 +125,13 @@ public class DepartmentService {
             response.setSiteName(deptMember.getDepartment().getSiteName());
             response.setDeptName(deptMember.getDepartment().getDeptName());
             response.setLogo(deptMember.getDepartment().getLogo());
-            response.setColor(deptMember.getDepartment().getColor());
+//            response.setColor(deptMember.getDepartment().getColor());
             response.setUserAccept(deptMember.getDepartment().isUserAccept());
 //            response.setMaxReserveCount(deptMember.getDepartment().getMaxReserveCount());
             response.setLink(deptMember.getDepartment().getLink());
             response.setExtraInfo(deptMember.getDepartment().getExtraInfo());
-            response.setSiteInfoTitle(deptMember.getDepartment().getSiteInfoTitle());
-            response.setSiteInfoDetail(deptMember.getDepartment().getSiteInfoDetail());
+//            response.setSiteInfoTitle(deptMember.getDepartment().getSiteInfoTitle());
+//            response.setSiteInfoDetail(deptMember.getDepartment().getSiteInfoDetail());
 
             responses.add(response);
         }
