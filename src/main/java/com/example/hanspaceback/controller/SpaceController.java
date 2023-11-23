@@ -35,7 +35,7 @@ public class SpaceController {
         return ResponseEntity.ok(spaceService.findByDeptId(deptId));
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<Space> update(@PathVariable Long id, @RequestBody SpaceRequest request, @RequestParam(value="image") MultipartFile image) throws IOException {
+    public ResponseEntity<Space> update(@PathVariable Long id, @ModelAttribute SpaceRequest request, @RequestParam(value="image") MultipartFile image) throws IOException {
         return ResponseEntity.ok(spaceService.update(id, request, image));
     }
     @DeleteMapping("/{id}")

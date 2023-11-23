@@ -37,20 +37,21 @@ public class Space extends BaseEntity{
     @JoinColumn(name = "deptId")
     private Department department;
 
-    @Transient
-    private S3Uploader s3Uploader;
-    public void update(SpaceRequest request, MultipartFile image) throws IOException {
+//    @Transient
+//    private S3Uploader s3Uploader;
+    public void update(SpaceRequest request, String image) throws IOException {
         this.name = request.getName();
         this.headCount = request.getHeadCount();
         this.availableStart = request.getAvailableStart();
         this.availableEnd = request.getAvailableEnd();
         this.detail = request.getDetail();
         this.availability = request.isAvailability();
-        // 이미지가 존재하면 S3에 업로드
-        if (image != null && !image.isEmpty()) {
-            String imageUrl = s3Uploader.upload(image, "images");
-            this.image = imageUrl;
-        }
+//        // 이미지가 존재하면 S3에 업로드
+//        if (image != null && !image.isEmpty()) {
+//            String imageUrl = s3Uploader.upload(image, "images");
+//            this.image = imageUrl;
+//        }
+        this.image = image;
     }
     @JsonIgnore
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)

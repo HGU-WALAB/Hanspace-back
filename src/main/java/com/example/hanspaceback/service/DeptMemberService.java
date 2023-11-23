@@ -39,17 +39,12 @@ public class DeptMemberService {
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-//                .approve(request.getApprove()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
                 .approve("승인 대기") // default : 승인대기
-//                .permission(request.getPermission()) // deptMemberCreate 때 굳이 request에서 입력받을 필요 없다고 생각함
                 .deptRole(DeptRole.USER) // default : user
                 .build();
         deptMemberRepository.save(deptMember);
     }
 
-//    public List<DeptMember> findDeptMemberFetchJoin() {
-//        return deptMemberRepository.findDeptMemberFetchJoin();
-//    }
     public List<DeptMemberResponse> findDeptMemberFetchJoin() {
         List<DeptMember> deptMembers = deptMemberRepository.findAll();
         List<DeptMemberResponse> responses = new ArrayList<>();
@@ -109,14 +104,12 @@ public class DeptMemberService {
             response.setDeptId(department.getDeptId());
             response.setSiteName(department.getSiteName());
             response.setDeptName(department.getDeptName());
-            response.setLogo(department.getLogo());
-//            response.setColor(department.getColor());
+            response.setLogoImage(department.getLogoImage());
             response.setUserAccept(department.isUserAccept());
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
-//            response.setSiteInfoTitle(department.getSiteInfoTitle());
-//            response.setSiteInfoDetail(department.getSiteInfoDetail());
+            response.setDeptImage(department.getDeptImage());
 
             List<DeptMemberResponse> deptMemberResponses = new ArrayList<>();
             for (DeptMember deptMember : deptMembers) {
@@ -145,14 +138,12 @@ public class DeptMemberService {
                 response.setDeptId(department.getDeptId());
                 response.setSiteName(department.getSiteName());
                 response.setDeptName(department.getDeptName());
-                response.setLogo(department.getLogo());
-//                response.setColor(department.getColor());
+                response.setLogoImage(department.getLogoImage());
                 response.setUserAccept(department.isUserAccept());
                 response.setMaxRserveCount(department.getMaxReserveCount());
                 response.setLink(department.getLink());
                 response.setExtraInfo(department.getExtraInfo());
-//                response.setSiteInfoTitle(department.getSiteInfoTitle());
-//                response.setSiteInfoDetail(department.getSiteInfoDetail());
+                response.setDeptImage(department.getDeptImage());
                 responses.add(response);
             }
         }
@@ -174,14 +165,12 @@ public class DeptMemberService {
                 response.setDeptId(dept.getDeptId());
                 response.setSiteName(dept.getSiteName());
                 response.setDeptName(dept.getDeptName());
-                response.setLogo(dept.getLogo());
-//                response.setColor(dept.getColor());
+                response.setLogoImage(dept.getLogoImage());
                 response.setUserAccept(dept.isUserAccept());
                 response.setMaxRserveCount(dept.getMaxReserveCount());
                 response.setLink(dept.getLink());
                 response.setExtraInfo(dept.getExtraInfo());
-//                response.setSiteInfoTitle(dept.getSiteInfoTitle());
-//                response.setSiteInfoDetail(dept.getSiteInfoDetail());
+                response.setDeptImage(dept.getDeptImage());
                 notAddedDepts.add(response);
             }
         }

@@ -14,6 +14,4 @@ public class SpaceResponse {
     private String detail;
     private boolean availability;
     private String image;
-
-
 }

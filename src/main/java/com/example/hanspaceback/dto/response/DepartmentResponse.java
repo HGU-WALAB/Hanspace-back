@@ -11,15 +11,11 @@ public class DepartmentResponse {
     private Long deptId;
     private String siteName;
     private String deptName;
-    private String logo;
-//    private String color;
+    private String logoImage;
     private boolean userAccept;
     private int maxRserveCount;
     private String link;
     private String extraInfo;
-//    private String siteInfoTitle;
-//    private String siteInfoDetail;
-
-//    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String deptImage;
     private List<DeptMemberResponse> deptMemberResponse;
 }

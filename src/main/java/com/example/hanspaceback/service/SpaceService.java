@@ -67,7 +67,11 @@ public class SpaceService {
     }
     public Space update(Long id, SpaceRequest request, MultipartFile image) throws IOException {
         Space space = spaceRepository.findById(id).orElseThrow();
-        space.update(request, image);
+        String img = null;
+        if (image != null && !image.isEmpty()) {
+            img = s3Uploader.upload(image, "images");
+        }
+        space.update(request, img);
         spaceRepository.save(space);
         return space;
     }
