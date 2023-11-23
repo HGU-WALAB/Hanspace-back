@@ -22,8 +22,9 @@ import java.util.List;
 public class DeptMemberController {
     private final DeptMemberService deptMemberService;
     @PostMapping
-    public void create(@RequestBody DeptMemberRequest request){
-        deptMemberService.create(request);
+    public void create(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody DeptMemberRequest request){
+        Long memberId = customUserDetails.getMemberId();
+        deptMemberService.create(memberId, request);
     }
 //    @GetMapping("/deptMember/list")
 //    public ResponseEntity<List<DeptMember>> findDeptMemberFetchJoin(){
