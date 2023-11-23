@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Slf4j
-@RequiredArgsConstructor    // final 멤버변수가 있으면 생성자 항목에 포함시킴
-//@Component
+@RequiredArgsConstructor
 @Service
 public class S3Uploader {
     private final AmazonS3 amazonS3Client;

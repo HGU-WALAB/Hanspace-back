@@ -1,5 +1,5 @@
-ALTER TABLE member ADD UNIQUE (email);
-ALTER TABLE department ADD UNIQUE (link);
+# ALTER TABLE member ADD UNIQUE (email);
+# ALTER TABLE department ADD UNIQUE (link);
 
 INSERT IGNORE INTO member (email, name, reg_date, mod_date, han_role) VALUES ('admin@hanspace.com', 'superAdmin', NOW(), NOW(), 0);
 

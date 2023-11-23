@@ -9,13 +9,16 @@ import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
+import com.example.hanspaceback.s3.S3Uploader;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,18 +30,26 @@ public class DepartmentService {
     private final MemberRepository memberRepository;
     private final DepartmentRepository departmentRepository;
     private final DeptMemberRepository deptMemberRepository;
-    public void create(Long memberId, DepartmentRequest request){
+    private final S3Uploader s3Uploader;
+
+    public void create(Long memberId, DepartmentRequest request, MultipartFile deptImage, MultipartFile logoImgae) throws IOException {
+        String deptImg = null;
+        String logoImg = null;
+        if(!deptImage.isEmpty()) {
+            deptImg = s3Uploader.upload(deptImage,"deptImage");
+        }
+        if(!logoImgae.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImgae,"logoImage");
+        }
         Department department = Department.builder()
                 .siteName(request.getSiteName())
                 .deptName(request.getDeptName())
-                .logo(request.getLogo())
-//                .color(request.getColor())
+                .logoImage(logoImg)
                 .userAccept(request.isUserAccept())
                 .maxReserveCount(request.getMaxRserveCount())
                 .link(request.getLink())
                 .extraInfo(request.getExtraInfo())
-//                .siteInfoTitle(request.getSiteInfoTitle())
-//                .siteInfoDetail(request.getSiteInfoDetail())
+                .deptImage(deptImg)
                 .build();
         departmentRepository.save(department);
 
@@ -53,10 +64,15 @@ public class DepartmentService {
         deptMemberRepository.save(deptMember);
     }
 
-//    public List<Department> findAll(){
-//        return departmentRepository.findAll();
-//    }
-    public List<DepartmentResponse> findAll() {
+    public List<DepartmentResponse> findAll(MultipartFile deptImage, MultipartFile logoImage) throws IOException {
+        String deptImg = null;
+        String logoImg = null;
+        if(!deptImage.isEmpty()) {
+            deptImg = s3Uploader.upload(deptImage,"deptImage");
+        }
+        if(!logoImage.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImage,"logoImage");
+        }
         List<Department> departments = departmentRepository.findAll();
         List<DepartmentResponse> responses = new ArrayList<>();
 
@@ -65,42 +81,55 @@ public class DepartmentService {
             response.setDeptId(department.getDeptId());
             response.setSiteName(department.getSiteName());
             response.setDeptName(department.getDeptName());
-            response.setLogo(department.getLogo());
-//            response.setColor(department.getColor());
+            response.setLogoImage(logoImg);
             response.setUserAccept(department.isUserAccept());
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
-//            response.setSiteInfoTitle(department.getSiteInfoTitle());
-//            response.setSiteInfoDetail(department.getSiteInfoDetail());
+            response.setDeptImage(deptImg);
 
             responses.add(response);
         }
         return responses;
     }
 
-    public DepartmentResponse findByDeptId(Long id) {
+    public DepartmentResponse findByDeptId(Long id, MultipartFile deptImage, MultipartFile logoImage) throws IOException {
+        String deptImg = null;
+        String logoImg = null;
+        if(!deptImage.isEmpty()) {
+            deptImg = s3Uploader.upload(deptImage,"deptImage");
+        }
+        if(!logoImage.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImage,"logoImage");
+        }
         Department department = departmentRepository.findById(id).get();
         DepartmentResponse response = new DepartmentResponse();
 
         response.setDeptId(department.getDeptId());
         response.setSiteName(department.getSiteName());
         response.setDeptName(department.getDeptName());
-        response.setLogo(department.getLogo());
-//        response.setColor(department.getColor());
+        response.setLogoImage(logoImg);
         response.setUserAccept(department.isUserAccept());
         response.setMaxRserveCount(department.getMaxReserveCount());
         response.setLink(department.getLink());
         response.setExtraInfo(department.getExtraInfo());
-//        response.setSiteInfoTitle(department.getSiteInfoTitle());
-//        response.setSiteInfoDetail(department.getSiteInfoDetail());
+        response.setDeptImage(deptImg);
 
         return response;
     }
 
-    public Department update(Long id, DepartmentRequest request){
+    public Department update(Long id, DepartmentRequest request, MultipartFile deptImage, MultipartFile logoImage) throws IOException {
         Department department = departmentRepository.findById(id).get();
-        department.update(request);
+        String logoImg = null;
+        String deptImg = null;
+
+        if (logoImage != null && !logoImage.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImage, "logoImage");
+        }
+        if (deptImage != null && !deptImage.isEmpty()) {
+            deptImg = s3Uploader.upload(deptImage, "deptImage");
+        }
+        department.update(request, deptImg, logoImg);
         departmentRepository.save(department);
         return department;
     }
@@ -115,23 +144,28 @@ public class DepartmentService {
         return deptId;
     }
 
-    public List<DepartmentResponse> findByDeptRole(Long memberId, DeptRole deptRole) {
+    public List<DepartmentResponse> findByDeptRole(Long memberId, DeptRole deptRole, MultipartFile deptImage, MultipartFile logoImage) throws IOException {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberIdAndDeptRole(memberId, deptRole);
         List<DepartmentResponse> responses = new ArrayList<>();
+        String deptImg = null;
+        String logoImg = null;
+        if(!deptImage.isEmpty()) {
+            deptImg = s3Uploader.upload(deptImage,"deptImage");
+        }
+        if(!logoImage.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImage,"logoImage");
+        }
 
         for (DeptMember deptMember : deptMembers) {
             DepartmentResponse response = new DepartmentResponse();
             response.setDeptId(deptMember.getDepartment().getDeptId());
             response.setSiteName(deptMember.getDepartment().getSiteName());
             response.setDeptName(deptMember.getDepartment().getDeptName());
-            response.setLogo(deptMember.getDepartment().getLogo());
-//            response.setColor(deptMember.getDepartment().getColor());
+            response.setLogoImage(logoImg);
             response.setUserAccept(deptMember.getDepartment().isUserAccept());
-//            response.setMaxReserveCount(deptMember.getDepartment().getMaxReserveCount());
             response.setLink(deptMember.getDepartment().getLink());
             response.setExtraInfo(deptMember.getDepartment().getExtraInfo());
-//            response.setSiteInfoTitle(deptMember.getDepartment().getSiteInfoTitle());
-//            response.setSiteInfoDetail(deptMember.getDepartment().getSiteInfoDetail());
+            response.setDeptImage(deptImg);
 
             responses.add(response);
         }
