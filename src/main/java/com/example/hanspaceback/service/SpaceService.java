@@ -10,6 +10,7 @@ import com.example.hanspaceback.repository.SpaceTimeExtraRepository;
 import com.example.hanspaceback.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,12 @@ public class SpaceService {
     private final SpaceRepository spaceRepository;
     private final DepartmentRepository departmentRepository;
     private final S3Uploader s3Uploader;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+    @Value("${cloud.aws.region.static}")
+    private String region;
+
     public void create(SpaceRequest request, MultipartFile image) throws IOException {
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
         String imageName = null;
@@ -50,6 +57,7 @@ public class SpaceService {
     public List<SpaceResponse> findByDeptId(Long deptId) {
         List<Space> spaces = spaceRepository.findByDepartment_DeptId(deptId);
         List<SpaceResponse> responses = new ArrayList<>();
+        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/images/";
 
         for (Space space : spaces) {
             SpaceResponse response = new SpaceResponse();
@@ -60,7 +68,8 @@ public class SpaceService {
             response.setAvailableEnd(space.getAvailableEnd());
             response.setDetail(space.getDetail());
             response.setAvailability(space.isAvailability());
-            response.setImage(space.getImage());
+            if(space.getImage() != null)
+                response.setImage(url + space.getImage());
             responses.add(response);
         }
         return responses;

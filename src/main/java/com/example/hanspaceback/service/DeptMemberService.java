@@ -141,6 +141,7 @@ public class DeptMemberService {
     public List<DepartmentResponse> findAddDeptMembersByMemberId(Long memberId) {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
         List<DepartmentResponse> responses = new ArrayList<>();
+        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
 
         for (DeptMember deptMember : deptMembers) {
             if(deptMember.getDepartment().getDeptId() != null) {
@@ -154,7 +155,10 @@ public class DeptMemberService {
                 response.setMaxRserveCount(department.getMaxReserveCount());
                 response.setLink(department.getLink());
                 response.setExtraInfo(department.getExtraInfo());
-                response.setDeptImage(department.getDeptImage());
+                if(department.getDeptImage() != null)
+                    response.setDeptImage(url + department.getDeptImage());
+                response.setMemberCount(deptMembers.size());
+                response.setSpaceCount(department.getSpace().size());
                 responses.add(response);
             }
         }
@@ -163,6 +167,7 @@ public class DeptMemberService {
     public List<DepartmentResponse> findNAddDeptMembersByMemberId(Long memberId) {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
         List<Department> allDepts = departmentRepository.findAll();
+        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
 
         List<Long> addedDeptIds = new ArrayList<>();
         for (DeptMember deptMember : deptMembers) {
@@ -181,7 +186,10 @@ public class DeptMemberService {
                 response.setMaxRserveCount(dept.getMaxReserveCount());
                 response.setLink(dept.getLink());
                 response.setExtraInfo(dept.getExtraInfo());
-                response.setDeptImage(dept.getDeptImage());
+                if(dept.getDeptImage() != null)
+                    response.setDeptImage(url + dept.getDeptImage());
+                response.setMemberCount(deptMembers.size());
+                response.setSpaceCount(dept.getSpace().size());
                 notAddedDepts.add(response);
             }
         }
