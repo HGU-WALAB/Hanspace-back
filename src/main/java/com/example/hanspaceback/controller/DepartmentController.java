@@ -28,10 +28,6 @@ public class DepartmentController {
         Long memberId = currentUserDetails.getMemberId();
         departmentService.create(memberId, request, deptImage, logoImage);
     }
-//    @GetMapping("/dept/list")
-//    public ResponseEntity<List<Department>> findAll(){
-//        return ResponseEntity.ok(departmentService.findAll());
-//    }
     @GetMapping("/list")
     public ResponseEntity<List<DepartmentResponse>> findAll(@RequestParam(value="deptImage", required = false) MultipartFile deptImage, @RequestParam(value="logoImage", required = false) MultipartFile logoImage) throws IOException {
         return ResponseEntity.ok(departmentService.findAll(deptImage, logoImage));

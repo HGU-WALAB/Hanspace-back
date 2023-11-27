@@ -17,5 +17,7 @@ public class DepartmentResponse {
     private String link;
     private String extraInfo;
     private String deptImage;
+    private int memberCount;
+    private int spaceCount;
     private List<DeptMemberResponse> deptMemberResponse;
 }

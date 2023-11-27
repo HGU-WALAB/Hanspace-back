@@ -13,6 +13,7 @@ import com.example.hanspaceback.repository.DepartmentRepository;
 import com.example.hanspaceback.repository.DeptMemberRepository;
 import com.example.hanspaceback.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,10 @@ public class DeptMemberService {
     private final DepartmentRepository departmentRepository;
     private final DeptMemberRepository deptMemberRepository;
     private final MemberRepository memberRepository;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+    @Value("${cloud.aws.region.static}")
+    private String region;
 
     public void create(Long memberId, DeptMemberRequest request){
         int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), request.getMemberId());
@@ -96,6 +101,8 @@ public class DeptMemberService {
     public List<DepartmentResponse> findDeptMembersByMemberId(Long memberId) {
         List<DepartmentResponse> responses = new ArrayList<>();
         List<Department> departments = departmentRepository.findAll();
+        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+
         for (Department department : departments) {
             List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
 
@@ -109,7 +116,11 @@ public class DeptMemberService {
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
-            response.setDeptImage(department.getDeptImage());
+            if(department.getDeptImage() != null)
+                response.setDeptImage(url + department.getDeptImage());
+
+            response.setMemberCount(deptMembers.size());
+            response.setSpaceCount(department.getSpace().size());
 
             List<DeptMemberResponse> deptMemberResponses = new ArrayList<>();
             for (DeptMember deptMember : deptMembers) {
