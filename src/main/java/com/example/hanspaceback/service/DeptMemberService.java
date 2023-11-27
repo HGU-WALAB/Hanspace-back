@@ -101,7 +101,8 @@ public class DeptMemberService {
     public List<DepartmentResponse> findDeptMembersByMemberId(Long memberId) {
         List<DepartmentResponse> responses = new ArrayList<>();
         List<Department> departments = departmentRepository.findAll();
-        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String deptUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String logoUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/logoImage/";
 
         for (Department department : departments) {
             List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
@@ -111,13 +112,14 @@ public class DeptMemberService {
             response.setDeptId(department.getDeptId());
             response.setSiteName(department.getSiteName());
             response.setDeptName(department.getDeptName());
-            response.setLogoImage(department.getLogoImage());
+            if(department.getLogoImage() != null)
+                response.setLogoImage(logoUrl + department.getLogoImage());
             response.setUserAccept(department.isUserAccept());
             response.setMaxRserveCount(department.getMaxReserveCount());
             response.setLink(department.getLink());
             response.setExtraInfo(department.getExtraInfo());
             if(department.getDeptImage() != null)
-                response.setDeptImage(url + department.getDeptImage());
+                response.setDeptImage(deptUrl + department.getDeptImage());
 
             response.setMemberCount(deptMembers.size());
             response.setSpaceCount(department.getSpace().size());
@@ -141,7 +143,8 @@ public class DeptMemberService {
     public List<DepartmentResponse> findAddDeptMembersByMemberId(Long memberId) {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
         List<DepartmentResponse> responses = new ArrayList<>();
-        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String deptUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String logoUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/logoImage/";
 
         for (DeptMember deptMember : deptMembers) {
             if(deptMember.getDepartment().getDeptId() != null) {
@@ -150,13 +153,14 @@ public class DeptMemberService {
                 response.setDeptId(department.getDeptId());
                 response.setSiteName(department.getSiteName());
                 response.setDeptName(department.getDeptName());
-                response.setLogoImage(department.getLogoImage());
+                if(department.getLogoImage() != null)
+                    response.setLogoImage(logoUrl + department.getLogoImage());
                 response.setUserAccept(department.isUserAccept());
                 response.setMaxRserveCount(department.getMaxReserveCount());
                 response.setLink(department.getLink());
                 response.setExtraInfo(department.getExtraInfo());
                 if(department.getDeptImage() != null)
-                    response.setDeptImage(url + department.getDeptImage());
+                    response.setDeptImage(deptUrl + department.getDeptImage());
                 response.setMemberCount(deptMembers.size());
                 response.setSpaceCount(department.getSpace().size());
                 responses.add(response);
@@ -167,7 +171,8 @@ public class DeptMemberService {
     public List<DepartmentResponse> findNAddDeptMembersByMemberId(Long memberId) {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
         List<Department> allDepts = departmentRepository.findAll();
-        String url = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String deptUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String logoUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/logoImage/";
 
         List<Long> addedDeptIds = new ArrayList<>();
         for (DeptMember deptMember : deptMembers) {
@@ -181,13 +186,14 @@ public class DeptMemberService {
                 response.setDeptId(dept.getDeptId());
                 response.setSiteName(dept.getSiteName());
                 response.setDeptName(dept.getDeptName());
-                response.setLogoImage(dept.getLogoImage());
+                if(dept.getLogoImage() != null)
+                    response.setLogoImage(logoUrl + dept.getLogoImage());
                 response.setUserAccept(dept.isUserAccept());
                 response.setMaxRserveCount(dept.getMaxReserveCount());
                 response.setLink(dept.getLink());
                 response.setExtraInfo(dept.getExtraInfo());
                 if(dept.getDeptImage() != null)
-                    response.setDeptImage(url + dept.getDeptImage());
+                    response.setDeptImage(deptUrl + dept.getDeptImage());
                 response.setMemberCount(deptMembers.size());
                 response.setSpaceCount(dept.getSpace().size());
                 notAddedDepts.add(response);
