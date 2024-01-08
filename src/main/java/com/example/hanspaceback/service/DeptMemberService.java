@@ -36,16 +36,24 @@ public class DeptMemberService {
     // 기관 멤버 create (add)
     public void create(Long memberId, DeptMemberRequest request){
         int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), memberId);
+        String status = "승인 대기";
         if (count > 0) {
             throw new DuplicateDeptMemberException("이미 존재하는 DeptMember입니다.");
         }
         Department department = departmentRepository.findById(request.getDeptId()).orElseThrow();
         Member member = memberRepository.findById(memberId).orElseThrow();
 
+        if(department.isUserAccept() == false){
+            status = "승인";
+        }
+        else if(department.isUserAccept() == true){
+            status = "승인 대기";
+        }
+
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve("승인 대기") // default : 승인대기
+                .approve(status) // default : 승인대기
                 .deptRole(DeptRole.USER) // default : user
                 .build();
         deptMemberRepository.save(deptMember);

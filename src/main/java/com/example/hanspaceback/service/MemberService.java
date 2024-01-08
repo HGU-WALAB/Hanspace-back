@@ -27,6 +27,7 @@ public class MemberService {
     private final DepartmentRepository departmentRepository;
     private final ReserveMemberRepository reserveMemberRepository;
 
+    // HanSpace 회원 가입
     public void signup(MemberRequest request){
         Member member = memberRepository.findByEmail(request.getEmail());
 
@@ -41,9 +42,11 @@ public class MemberService {
             throw new DuplicateMemberException("이미 member에 있는 사람입니당.");
         }
     }
+    // 기관에 멤버 추가
     public void add(MemberRequest request){
         Member member = memberRepository.findByEmail(request.getEmail());
         Department department = departmentRepository.findById(request.getDeptId()).get();
+        String status = "승인 대기";
         if(member == null){
             throw new RuntimeException("해당 멤버를 찾을 수 없습니다.");
         }
@@ -54,11 +57,16 @@ public class MemberService {
         if (existingDeptMember != null) {
             throw new DuplicateDeptMemberException("이미 해당 부서에 소속된 멤버입니다.");
         }
-
+        if(department.isUserAccept() == false){
+            status = "승인";
+        }
+        else if(department.isUserAccept() == true){
+            status = "승인 대기";
+        }
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve("승인 대기")
+                .approve(status)
                 .deptRole(DeptRole.USER)
                 .build();
         deptMemberRepository.save(deptMember);
