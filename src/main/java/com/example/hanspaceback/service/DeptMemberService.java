@@ -33,8 +33,9 @@ public class DeptMemberService {
     @Value("${cloud.aws.region.static}")
     private String region;
 
+    // 기관 멤버 create (add)
     public void create(Long memberId, DeptMemberRequest request){
-        int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), request.getMemberId());
+        int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), memberId);
         if (count > 0) {
             throw new DuplicateDeptMemberException("이미 존재하는 DeptMember입니다.");
         }
@@ -201,6 +202,35 @@ public class DeptMemberService {
         }
 
         return notAddedDepts;
+    }
+
+    public List<DepartmentResponse> findAddApproveDeptMembersByMemberId(Long memberId) {
+        List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
+        List<DepartmentResponse> responses = new ArrayList<>();
+        String deptUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/deptImage/";
+        String logoUrl = "https://" + bucket + ".s3." + region + ".amazonaws.com/logoImage/";
+
+        for (DeptMember deptMember : deptMembers) {
+            if(deptMember.getDepartment().getDeptId() != null && deptMember.getApprove().equals("승인")) {
+                DepartmentResponse response = new DepartmentResponse();
+                Department department =  deptMember.getDepartment();
+                response.setDeptId(department.getDeptId());
+                response.setSiteName(department.getSiteName());
+                response.setDeptName(department.getDeptName());
+                if(department.getLogoImage() != null)
+                    response.setLogoImage(logoUrl + department.getLogoImage());
+                response.setUserAccept(department.isUserAccept());
+                response.setMaxRserveCount(department.getMaxReserveCount());
+                response.setLink(department.getLink());
+                response.setExtraInfo(department.getExtraInfo());
+                if(department.getDeptImage() != null)
+                    response.setDeptImage(deptUrl + department.getDeptImage());
+                response.setMemberCount(deptMembers.size());
+                response.setSpaceCount(department.getSpace().size());
+                responses.add(response);
+            }
+        }
+        return responses;
     }
     public DeptMember findById(Long id){
         DeptMember deptMember = deptMemberRepository.findById(id).get();
