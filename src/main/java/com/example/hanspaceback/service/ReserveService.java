@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -153,4 +154,27 @@ public class ReserveService {
         return reserveRepository.countByStatusAndSpace_Department_DeptId("미승인", deptId);
     }
 
+//    public List<Reserve> findByDeptIdMemberId(Long memberId, Long deptId) {
+//        List<ReserveMember> reserveMembers = reserveMemberRepository.findByMember_MemberId(memberId);
+//        List<Reserve> reserves = reserveRepository.findBySpace_Department_deptId(deptId);
+//        return reserves;
+//    }
+
+    public List<Reserve> findByDeptIdMemberId(Long memberId, Long deptId) {
+        // memberId로 ReserveMember 리스트 찾기
+        List<ReserveMember> reserveMembers = reserveMemberRepository.findByMember_MemberId(memberId);
+
+        // memberId에 해당하는 Reserve 리스트 필터링
+        List<Reserve> filteredReserves = reserveMembers.stream()
+                .map(ReserveMember::getReserve) // ReserveMember에서 Reserve 객체로 변환
+//                .filter(reserve -> reserve.getSpace().getDepartment().getDeptId().equals(deptId)) // deptId가 일치하는 Reserve만 필터링
+                .filter(Objects::nonNull)
+                .filter(reserve -> {
+                    Space space = reserve.getSpace();
+                    return space != null && space.getDepartment() != null && space.getDepartment().getDeptId() == deptId;
+                })
+//                .filter(reserve -> reserve.getSpace().getDepartment().getDeptId() == deptId)
+                .collect(Collectors.toList()); // 결과를 List로 수집
+        return filteredReserves;
+    }
 }
