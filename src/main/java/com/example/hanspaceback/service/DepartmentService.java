@@ -32,14 +32,14 @@ public class DepartmentService {
     private final DeptMemberRepository deptMemberRepository;
     private final S3Uploader s3Uploader;
 
-    public void create(Long memberId, DepartmentRequest request, MultipartFile deptImage, MultipartFile logoImgae) throws IOException {
+    public void create(Long memberId, DepartmentRequest request, MultipartFile deptImage, MultipartFile logoImage) throws IOException {
         String deptImg = null;
         String logoImg = null;
-        if(!deptImage.isEmpty()) {
+        if(deptImage != null && !deptImage.isEmpty()) {
             deptImg = s3Uploader.upload(deptImage,"deptImage");
         }
-        if(!logoImgae.isEmpty()) {
-            logoImg = s3Uploader.upload(logoImgae,"logoImage");
+        if(logoImage != null && !logoImage.isEmpty()) {
+            logoImg = s3Uploader.upload(logoImage,"logoImage");
         }
         Department department = Department.builder()
                 .siteName(request.getSiteName())
@@ -67,10 +67,10 @@ public class DepartmentService {
     public List<DepartmentResponse> findAll(MultipartFile deptImage, MultipartFile logoImage) throws IOException {
         String deptImg = null;
         String logoImg = null;
-        if(!deptImage.isEmpty()) {
+        if(deptImage != null && !deptImage.isEmpty()) {
             deptImg = s3Uploader.upload(deptImage,"deptImage");
         }
-        if(!logoImage.isEmpty()) {
+        if(logoImage != null && !logoImage.isEmpty()) {
             logoImg = s3Uploader.upload(logoImage,"logoImage");
         }
         List<Department> departments = departmentRepository.findAll();
@@ -96,10 +96,10 @@ public class DepartmentService {
     public DepartmentResponse findByDeptId(Long id, MultipartFile deptImage, MultipartFile logoImage) throws IOException {
         String deptImg = null;
         String logoImg = null;
-        if(!deptImage.isEmpty()) {
+        if(deptImage != null && !deptImage.isEmpty()) {
             deptImg = s3Uploader.upload(deptImage,"deptImage");
         }
-        if(!logoImage.isEmpty()) {
+        if(logoImage != null && !logoImage.isEmpty()) {
             logoImg = s3Uploader.upload(logoImage,"logoImage");
         }
         Department department = departmentRepository.findById(id).get();
@@ -149,10 +149,10 @@ public class DepartmentService {
         List<DepartmentResponse> responses = new ArrayList<>();
         String deptImg = null;
         String logoImg = null;
-        if(!deptImage.isEmpty()) {
+        if(deptImage != null && !deptImage.isEmpty()) {
             deptImg = s3Uploader.upload(deptImage,"deptImage");
         }
-        if(!logoImage.isEmpty()) {
+        if(logoImage != null && !logoImage.isEmpty()) {
             logoImg = s3Uploader.upload(logoImage,"logoImage");
         }
 
