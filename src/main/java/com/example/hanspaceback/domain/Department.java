@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -28,11 +29,13 @@ public class Department extends BaseEntity{
     private Long deptId;
     private String siteName;
     private String deptName;
+    @Nullable
     private String logoImage;
     private boolean userAccept;
     private int maxReserveCount;
     private String link;
     private String extraInfo;
+    @Nullable
     private String deptImage;
 
 //    @Transient
