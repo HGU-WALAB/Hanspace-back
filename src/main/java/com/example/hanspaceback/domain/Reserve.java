@@ -15,9 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reserve extends BaseEntity{
-    // groupName -> purpose
-    // approve -> status
-    // phoneNumber 삭제
     @Id
     @Column(name = "reserveId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +27,8 @@ public class Reserve extends BaseEntity{
     private String status;
     private String extraInfoAns;
     private String invitedMemberEmail;
-    private Long createMemberId;
+//    private Long createMemberId;
+    private String createMemberName;
 
     @ManyToOne
     @JoinColumn(name = "spaceId")
