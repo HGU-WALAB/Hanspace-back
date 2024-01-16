@@ -21,4 +21,5 @@ public class ReserveResponse {
     private String status;
     private String extraInfoAns;
     private String invitedMemberEmail;
+    private String memberName;
 }

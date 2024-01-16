@@ -35,7 +35,8 @@ public class ReserveService {
                 .extraInfoAns(request.getExtraInfoAns())
                 .invitedMemberEmail(request.getInvitedMemberEmail())
                 .space(space)
-                .createMemberId(memberId)
+//                .createMemberId(memberId)
+                .createMemberName(member.getName())
                 .build();
         reserveRepository.save(reserve);
 
@@ -107,7 +108,8 @@ public class ReserveService {
                 }
                 response.setHeadCount(reserve.getHeadCount());
                 response.setEndTime(reserve.getEndTime());
-                response.setMemberId(reserve.getCreateMemberId());
+//                response.setMemberId(reserve.getCreateMemberId());
+                response.setMemberName(reserve.getCreateMemberName());
                 response.setStatus(reserve.getStatus());
                 response.setInvitedMemberEmail(reserve.getInvitedMemberEmail());
                 response.setStartTime(reserve.getStartTime());
