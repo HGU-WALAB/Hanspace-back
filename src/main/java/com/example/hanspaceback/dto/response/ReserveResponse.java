@@ -11,6 +11,7 @@ public class ReserveResponse {
     private Long reserveId;
     private Long spaceId;
     private String spaceName;
+    private String labelColor;
     private Long memberId;
     private Long regularReserveId;
     private String reserveDate;
