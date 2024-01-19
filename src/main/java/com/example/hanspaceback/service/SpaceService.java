@@ -46,6 +46,7 @@ public class SpaceService {
                 .availableEnd(request.getAvailableEnd())
                 .detail(request.getDetail())
                 .availability(request.isAvailability())
+                .labelColor(request.getLabelColor())
                 .department(department)
                 .image(imageName)
                 .build();
@@ -68,6 +69,7 @@ public class SpaceService {
             response.setAvailableEnd(space.getAvailableEnd());
             response.setDetail(space.getDetail());
             response.setAvailability(space.isAvailability());
+            response.setLabelColor(space.getLabelColor());
             if(space.getImage() != null)
                 response.setImage(url + space.getImage());
             responses.add(response);
