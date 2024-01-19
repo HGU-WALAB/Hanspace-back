@@ -109,6 +109,7 @@ public class ReserveService {
                 response.setHeadCount(reserve.getHeadCount());
                 response.setEndTime(reserve.getEndTime());
 //                response.setMemberId(reserve.getCreateMemberId());
+                response.setLabelColor(reserve.getSpace().getLabelColor());
                 response.setMemberName(reserve.getCreateMemberName());
                 response.setStatus(reserve.getStatus());
                 response.setInvitedMemberEmail(reserve.getInvitedMemberEmail());
