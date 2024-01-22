@@ -33,29 +33,29 @@ public class DeptMemberController {
         return ResponseEntity.ok(deptMemberService.findDeptMemberFetchJoin());
     }
 
-    // 기관 아이디로 홰당 기관의 유저 리스트
+    // 기관 아이디로 해당 기관의 유저 리스트
     @GetMapping("/list/{deptId}")
     public ResponseEntity<List<DeptMemberResponse>> findByDeptMemberFetchJoin(@PathVariable Long deptId){
         return ResponseEntity.ok(deptMemberService.findByDeptMemberFetchJoin(deptId));
     }
 
-    // 기관 아이디로 홰당 기관에 승인된 유저 리스트
+    // 기관 아이디로 해당 기관에 승인된 유저 리스트
     @GetMapping("/list/approve/{deptId}")
     public ResponseEntity<List<DeptMemberResponse>> findDeptMembersApprove(@PathVariable Long deptId){
         return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "승인"));
     }
-    // 기관 아이디로 홰당 기관에 미승인된 유저 리스트 (승인 대기)
+    // 기관 아이디로 해당 기관에 미승인된 유저 리스트 (미승인)
     @GetMapping("/list/approveNan/{deptId}")
     public ResponseEntity<List<DeptMemberResponse>> findDeptMembersNApprove(@PathVariable Long deptId){
-        return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "승인 대기"));
+        return ResponseEntity.ok(deptMemberService.findDeptMembersByApprovalStatus(deptId, "미승인"));
     }
-    // 해당 멤버가 추가한 기관 리스트 (승인 + 승인 대기 + 거절)
+    // 해당 멤버가 추가한 기관 리스트 (승인 + 미승인 + 거절)
     @GetMapping("/list/member/add")
     public ResponseEntity<List<DepartmentResponse>> findMemberIdAdd(@AuthenticationPrincipal CustomUserDetails currentUserDetails){
         Long memberId = currentUserDetails.getMemberId();
         return ResponseEntity.ok(deptMemberService.findAddDeptMembersByMemberId(memberId));
     }
-    // 해당 멤버가 추가하지 않은 기관 리스트 (승인 + 승인 대기 + 거절)
+    // 해당 멤버가 추가하지 않은 기관 리스트 (승인 + 미승인 + 거절)
     @GetMapping("/list/member/nadd")
     public ResponseEntity<List<DepartmentResponse>> findMemberIdNAdd(@AuthenticationPrincipal CustomUserDetails currentUserDetails){
         Long memberId = currentUserDetails.getMemberId();

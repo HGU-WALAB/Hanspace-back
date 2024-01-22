@@ -46,7 +46,7 @@ public class MemberService {
     public void add(MemberRequest request){
         Member member = memberRepository.findByEmail(request.getEmail());
         Department department = departmentRepository.findById(request.getDeptId()).get();
-        String status = "승인 대기";
+        String status = "미승인";
         if(member == null){
             throw new RuntimeException("해당 멤버를 찾을 수 없습니다.");
         }
@@ -61,13 +61,13 @@ public class MemberService {
             status = "승인";
         }
         else if(department.isUserAccept() == true){
-            status = "승인 대기";
+            status = "미승인";
         }
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
                 .approve(status)
-                .deptRole(DeptRole.USER)
+                .deptRole(DeptRole.사용자)
                 .build();
         deptMemberRepository.save(deptMember);
 
