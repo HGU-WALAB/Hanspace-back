@@ -56,7 +56,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/hanSpace/admin/**")
-                        .hasAuthority(HanRole.ADMIN.name())
+                        .hasAuthority(HanRole.관리자.name())
                 );
         return http.build();
     }

@@ -1,5 +1,5 @@
 package com.example.hanspaceback.domain;
 
 public enum DeptRole {
-    ADMIN, USER, BLACKLIST;
+    관리자, 사용자, 블랙리스트;
 }

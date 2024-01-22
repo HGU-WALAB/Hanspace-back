@@ -36,7 +36,7 @@ public class DeptMemberService {
     // 기관 멤버 create (add)
     public void create(Long memberId, DeptMemberRequest request){
         int count = deptMemberRepository.countByDeptIdAndMemberId(request.getDeptId(), memberId);
-        String status = "승인 대기";
+        String status = "미승인";
         if (count > 0) {
             throw new DuplicateDeptMemberException("이미 존재하는 DeptMember입니다.");
         }
@@ -47,14 +47,14 @@ public class DeptMemberService {
             status = "승인";
         }
         else if(department.isUserAccept() == true){
-            status = "승인 대기";
+            status = "미승인";
         }
 
         DeptMember deptMember = DeptMember.builder()
                 .department(department)
                 .member(member)
-                .approve(status) // default : 승인대기
-                .deptRole(DeptRole.USER) // default : user
+                .approve(status) // default : 미승인
+                .deptRole(DeptRole.사용자) // default : 사용자
                 .build();
         deptMemberRepository.save(deptMember);
     }
@@ -70,6 +70,7 @@ public class DeptMemberService {
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
             response.setDeptRole(deptMember.getDeptRole());
+            response.setMember(deptMember.getMember());
             responses.add(response);
         }
         return responses;
@@ -85,6 +86,7 @@ public class DeptMemberService {
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
             response.setDeptRole(deptMember.getDeptRole());
+            response.setMember(deptMember.getMember());
             responses.add(response);
         }
         return responses;
@@ -103,6 +105,7 @@ public class DeptMemberService {
             response.setMemberId(deptMember.getMember().getMemberId());
             response.setApprove(deptMember.getApprove());
             response.setDeptRole(deptMember.getDeptRole());
+            response.setMember(deptMember.getMember());
             responses.add(response);
         }
         return responses;
@@ -140,6 +143,7 @@ public class DeptMemberService {
                     deptMemberResponse.setDeptMemberId(deptMember.getId());
                     deptMemberResponse.setDeptRole(deptMember.getDeptRole());
                     deptMemberResponse.setApprove(deptMember.getApprove());
+                    deptMemberResponse.setMember(deptMember.getMember());
                     deptMemberResponses.add(deptMemberResponse);
                 }
             }

@@ -59,7 +59,7 @@ public class DepartmentService {
                 .department(department)
                 .member(member)
                 .approve("승인")
-                .deptRole(DeptRole.ADMIN)
+                .deptRole(DeptRole.관리자)
                 .build();
         deptMemberRepository.save(deptMember);
     }

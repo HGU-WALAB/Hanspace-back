@@ -6,6 +6,8 @@ import com.example.hanspaceback.dto.request.DepartmentRequest;
 import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.service.DepartmentService;
+import com.example.hanspaceback.service.ReserveService;
+import com.example.hanspaceback.service.SpaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +25,8 @@ import java.util.Map;
 @RequestMapping("/hanSpace/dept")
 public class DepartmentController {
     private final DepartmentService departmentService;
+    private final ReserveService reserveService;
+    private final SpaceService spaceService;
     @PostMapping
     public void create(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @ModelAttribute DepartmentRequest request, @RequestParam(value="deptImage", required = false) MultipartFile deptImage, @RequestParam(value="logoImage", required = false) MultipartFile logoImage) throws IOException {
         Long memberId = currentUserDetails.getMemberId();
@@ -48,17 +52,23 @@ public class DepartmentController {
     @GetMapping("/list/user")
     public ResponseEntity<List<DepartmentResponse>> findByUser(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @RequestParam(value="deptImage", required = false) MultipartFile deptImage, @RequestParam(value="logoImage", required = false) MultipartFile logoImage) throws IOException {
         Long memberId = currentUserDetails.getMemberId();
-        departmentService.findByDeptRole(memberId, DeptRole.USER, deptImage, logoImage);
-        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.USER, deptImage, logoImage));
+        departmentService.findByDeptRole(memberId, DeptRole.사용자, deptImage, logoImage);
+        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.사용자, deptImage, logoImage));
     }
 
     @GetMapping("/list/admin")
     public ResponseEntity<List<DepartmentResponse>> findByADMIN(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @RequestParam(value="deptImage", required = false) MultipartFile deptImage, @RequestParam(value="logoImage", required = false) MultipartFile logoImage) throws IOException {
         Long memberId = currentUserDetails.getMemberId();
-        departmentService.findByDeptRole(memberId, DeptRole.ADMIN, deptImage, logoImage);
-        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.ADMIN, deptImage, logoImage));
+        departmentService.findByDeptRole(memberId, DeptRole.관리자, deptImage, logoImage);
+        return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.관리자, deptImage, logoImage));
     }
 
+//    @GetMapping("/{id}")
+//    public List<String> count(@PathVariable Long id){
+//        Long spaceId = spaceService.findByDeptId(id).get(0).getSpaceId();
+//        reserveService.countReserve(spaceId);
+//        return ;
+//    }
     @PatchMapping("/{id}")
     public ResponseEntity<Department> update(@PathVariable Long id, @ModelAttribute DepartmentRequest request, @RequestParam(value="deptImage", required = false) MultipartFile deptImage, @RequestParam(value="logoImage", required = false) MultipartFile logoImage) throws IOException {
         return ResponseEntity.ok(departmentService.update(id, request, deptImage, logoImage));

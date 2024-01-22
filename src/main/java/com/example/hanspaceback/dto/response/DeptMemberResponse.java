@@ -2,6 +2,7 @@ package com.example.hanspaceback.dto.response;
 
 import com.example.hanspaceback.domain.Department;
 import com.example.hanspaceback.domain.DeptRole;
+import com.example.hanspaceback.domain.Member;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -13,5 +14,6 @@ public class DeptMemberResponse {
     private Long memberId;
     private String approve;
     private DeptRole deptRole;
+    private Member member;
 //    private DepartmentResponse departmentResponse;
 }
