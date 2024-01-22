@@ -58,6 +58,11 @@ public class ReserveController {
     public ResponseEntity<List<Reserve>> findByDeptId(@PathVariable Long deptId){
         return ResponseEntity.ok(reserveService.findByDeptId(deptId));
     }
+    @GetMapping("/date/{deptId}")
+    public ResponseEntity<List<Reserve>> findByDeptIdDate(@PathVariable Long deptId, @RequestBody ReserveRequest request){
+        request.getReserveDate();
+        return ResponseEntity.ok(reserveService.findByDeptIdDate(deptId, request));
+    }
     @GetMapping("member/{deptId}")
     public ResponseEntity<List<Reserve>> findByDeptIdMemberId(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable Long deptId){
         Long memberId = customUserDetails.getMemberId();

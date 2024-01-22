@@ -1,7 +1,6 @@
 package com.example.hanspaceback.repository;
 
 import com.example.hanspaceback.domain.Reserve;
-import com.example.hanspaceback.domain.Space;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +24,6 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
             "left join fetch r.reserveMember rm left join fetch r.space c left join fetch r.regularReserve lr " +
             "where r.reserveDate = :reserveDate")
     List<Reserve> findByReserveDateFetchJoin(String reserveDate);
+
+    List<Reserve> findByReserveDate(String reserveDate);
 }
