@@ -58,7 +58,7 @@ public class ReserveController {
     public ResponseEntity<List<Reserve>> findByDeptId(@PathVariable Long deptId){
         return ResponseEntity.ok(reserveService.findByDeptId(deptId));
     }
-    @GetMapping("/date/{deptId}")
+    @PostMapping("/date/{deptId}")
     public ResponseEntity<List<Reserve>> findByDeptIdDate(@PathVariable Long deptId, @RequestBody ReserveRequest request){
         request.getReserveDate();
         return ResponseEntity.ok(reserveService.findByDeptIdDate(deptId, request));

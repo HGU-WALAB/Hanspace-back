@@ -85,11 +85,13 @@ public class ReserveService {
         return reserves;
     }
     public List<Reserve> findByDeptIdDate(Long deptId, ReserveRequest request){
+        // 승인 또는 미승인 상태의 예약 리스트만 ....
         // findByReserveDate 메소드는 List<Reserve>를 반환하므로, 이를 사용하여 날짜가 일치하는지 확인합니다.
         List<Reserve> matchedReserves = reserveRepository.findByReserveDate(request.getReserveDate());
 
         // 필터링된 예약 리스트에서 특정 부서의 예약만 추출합니다.
         List<Reserve> filteredReserves = matchedReserves.stream()
+                .filter((reserve -> reserve.getStatus().equals("승인") || reserve.getStatus().equals("미승인")))
                 .filter(reserve -> reserve.getSpace().getDepartment().getDeptId().equals(deptId))
                 .collect(Collectors.toList());
 
