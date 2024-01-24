@@ -10,9 +10,11 @@ import com.example.hanspaceback.service.RegularReserveService;
 import com.example.hanspaceback.service.ReserveMemberService;
 import com.example.hanspaceback.service.ReserveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,6 +37,16 @@ public class ReserveController {
         Long memberId = customUserDetails.getMemberId();
         ReserveResponse response = regularReserveService.create(memberId, request);
         return response;
+    }
+    @PostMapping("/csvUpload")
+    public ResponseEntity<String> csvUpload(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestParam("file") MultipartFile file){
+        Long memberId = customUserDetails.getMemberId();
+        try {
+            regularReserveService.processCsvFile(file, memberId);
+            return ResponseEntity.ok().body("File uploaded and processed successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
+        }
     }
     @GetMapping("/count")
     public Long countReserve(@RequestBody ReserveRequest request){
