@@ -216,6 +216,7 @@ public class DeptMemberService {
         return notAddedDepts;
     }
 
+    // deptRole
     public List<DepartmentResponse> findAddApproveDeptMembersByMemberId(Long memberId) {
         List<DeptMember> deptMembers = deptMemberRepository.findByMember_MemberId(memberId);
         List<DepartmentResponse> responses = new ArrayList<>();
@@ -239,6 +240,7 @@ public class DeptMemberService {
                     response.setDeptImage(deptUrl + department.getDeptImage());
                 response.setMemberCount(deptMembers.size());
                 response.setSpaceCount(department.getSpace().size());
+                response.setDeptRole(deptMember.getDeptRole());
                 responses.add(response);
             }
         }
