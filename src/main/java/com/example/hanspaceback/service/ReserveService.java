@@ -2,10 +2,8 @@ package com.example.hanspaceback.service;
 
 import com.example.hanspaceback.domain.*;
 import com.example.hanspaceback.dto.request.ReserveRequest;
-import com.example.hanspaceback.dto.response.DepartmentResponse;
 import com.example.hanspaceback.dto.response.ReserveResponse;
 import com.example.hanspaceback.dto.response.SpaceWithReservesResponse;
-import com.example.hanspaceback.jwt.CustomUserDetails;
 import com.example.hanspaceback.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +20,7 @@ public class ReserveService {
     private final MemberRepository memberRepository;
     private final SpaceRepository spaceRepository;
     private final ReserveMemberRepository reserveMemberRepository;
+    private final DepartmentRepository departmentRepository;
     public void create(Long memberId, ReserveRequest request){
         Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
         Member member = memberRepository.findById(memberId).orElseThrow();
@@ -191,4 +190,12 @@ public class ReserveService {
                 .collect(Collectors.toList()); // 결과를 List로 수집
         return filteredReserves;
     }
+
+//    public void countAllReserve(Long deptId) {
+//        Department department = departmentRepository.findById(deptId).get();
+//        if(department == null) {
+//            throw new IllegalArgumentException("Department not found with ID: " + department);
+//        }
+//        int result = reserveRepository.countByDeptId(deptId);
+//    }
 }

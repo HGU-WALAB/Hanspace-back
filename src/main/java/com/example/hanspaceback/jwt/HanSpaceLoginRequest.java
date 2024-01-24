@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class HanSpaceLoginRequest {
-    private String name;
     private String email;
+    private String sId;
+    private String password;
 }

@@ -12,6 +12,7 @@ import com.example.hanspaceback.repository.MemberRepository;
 import com.example.hanspaceback.repository.ReserveMemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,18 +24,23 @@ import java.util.List;
 @Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
+//    private final BCryptPasswordEncoder passwordEncoder;
     private final DeptMemberRepository deptMemberRepository;
     private final DepartmentRepository departmentRepository;
     private final ReserveMemberRepository reserveMemberRepository;
 
+
     // HanSpace 회원 가입
     public void signup(MemberRequest request){
         Member member = memberRepository.findByEmail(request.getEmail());
+//        String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         if (member == null) {
             member = Member.builder()
                     .name(request.getName())
                     .email(request.getEmail())
+                    .sId(request.getSId())
+                    .password(request.getPassword())
                     .hanRole(request.getHanRole())
                     .build();
             memberRepository.save(member);
@@ -92,6 +98,8 @@ public class MemberService {
             MemberResponse response = new MemberResponse();
             response.setMemberId(member.getMemberId());
             response.setName(member.getName());
+            response.setPassword(member.getPassword());
+            response.setSId(member.getSId());
             response.setEmail(member.getEmail());
             response.setDeptId(member.getMemberId());
 
@@ -119,7 +127,11 @@ public class MemberService {
 
     public Member login(HanSpaceLoginRequest hanSpaceLoginRequest) {
         Member member = memberRepository.findByEmail(hanSpaceLoginRequest.getEmail());
-
-        return member;
+        System.out.println("member.getPassword() = " + member.getPassword());
+        System.out.println("hanSpaceLoginRequest.getPassword() = " + hanSpaceLoginRequest.getPassword());
+        if(!member.getPassword().equals(hanSpaceLoginRequest.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
+        }
+        else return member;
     }
 }

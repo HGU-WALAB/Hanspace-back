@@ -26,4 +26,6 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
     List<Reserve> findByReserveDateFetchJoin(String reserveDate);
 
     List<Reserve> findByReserveDate(String reserveDate);
+
+//    int countByDeptId(Long deptId);
 }

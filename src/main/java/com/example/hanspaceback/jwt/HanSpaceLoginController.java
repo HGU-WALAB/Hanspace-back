@@ -50,7 +50,7 @@ public class HanSpaceLoginController {
         long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
         List<DepartmentResponse> departmentResponses = deptMemberService.findDeptMembersByMemberId(member.getMemberId());
 
-        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), member.getMemberId(), secretKey, expireTimeMs, departmentResponses);
+        String jwtToken = HanSpaceTokenUtil.createToken(member.getEmail(), member.getMemberId(), member.getSId(), secretKey, expireTimeMs, departmentResponses);
 
         return ResponseEntity.ok(new HanSpaceTokenResponse(jwtToken));
     }
@@ -64,6 +64,8 @@ public class HanSpaceLoginController {
         HanSpaceMemberInfoResponse response = new HanSpaceMemberInfoResponse(
                 member.getEmail(),
                 member.getName(),
+                member.getSId(),
+                member.getPassword(),
                 member.getHanRole(),
                 department
         );

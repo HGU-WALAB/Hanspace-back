@@ -12,13 +12,17 @@ import java.util.List;
 public class HanSpaceMemberInfoResponse {
     private String email;
     private String name;
+    private String password;
+    private String sId;
     private HanRole hanRole;
     private List<DepartmentResponse> departmentResponses;
     private List<DeptMemberResponse> deptMemberResponses;
 
-    public HanSpaceMemberInfoResponse(String loginId, String name, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
+    public HanSpaceMemberInfoResponse(String loginId, String name, String sId, String password, HanRole hanRole, List<DepartmentResponse> departmentResponses) {
         this.email = loginId;
         this.name = name;
+        this.password = password;
+        this.sId = sId;
         this.hanRole = hanRole;
         this.departmentResponses = departmentResponses;
     }

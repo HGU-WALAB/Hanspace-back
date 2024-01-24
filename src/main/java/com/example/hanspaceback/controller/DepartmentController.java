@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,18 @@ public class DepartmentController {
         return ResponseEntity.ok(departmentService.findByDeptRole(memberId, DeptRole.관리자, deptImage, logoImage));
     }
 
+    @GetMapping("/list/admin/count/{deptId}")
+    public List<String> findByADMINCount(@AuthenticationPrincipal CustomUserDetails currentUserDetails, @PathVariable Long deptId) throws IOException {
+        Long memberId = currentUserDetails.getMemberId();
+        Long spaceId = spaceService.findByDeptId(deptId).get(0).getSpaceId();
+        List<String> count = null;
+//        reserveService.countReserve(memberId, spaceId);
+//        reserveService.countAllReserve(memberId, deptId);
+
+        // 미승인 예약 수, 미승인 사용자 수,
+//        departmentService.findByDeptRole(memberId, DeptRole.관리자, deptImage, logoImage);
+        return count;
+    }
 //    @GetMapping("/{id}")
 //    public List<String> count(@PathVariable Long id){
 //        Long spaceId = spaceService.findByDeptId(id).get(0).getSpaceId();

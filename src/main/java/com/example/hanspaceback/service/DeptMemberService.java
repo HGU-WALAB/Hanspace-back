@@ -54,7 +54,7 @@ public class DeptMemberService {
                 .department(department)
                 .member(member)
                 .approve(status) // default : 미승인
-                .deptRole(DeptRole.사용자) // default : 사용자
+                .deptRole(DeptRole.미승인) // default : 미승인
                 .build();
         deptMemberRepository.save(deptMember);
     }
