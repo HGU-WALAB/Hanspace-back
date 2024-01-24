@@ -41,7 +41,7 @@ public class MemberService {
                     .email(request.getEmail())
                     .sId(request.getSId())
                     .password(request.getPassword())
-                    .hanRole(request.getHanRole())
+                    .hanRole(HanRole.사용자)
                     .build();
             memberRepository.save(member);
         }else{
