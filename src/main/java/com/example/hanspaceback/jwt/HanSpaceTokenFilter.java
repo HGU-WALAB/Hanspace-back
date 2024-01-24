@@ -24,7 +24,6 @@ public class HanSpaceTokenFilter extends OncePerRequestFilter {
 
     private final MemberService memberService;
     private final String secretKey;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -58,7 +57,7 @@ public class HanSpaceTokenFilter extends OncePerRequestFilter {
         Member loginMember = memberService.findByEmail(email);
         // email 정보로 UsernamePasswordAuthenticationToken 발급
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                new CustomUserDetails(loginMember.getEmail(), loginMember.getMemberId(), List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())), deptRoles),
+                new CustomUserDetails(loginMember.getEmail(), loginMember.getMemberId(), loginMember.getPassword(), List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())), deptRoles),
                 null,
                 List.of(new SimpleGrantedAuthority(loginMember.getHanRole().name())));
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

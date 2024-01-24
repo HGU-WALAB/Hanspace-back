@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +31,9 @@ public class RegularReserveService {
                 .build();
         regularReserveRepository.save(regularReserve);
 
-        Reserve firstReserve = null;
         Reserve lastReserve = null;
+        List<String> reserveDates = new ArrayList<>(); // 예약 날짜를 저장할 리스트
+
         for(int i = 0; i < request.getReserveCount(); i++) {
             Space space = spaceRepository.findById(request.getSpaceId()).orElseThrow();
             Member member = memberRepository.findById(memberId).orElseThrow();
@@ -49,10 +51,8 @@ public class RegularReserveService {
 //                    .member(member)
                     .build();
             reserveRepository.save(reserve);
-            if (i == 0) {
-                firstReserve = reserve; // 첫 번째로 생성된 Reserve 저장
-            }
             lastReserve = reserve;
+            reserveDates.add(reserve.getReserveDate());
 
             ReserveMember reserveMember = ReserveMember.builder()
                     .reserve(reserve)
@@ -65,13 +65,13 @@ public class RegularReserveService {
         response.setReserveId(lastReserve.getId());
         response.setSpaceId(lastReserve.getSpace().getSpaceId());
         response.setRegularReserveId(regularReserve.getId());
-        response.setReserveDate(firstReserve.getReserveDate() + ", " + lastReserve.getReserveDate());
         response.setStartTime(lastReserve.getStartTime());
         response.setEndTime(lastReserve.getEndTime());
         response.setHeadCount(lastReserve.getHeadCount());
         response.setPurpose(lastReserve.getPurpose());
         response.setStatus(lastReserve.getStatus());
         response.setExtraInfoAns(lastReserve.getExtraInfoAns());
+        response.setReserveDate(String.join(", ", reserveDates));
         return response;
     }
     public List<RegularReserve> findAll(){

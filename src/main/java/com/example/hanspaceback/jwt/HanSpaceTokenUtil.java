@@ -9,10 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HanSpaceTokenUtil {
-    public static String createToken(String email, Long memberId, String secretKey, long expireTimeMs, List<DepartmentResponse> departmentResponses) {
+    public static String createToken(String email, Long memberId, String sId, String secretKey, long expireTimeMs, List<DepartmentResponse> departmentResponses) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("email", email);
         claims.put("memberId", memberId);
+        claims.put("sId", sId);
 
         // departmentResponses에서 deptId와 deptRole을 추출하여 클레임에 추가
         List<Map<String, Object>> deptRolesClaims = departmentResponses.stream()
@@ -35,7 +36,6 @@ public class HanSpaceTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
-
 
     public static String getEmail(String token, String secretKey) {
         return extractClaims(token, secretKey).get("email").toString();

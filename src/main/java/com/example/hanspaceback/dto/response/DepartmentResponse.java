@@ -1,5 +1,6 @@
 package com.example.hanspaceback.dto.response;
 
+import com.example.hanspaceback.domain.DeptRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -19,5 +20,6 @@ public class DepartmentResponse {
     private String deptImage;
     private int memberCount;
     private int spaceCount;
+    private DeptRole deptRole;
     private List<DeptMemberResponse> deptMemberResponse;
 }

@@ -24,9 +24,14 @@ public class Member extends BaseEntity{
     @Column(name = "memberId")
     private Long memberId;
     private String name;
+    @Column(unique = true)
     private String email;
     private HanRole hanRole;
-    public void update(MemberRequest request){
+
+    @Column(unique = true)
+    private String sId;
+    private String password;
+    public void update(MemberRequest request) {
         this.name = request.getName();
         this.email = request.getEmail();
         this.hanRole = request.getHanRole();
@@ -35,9 +40,6 @@ public class Member extends BaseEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeptMember> deptMember = new ArrayList<>();
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Reserve> reserve = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReserveMember> reserveMember = new ArrayList<>();

@@ -11,4 +11,6 @@ public class MemberResponse {
 
     private Long deptId;
     private HanRole hanRole;
+    private String sId;
+    private String password;
 }
