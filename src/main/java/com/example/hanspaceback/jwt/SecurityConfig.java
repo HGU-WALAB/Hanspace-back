@@ -34,6 +34,8 @@ public class SecurityConfig {
     @Value("${host.client}")
     private String client;
 
+    @Value("https://hanspace.netlify.app")
+    private String netlify;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -63,8 +65,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-
-        config.setAllowedOrigins(List.of(client));
+        
+        config.setAllowedOrigins(Arrays.asList(client, netlify));
         config.setAllowedMethods(Arrays.asList("POST", "GET", "PATCH", "DELETE"));
         config.setAllowedHeaders(Arrays.asList(HttpHeaders.AUTHORIZATION, HttpHeaders.CONTENT_TYPE));
         config.setAllowCredentials(true);
